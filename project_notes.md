@@ -72,9 +72,10 @@ Sample response:
   }, function (err, res) {
     console.log (err, res);
   });
+
 ----------------------------------Database--------------------------------------
 ERD: Relatations
-customers, orders, products, order_details, categories, product_images, promos, product_prices
+customers, orders, products, orders_products, categories, product_images, promos, product_prices
 
 customers:
 id - primary key
@@ -124,7 +125,7 @@ products:
 id - primary key
 created_at - timestamp
 updated_at - timestamp
-category_id - foreign key
+category - varchar(255) - from embedded array
 product_price_id - foreign key
 name - varChar(255)
 description - text
@@ -139,18 +140,11 @@ product_id - foreign key
 price - float precision 2 decimals
 deleted - timestamp
 
-order_details:
+order_products:
 id - primary key
 order_id - foreign key
 product_id - foreign key
 product_price_id - foreign key
-quantity - integer greater than 1 required
-
-categories:
-id - primary key
-created_at - timestamp
-updated_at - timestamp
-name - varchar(255)
 
 product_images:
 id - primary key
@@ -159,16 +153,15 @@ created_at - timestamp
 updated_at - timestamp
 display_order - integer - required
 image_url - varchar(255) url
-alt_text - varchar(255), max 60
+alt_text - varchar(255), max 40
 
 promos:
 id - primary key
-product_id - foreign key
+promo_code - unique - required
+product_id - foreign key - nullable (null indicates apply to order)
 created_at - timestamp
 updated_at - timestamp
 expires_at - timestamp required
-promo_code - unique - required
-apply_to_order - boolean - required
 discount_rate - float between 0 exclusive and 1 inclusive - required
 
 shippers:
@@ -186,4 +179,87 @@ shipper_id - foreign key
 type - varchar(255)
 price - float precision 2 decimals
 deleted - timestamps
+
+-----------------------Modified Database----------------------------------------
+ERD: Relatations
+customers, orders, products, orders_products, categories, product_images, promos, product_prices
+
+customers:
+id - primary key
+created_at - timestamp
+updated_at - timestamp
+user_name - varchar(60) - nullable
+hashed_password - char(60) - nullable
+address_line1 - varchar(255) - required
+address_line2 - varchar(255) - nullable
+address_city - varchar(255) - required
+address_state - char(2) - required
+address_zip - varchar(255) - required
+address_country (US ONLY) 2 letter code - char(2) - required
+first_name - varchar(255) - required
+last_name - varchar(255) - required
+phone - varchar(255) - required
+email - varchar(255) - required
+ship_first_name - varchar(255) - required
+ship_last_name - varchar(255) - required
+ship_address_line1 - varchar(255) - required
+ship_address_line2 - varchar(255) - required
+ship_address_city - varchar(255) - required
+ship_address_state - char(2) - required
+ship_address_zip - varchar(255) - required
+ship_address_country (US ONLY) - char(2)
+deleted - timestamp
+
+orders:
+id - primary key
+created_at - timestamp
+updated_at - timestamp
+customer_id - foreign key
+shipping_type - varchar(255) - from embedded array - required
+promo_id - foreign key
+shipped_date - timestamp
+ship_first_name - varchar(255) - required
+ship_last_name - varchar(255) - required
+ship_address_line1 - varchar(255) - required
+ship_address_line2 - varchar(255) nullable
+ship_address_city - varchar(255) - required
+ship_address_state - char(2) - required
+ship_address_zip - varchar(255) - required
+ship_address_country (US ONLY) - char(2)
+cancelled - timestamp
+
+products:
+id - primary key
+created_at - timestamp
+updated_at - timestamp
+category - varchar(255) - from embedded array - required
+price - float(2) - required
+name - varChar(255)
+description - text
+units_in_stock - integer required - negative ok
+deleted - timestamp
+
+orders_products:
+id - primary key
+order_id - foreign key
+product_id - foreign key
+price - float(2) - required
+
+product_images:
+id - primary key
+product_id - foreign key
+created_at - timestamp
+updated_at - timestamp
+display_order - integer - required
+image_url - varchar(255) url
+alt_text - varchar(255), max 40
+
+promos:
+id - primary key
+product_id - foreign key - nullable (null means apply to order)
+created_at - timestamp
+updated_at - timestamp
+expires_at - timestamp required
+promo_code - unique - required
+discount_rate - float between 0 exclusive and 1 inclusive - required
 --------------------------------------------------------------------------------
