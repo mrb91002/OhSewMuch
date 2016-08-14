@@ -10,6 +10,7 @@ exports.up = function(knex) {
     table.string('email').notNullable();
     table.string('user_name', 255).unique().notNullable();
     table.specificType('hashed_password', 'char(60)').nullable();
+    table.string('admin').notNullable().defaultTo(false);
     table.string('address_line1').notNullable();
     table.string('address_line2').nullable();
     table.string('address_city').notNullable();
