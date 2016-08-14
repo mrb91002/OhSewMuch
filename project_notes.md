@@ -177,18 +177,22 @@ created_at - timestamp
 updated_at - timestamp
 shipper_id - foreign key
 type - varchar(255)
-price - float precision 2 decimals
+price - float(8,2)
 deleted - timestamps
 
 -----------------------Modified Database----------------------------------------
 ERD: Relatations
-customers, orders, products, orders_products, categories, product_images, promos, product_prices
+customers, orders, products, orders_products, product_images, promos
 
-customers:
+customers: - migration 1
 id - primary key
 created_at - timestamp
 updated_at - timestamp
-user_name - varchar(60) - nullable
+first_name - varchar(255) - required
+last_name - varchar(255) - required
+phone - varchar(255) - required
+email - varchar(255) - required
+user_name - varchar(255) - required (default to email address for no signin)
 hashed_password - char(60) - nullable
 address_line1 - varchar(255) - required
 address_line2 - varchar(255) - nullable
@@ -196,70 +200,66 @@ address_city - varchar(255) - required
 address_state - char(2) - required
 address_zip - varchar(255) - required
 address_country (US ONLY) 2 letter code - char(2) - required
-first_name - varchar(255) - required
-last_name - varchar(255) - required
-phone - varchar(255) - required
-email - varchar(255) - required
 ship_first_name - varchar(255) - required
 ship_last_name - varchar(255) - required
 ship_address_line1 - varchar(255) - required
 ship_address_line2 - varchar(255) - required
 ship_address_city - varchar(255) - required
 ship_address_state - char(2) - required
-ship_address_zip - varchar(255) - required
+ship_address_zip - varchar(10) - required
 ship_address_country (US ONLY) - char(2)
 deleted - timestamp
 
-orders:
-id - primary key
-created_at - timestamp
-updated_at - timestamp
-customer_id - foreign key
-shipping_type - varchar(255) - from embedded array - required
-promo_id - foreign key
-shipped_date - timestamp
-ship_first_name - varchar(255) - required
-ship_last_name - varchar(255) - required
-ship_address_line1 - varchar(255) - required
-ship_address_line2 - varchar(255) nullable
-ship_address_city - varchar(255) - required
-ship_address_state - char(2) - required
-ship_address_zip - varchar(255) - required
-ship_address_country (US ONLY) - char(2)
-cancelled - timestamp
-
-products:
+products: - migration 2
 id - primary key
 created_at - timestamp
 updated_at - timestamp
 category - varchar(255) - from embedded array - required
-price - float(2) - required
+price - float(8,2) - required
 name - varChar(255)
 description - text
 units_in_stock - integer required - negative ok
 deleted - timestamp
 
-orders_products:
-id - primary key
-order_id - foreign key
-product_id - foreign key
-price - float(2) - required
-
-product_images:
-id - primary key
-product_id - foreign key
-created_at - timestamp
-updated_at - timestamp
-display_order - integer - required
-image_url - varchar(255) url
-alt_text - varchar(255), max 40
-
-promos:
+promos: - migration 3
 id - primary key
 product_id - foreign key - nullable (null means apply to order)
 created_at - timestamp
 updated_at - timestamp
 expires_at - timestamp required
 promo_code - unique - required
-discount_rate - float between 0 exclusive and 1 inclusive - required
+discount_rate - float(8,4) limit between 0 exclusive and 1 inclusive - required
+
+product_images: - migration 4
+id - primary key
+product_id - foreign key
+created_at - timestamp
+updated_at - timestamp
+display_order - integer - required
+image_url - varchar(255) url
+alt_text - varchar(50)
+
+orders: - migration 5
+id - primary key
+customer_id - foreign key
+promo_id - foreign key
+created_at - timestamp
+updated_at - timestamp
+cancelled - timestamp
+ship_type - varchar(255) - from embedded array - required
+ship_date - timestamp
+ship_first_name - varchar(255) - required
+ship_last_name - varchar(255) - required
+ship_address_line1 - varchar(255) - required
+ship_address_line2 - varchar(255) nullable
+ship_address_city - varchar(255) - required
+ship_address_state - char(2) - required
+ship_address_zip - varchar(10) - required
+ship_address_country (US ONLY) - char(2)
+
+orders_products: - migration 6
+id - primary key
+order_id - foreign key
+product_id - foreign key
+price - decimal(8,2) - required
 --------------------------------------------------------------------------------
