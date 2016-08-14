@@ -179,7 +179,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
-        id:22,
+        id:23,
         product_id: 4,
         display_order:2,
         image_url: 'http://imgur.com/hpbqXCx',
@@ -187,7 +187,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
-        id:23,
+        id:24,
         product_id: 5,
         display_order:1,
         image_url: 'http://imgur.com/C7MJhpU',
@@ -195,7 +195,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
-        id:24,
+        id:25,
         product_id: 6,
         display_order:1,
         image_url: 'http://imgur.com/9E1wKyA',
@@ -203,7 +203,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
-        id:25,
+        id:26,
         product_id: 7,
         display_order:1,
         image_url: 'http://imgur.com/eBI9eEe',
@@ -211,7 +211,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
-        id:26,
+        id:27,
         product_id: 8,
         display_order:1,
         image_url: 'http://imgur.com/8Uo22K6',
@@ -219,7 +219,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
-        id:27,
+        id:28,
         product_id: 8,
         display_order:2,
         image_url: 'http://imgur.com/ZklvCgG',
@@ -227,7 +227,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
        }, {
-        id:28,
+        id:29,
         product_id: 8,
         display_order:3,
         image_url: 'http://imgur.com/Y9O41jv',
@@ -235,7 +235,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
        }, {
-        id:29,
+        id:30,
         product_id: 8,
         display_order:4,
         image_url: 'http://imgur.com/YMt3Q6Y',
@@ -243,7 +243,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
        }, {
-        id:30,
+        id:31,
         product_id: 8,
         display_order:5,
         image_url: 'http://imgur.com/b1uIGA1',
@@ -251,7 +251,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
        }, {
-        id:31,
+        id:32,
         product_id: 9,
         display_order:1,
         image_url: 'http://imgur.com/VtwGpkX',
@@ -259,7 +259,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
        }, {
-        id:32,
+        id:33,
         product_id: 9,
         display_order:2,
         image_url: 'http://imgur.com/BaOjmrd',
@@ -267,7 +267,7 @@ exports.seed = function(knex) {
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
        }, {
-        id:33,
+        id:34,
         product_id: 9,
         display_order:3,
         image_url: 'http://imgur.com/j1mW8uj',
