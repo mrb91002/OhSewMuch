@@ -264,3 +264,13 @@ order_id - foreign key
 product_id - foreign key
 price - decimal(8,2) - required
 --------------------------------------------------------------------------------
+
+To login a session:
+http --session guest post localhost:8000/api/token userName=guest1 password=GuestUser1!
+
+http --session admin post localhost:8000/api/token userName=ohsewmuch password=Ohsewmuchadmin1!
+
+To use a logged in session:
+http --session guest get localhost:8000/api/customers
+
+http --session admin get localhost:8000/api/customers
