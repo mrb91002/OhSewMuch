@@ -22,7 +22,7 @@ router.post('/api/token', ev(validate.post), (req, res, next) => {
     .where('user_name', userName)
     .first()
     .then((row) => {
-      if (!row) {
+      if (!row || row.deleted) {
         throw boom.unauthorized(errMsg);
       }
 

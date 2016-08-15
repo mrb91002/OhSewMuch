@@ -194,6 +194,7 @@ phone - varchar(255) - required
 email - varchar(255) - required
 user_name - varchar(255) - required (default to email address for no signin)
 hashed_password - char(60) - nullable
+admin - boolean - required - default to false
 address_line1 - varchar(255) - required
 address_line2 - varchar(255) - nullable
 address_city - varchar(255) - required
