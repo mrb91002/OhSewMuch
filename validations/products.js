@@ -4,14 +4,14 @@ const Joi = require('joi');
 
 module.exports.post = {
   body: {
-    category: Joi.sting()
+    category: Joi.string()
     .label('Category')
     .max(255)
     .trim()
     .required(),
   price: Joi.number()
     .label('Price')
-    .min(0),
+    .min(0)
     .required(),
   name: Joi.string()
     .label('Name')
@@ -33,17 +33,16 @@ module.exports.post = {
   }
 };
 
-
 module.exports.patch = {
   body: {
-    category: Joi.sting()
+    category: Joi.string()
     .label('Category')
     .max(255)
     .trim()
     .optional(),
   price: Joi.number()
     .label('Price')
-    .min(0),
+    .min(0)
     .optional(),
   name: Joi.string()
     .label('Name')

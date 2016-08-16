@@ -8,17 +8,11 @@ const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 const ev = require('express-validation');
 const val = require('../validations/products');
-const { checkAuth } = require('../modules/middleware');
-
-
-
-
-
-
-
+const { checkAdmin } = require('../modules/middleware');
 
 router.get('/api/products', (_req, res, next) => {
   knex('products')
+    .where('deleted', null)
     .then((products) => {
       res.send(camelizeKeys(products));
     })
@@ -27,7 +21,7 @@ router.get('/api/products', (_req, res, next) => {
     });
 });
 
-router.get('/api/admin/products', (_req.res, next) => {
+router.get('/api/admin/products', checkAdmin, (_req, res, next) => {
   knex('products')
     .then((products) => {
       res.send(camelizeKeys(products))
@@ -36,11 +30,6 @@ router.get('/api/admin/products', (_req.res, next) => {
       next(err);
     })
 })
-
-
-
-
-
 
 router.get('/api/products/:id', (req, res, next) => {
   const id = Number.parseInt(req.params.id)
@@ -60,14 +49,7 @@ router.get('/api/products/:id', (req, res, next) => {
     });
 });
 
-
-
-
-
-
-
-
-router.post('/api/admin/products', checkAuth, ev(val.post), (req, res, next) => {
+router.post('/api/admin/products', checkAdmin, ev(val.post), (req, res, next) => {
   const productInfo = req.body;
 
   knex('products')
@@ -80,13 +62,7 @@ router.post('/api/admin/products', checkAuth, ev(val.post), (req, res, next) => 
   });
 });
 
-
-
-
-
-
-
-router.patch('/api/admin/products/:id', checkAuth, ev(val.patch), (req, res, next) => {
+router.patch('/api/admin/products/:id', checkAdmin, ev(val.patch), (req, res, next) => {
   const updatedProduct = req.body;
   const id = req.params.id;
   if (isNaN(id)) {
