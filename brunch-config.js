@@ -19,6 +19,9 @@ module.exports = {
   plugins: {
     babel: {
       presets: ['es2015', 'react']
+    },
+    postcss: {
+      processors: [require('autoprefixer')(['last 99 versions'])]
     }
   },
 

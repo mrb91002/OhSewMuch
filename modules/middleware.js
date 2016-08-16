@@ -15,4 +15,18 @@ const checkAuth = function(req, res, next) {
   });
 };
 
-module.exports = { checkAuth };
+const checkAdmin = function(req, res, next) {
+  const jwtSecret = process.env.JWT_SECRET;
+  const admin = req.cookies.admin === 'true';
+
+  jwt.verify(req.cookies.accessToken, jwtSecret, (err, decoded) => {
+    if (err || !admin) {
+      return res.sendStatus(401);
+    }
+
+    req.token = decoded;
+    next();
+  });
+};
+
+module.exports = { checkAuth, checkAdmin };

@@ -9,12 +9,14 @@ const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 const bcrypt = require('bcrypt-as-promised');
 const ev = require('express-validation');
-const validate = require('../validations/customers');
-const { checkAuth } = require('../modules/middleware');
+const val = require('../validations/customers');
+const { checkAuth, checkAdmin } = require('../modules/middleware');
+const { sanitizeCustomer } = require('../modules/utils');
 
 // Customers: Create Customer (with or without proper registration security).
 // req.body: firstName, lastName, [phone], email, [userName], [password], addressLine1, [addressLine2], addressCity, addressState, addressZip, addressCountry, shipFirstName, shipLastName, shipAddressLine1, [shipAddressLine2], shipAddressCity, shipAddressState, shipAddressZip, shipAddressCountry
-router.post('/api/customers', ev(validate.post), (req, res, next) => {
+// Route tested and working
+router.post('/api/customers', ev(val.post), (req, res, next) => {
   const cust = req.body;
 
   // Path to take if a userName and password are present.
@@ -37,42 +39,46 @@ router.post('/api/customers', ev(validate.post), (req, res, next) => {
           .insert(decamelizeKeys(cust), '*');
       })
       .then((newCust) => {
-        const custResponse = camelizeKeys(newCust[0]);
-
-        delete custResponse.id;
-        delete custResponse.deleted;
-        delete custResponse.admin;
-        delete custResponse.hashedPassword;
-        delete custResponse.createdAt;
-        delete custResponse.updatedAt;
-        res.send(custResponse);
+        res.send(sanitizeCustomer(camelizeKeys(newCust[0])));
       })
       .catch((err) => {
         next(err);
-      })
+      });
   }
   // Path to take if a userName and password are not present.
   else {
     knex('customers')
       .insert(decamelizeKeys(cust), '*')
       .then((newCust) => {
-        const custResponse = camelizeKeys(newCust[0]);
-
-        delete custResponse.id;
-        delete custResponse.deleted;
-        delete custResponse.admin;
-        delete custResponse.hashedPassword;
-        delete custResponse.createdAt;
-        delete custResponse.updatedAt;
-        res.send(custResponse);
+        res.send(sanitizeCustomer(camelizeKeys(newCust[0])));
       })
       .catch((err) => {
         next(err);
-      })
+      });
   }
 });
 
+// Route tested and working
 router.get('/api/customers', checkAuth, (req, res, next) => {
+  const userId = req.token.userId;
+
+  knex('customers')
+    .where('id', userId)
+    .first()
+    .then((customer) => {
+      if (!customer) {
+        throw boom.notFound('Invalid customer');
+      }
+
+      res.send(sanitizeCustomer(camelizeKeys(customer)));
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Route tested and working
+router.delete('/api/customers', checkAuth, (req, res, next) => {
   const userId = req.token.userId;
 
   knex('customers')
@@ -83,19 +89,28 @@ router.get('/api/customers', checkAuth, (req, res, next) => {
         throw boom.notFound('Invalid customer');
       }
 
-      const user = camelizeKeys(exists);
+      const date = new Date();
+      const toUpdate = decamelizeKeys({
+        deleted: date,
+        updatedAt: date
+      });
 
-      delete user.id;
-      delete user.admin;
-      delete user.hashedPassword;
-      delete user.createdAt;
-      delete user.updatedAt;
-      delete user.deleted;
-      res.send(user);
+      return knex('customers')
+        .where('id', userId)
+        .update(toUpdate, '*');
+    })
+    .then((delCustomers) => {
+      res.send(sanitizeCustomer(camelizeKeys(delCustomers[0])));
     })
     .catch((err) => {
       next(err);
     });
+});
+
+router.patch('/api/customers', checkAdmin, ev(val.patch), (req, res, next) => {
+
+  // console.log(req.cookies.admin);
+  res.sendStatus(200);
 });
 
 module.exports = router;
