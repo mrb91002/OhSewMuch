@@ -8,6 +8,7 @@ exports.up = function(knex) {
     table.decimal('price').notNullable();
     table.string('name').notNullable();
     table.text('description').notNullable();
+    table.string('dimensions').notNullable().defaultTo('');
     table.integer('units_in_stock').notNullable().defaultTo(0);
     table.dateTime('deleted').nullable();
   });

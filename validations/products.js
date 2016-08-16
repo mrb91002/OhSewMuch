@@ -22,6 +22,10 @@ module.exports.post = {
     .label('Description')
     .trim()
     .required(),
+  dimensions: Joi.string()
+    .label('Dimensions')
+    .trim()
+    .optional(),
   units_in_stock: Joi.number()
     .label('Units in stock')
     .integer()
@@ -48,6 +52,10 @@ module.exports.patch = {
     .optional(),
   description: Joi.string()
     .label('Description')
+    .trim()
+    .optional(),
+  dimensions: Joi.string()
+    .label('Dimensions')
     .trim()
     .optional(),
   units_in_stock: Joi.number()

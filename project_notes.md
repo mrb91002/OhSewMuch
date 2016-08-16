@@ -219,6 +219,7 @@ category - varchar(255) - from embedded array - required
 price - float(8,2) - required
 name - varChar(255)
 description - text
+dimensions - varChar(255) - notNullable - default to ''
 units_in_stock - integer required - negative ok
 deleted - timestamp
 
