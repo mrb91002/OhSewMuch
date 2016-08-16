@@ -19,6 +19,7 @@ const cookieParser = require('cookie-parser');
 // const posts = require('./routes/posts');
 // const topics = require('./routes/topics');
 const customers = require('./routes/customers');
+const products = require('./routes/products');
 const token = require('./routes/token');
 
 const app = express();
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(posts);
 // app.use(topics);
 app.use(customers);
+app.use(products);
 app.use(token);
 
 // Page not found handler
