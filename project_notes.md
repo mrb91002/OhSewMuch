@@ -42,15 +42,16 @@ Must be a 2 letter country short-name code (ISO 3166)
 RETURNS
 
 Returns the validated address object. If there is only a partial match and more information is required (e.g. Apt#, etc), a message string with more information will also be returned.
+test_4e00b94a3f4e72376756182a0e2ffaca055
 
 curl https://api.lob.com/v1/verify \
-  -u test_0dc8d51e0acffcb1880e0f19c79b2f5b0cc: \
+  -u test_4e00b94a3f4e72376756182a0e2ffaca055: \
   -d "address_line1=185 Berry Street" \
   -d "address_city=San Francisco" \
   -d "address_state=CA" \
   -d "address_zip=94107"
 
-Sample response:
+Sample invalid response:
 {
     "address": {
         "address_line1": "185 BERRY ST",
@@ -62,6 +63,26 @@ Sample response:
         "object": "address"
     },
     "message": "Default address: The address you entered was found but more information is needed (such as an apartment, suite, or box number) to match to a specific address."
+}
+
+curl https://api.lob.com/v1/verify \
+  -u test_4e00b94a3f4e72376756182a0e2ffaca055: \
+  -d "address_line1=6821 S Gove St" \
+  -d "address_city=Tacoma" \
+  -d "address_state=WA" \
+  -d "address_zip=98409"
+
+Sample valid response:
+{
+    "address": {
+        "address_line1": "6821 S GOVE ST",
+        "address_line2": "",
+        "address_city": "TACOMA",
+        "address_state": "WA",
+        "address_zip": "98409-1549",
+        "address_country": "US",
+        "object": "address"
+    }
 }
 
   Lob.verification.verify({
@@ -275,3 +296,6 @@ To use a logged in session:
 http --session guest get localhost:8000/api/customers
 
 http --session admin get localhost:8000/api/customers
+
+To post a customer with a un/pw:
+http post localhost:8000/api/customers firstName=Chad lastName=Latham email=chadlatham33@gmail.com addressLine1='6821 S Gove St' addressCity=Tacoma addressState=WA addressZip=98409-1111 addressCountry=US shipFirstName=Chad shipLastName=Latham shipAddressLine1='6821 S Gove St' shipAddressCity=Tacoma shipAddressState=WA shipAddressZip=98409-1111 shipAddressCountry=US phone=253.335.7059 userName=guest2 password=GuestUser1!

@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router(); // eslint-disable-line new-cap
 
 // To log a user in
+// Route tested and working
 router.post('/api/token', ev(validate.post), (req, res, next) => {
   const errMsg = 'User could not be logged in';
   const { userName, password } = req.body;
