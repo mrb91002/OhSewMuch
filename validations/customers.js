@@ -383,6 +383,9 @@ module.exports.patchAdmin = {
       .allow('null')
       .allow(null)
       .timestamp()
+      .optional(),
+    admin: Joi.boolean()
+      .label('Admin')
       .optional()
   }
 };

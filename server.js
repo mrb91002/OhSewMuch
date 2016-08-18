@@ -65,9 +65,18 @@ app.use((err, _req, res, _next) => {
   }
 
   if (err.output && err.output.statusCode) {
+    let responseType;
+
+    if (err.json) {
+      responseType = 'application/json';
+    }
+    else {
+      responseType = 'text/plain';
+    }
+
     return res
       .status(err.output.statusCode)
-      .set('Content-Type', 'text/plain')
+      .set('Content-Type', responseType)
       .send(err.message);
   }
 

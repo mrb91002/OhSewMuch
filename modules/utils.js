@@ -12,6 +12,14 @@ const sanitizeCustomer = (customer) => {
 };
 
 const processShipAddress = (cust) => {
+  if (!cust.shipFirstName) {
+    cust.shipFirstName = cust.firstName;
+  }
+
+  if (!cust.shipLastName) {
+    cust.shipLastName = cust.lastName;
+  }
+
   if (!cust.shipAddressLine1) {
     cust.shipAddressLine1 = cust.addressLine1;
   }
@@ -39,32 +47,132 @@ const processShipAddress = (cust) => {
   return cust;
 };
 
-const verifySameAddress = (cust) => {
-  if (cust.addressLine1 !== cust.shipAddressLine1) {
+const verifySameAddress = (primary, ship) => {
+  if (primary.addressLine1 !== ship.addressLine1) {
     return false;
   }
 
-  if (cust.addressLine2 !== cust.shipAddressLine2) {
+  if (primary.addressLine2 !== ship.addressLine2) {
     return false;
   }
 
-  if (cust.addressCity !== cust.shipAddressCity) {
+  if (primary.addressCity !== ship.addressCity) {
     return false;
   }
 
-  if (cust.addressState !== cust.shipAddressState) {
+  if (primary.addressState !== ship.addressState) {
     return false;
   }
 
-  if (cust.addressZip !== cust.shipAddressZip) {
+  if (primary.addressZip !== ship.addressZip) {
     return false;
   }
 
-  if (cust.addressCountry !== cust.shipAddressCountry) {
+  if (primary.addressCountry !== ship.addressCountry) {
     return false;
   }
 
   return true;
-}
+};
 
-module.exports = { sanitizeCustomer, processShipAddress, verifySameAddress };
+const getPrimaryAddress = (cust) => {
+  const address = {
+    addressLine1: cust.addressLine1,
+    addressLine2: cust.addressLine2,
+    addressCity: cust.addressCity,
+    addressState: cust.addressState,
+    addressZip: cust.addressZip,
+    addressCountry: cust.addressCountry
+  };
+
+  return address;
+};
+
+const getShipAddress = (cust) => {
+  const address = {
+    addressLine1: cust.shipAddressLine1,
+    addressLine2: cust.shipAddressLine2,
+    addressCity: cust.shipAddressCity,
+    addressState: cust.shipAddressState,
+    addressZip: cust.shipAddressZip,
+    addressCountry: cust.shipAddressCountry
+  };
+
+  return address;
+};
+
+const embedAddresses = (cust, primaryAddress, shipAddress) => {
+  cust.addressLine1 = primaryAddress.addressLine1;
+  cust.addressLine2 = primaryAddress.addressLine2;
+  cust.addressCity = primaryAddress.addressCity;
+  cust.addressState = primaryAddress.addressState;
+  cust.addressZip = primaryAddress.addressZip;
+  cust.addressCountry = primaryAddress.addressCountry;
+
+  cust.shipAddressLine1 = shipAddress.addressLine1;
+  cust.shipAddressLine2 = shipAddress.addressLine2;
+  cust.shipAddressCity = shipAddress.addressCity;
+  cust.shipAddressState = shipAddress.addressState;
+  cust.shipAddressZip = shipAddress.addressZip;
+  cust.shipAddressCountry = shipAddress.addressCountry;
+};
+
+const mergeAddresses = (exist, primary, ship) => {
+  if (!primary.addressLine1) {
+    primary.addressLine1 = exist.addressLine1;
+  }
+
+  if (!primary.addressLine2) {
+    primary.addressLine2 = exist.addressLine2;
+  }
+
+  if (!primary.addressCity) {
+    primary.addressCity = exist.addressCity;
+  }
+
+  if (!primary.addressState) {
+    primary.addressState = exist.addressState;
+  }
+
+  if (!primary.addressZip) {
+    primary.addressZip = exist.addressZip;
+  }
+
+  if (!primary.addressCountry) {
+    primary.addressCountry = exist.addressCountry;
+  }
+
+  if (!ship.addressLine1) {
+    ship.addressLine1 = exist.shipAddressLine1;
+  }
+
+  if (!ship.addressLine2) {
+    ship.addressLine2 = exist.shipAddressLine2;
+  }
+
+  if (!ship.addressCity) {
+    ship.addressCity = exist.shipAddressCity;
+  }
+
+  if (!ship.addressState) {
+    ship.addressState = exist.shipAddressState;
+  }
+
+  if (!ship.addressZip) {
+    ship.addressZip = exist.shipAddressZip;
+  }
+
+  if (!ship.addressCountry) {
+    ship.addressCountry = exist.shipAddressCountry;
+  }
+};
+
+module.exports = {
+  sanitizeCustomer,
+  processShipAddress,
+  verifySameAddress,
+  getPrimaryAddress,
+  getShipAddress,
+  embedAddresses,
+  mergeAddresses
+};

@@ -85,14 +85,29 @@ Sample valid response:
     }
 }
 
-  Lob.verification.verify({
-    address_line1: '185 Berry Street',
-    address_city: 'San Francisco',
-    address_state: 'CA',
-    address_zip: '94107'
-  }, function (err, res) {
-    console.log (err, res);
-  });
+Node callback syntax:
+Lob.verification.verify({
+  address_line1: '185 Berry Street',
+  address_city: 'San Francisco',
+  address_state: 'CA',
+  address_zip: '94107'
+}, function (err, res) {
+  console.log (err, res);
+});
+
+Node Promise syntax:
+Lob.verification.verify({
+  address_line1: '185 Berry Street',
+  address_city: 'San Francisco',
+  address_state: 'CA',
+  address_zip: '94107'
+})
+.then((address) => {
+  res.send(address);
+})
+.catch((err) => {
+  next(err);
+})
 
 ----------------------------------Database--------------------------------------
 ERD: Relatations
