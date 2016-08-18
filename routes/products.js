@@ -14,7 +14,17 @@ router.get('/api/products', (_req, res, next) => {
   knex('products')
     .where('deleted', null)
     .then((products) => {
-      res.send(camelizeKeys(products));
+      let prods = camelizeKeys(products);
+
+      prods = prods.map((element) => {
+        delete element.createdAt;
+        delete element.updatedAt;
+        delete element.deleted;
+
+        return element;
+      });
+
+      res.send(prods);
     })
     .catch((err) => {
       next(err);
@@ -62,7 +72,8 @@ router.post('/api/admin/products', checkAdmin, ev(val.post), (req, res, next) =>
   });
 });
 
-router.patch('/api/admin/products/:id', checkAdmin, ev(val.patch), (req, res, next) => {
+router.patch('/api/admin/products/:id', checkAdmin, ev(val.patch),
+  (req, res,next) => {
   const updatedProduct = req.body;
   const id = req.params.id;
   if (isNaN(id)) {
