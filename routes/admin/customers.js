@@ -4,13 +4,13 @@ const express = require('express');
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
-const knex = require('../knex');
+const knex = require('../../knex');
 const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 const bcrypt = require('bcrypt-as-promised');
 const ev = require('express-validation');
-const val = require('../validations/customers');
-const { checkAdmin } = require('../modules/middleware');
+const val = require('../../validations/customers');
+const { checkAdmin } = require('../../modules/middleware');
 const {
   sanitizeCustomer,
   processShipAddress,
@@ -19,7 +19,7 @@ const {
   getShipAddress,
   embedAddresses,
   mergeAddresses,
-} = require('../modules/utils');
+} = require('../../modules/utils');
 const Lob = require('lob')(process.env.LOB_APIKEY);
 
 // For admins to get all customers

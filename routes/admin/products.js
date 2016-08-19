@@ -3,12 +3,12 @@
 const express = require('express');
 
 const router = express.Router();
-const knex = require('../knex');
+const knex = require('../../knex');
 const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
 const ev = require('express-validation');
-const val = require('../validations/products');
-const { checkAdmin } = require('../modules/middleware');
+const val = require('../../validations/products');
+const { checkAdmin } = require('../../modules/middleware');
 
 router.get('/products', checkAdmin, (_req, res, next) => {
   knex('products')
