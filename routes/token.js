@@ -13,7 +13,7 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 // To log a user in
 // Route tested and working
-router.post('/api/token', ev(validate.post), (req, res, next) => {
+router.post('/token', ev(validate.post), (req, res, next) => {
   const errMsg = 'User could not be logged in';
   const { userName, password } = req.body;
   const tokenTimeOut = 1000 * 60 * 60 * 3; // 3 hours in milliseconds
@@ -64,7 +64,7 @@ router.post('/api/token', ev(validate.post), (req, res, next) => {
 });
 
 // To log a user out
-router.delete('/api/token', (req, res) => {
+router.delete('/token', (req, res) => {
   res.clearCookie('accessToken');
   res.clearCookie('loggedIn');
   res.clearCookie('admin');

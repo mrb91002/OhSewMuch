@@ -15,12 +15,14 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-// Routes
-// const posts = require('./routes/posts');
-// const topics = require('./routes/topics');
+// Client Routes
 const customers = require('./routes/customers');
 const products = require('./routes/products');
 const token = require('./routes/token');
+
+// Admin Routes
+const customersAdmin = require('./routes/admin/customers');
+const productsAdmin = require('./routes/admin/products');
 
 const app = express();
 
@@ -43,15 +45,18 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(posts);
-// app.use(topics);
-app.use(customers);
-app.use(products);
-app.use(token);
+// Client Routes
+app.use('/api', customers);
+app.use('/api', products);
+app.use('/api', token);
+
+// Admin Routes
+app.use('/api/admin', customersAdmin);
+app.use('/api/admin', productsAdmin);
 
 // Page not found handler
-app.use((_req, res, _next) => {
-  res.sendStatus(404);
+app.use((_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Global error handler
