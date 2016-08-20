@@ -8,31 +8,31 @@ exports.seed = function(knex) {
         product_id: 1,
         expires_at: new Date('2016-06-26 14:26:16 UTC'),
         promo_code: 'Monster',
-        discount_rate: 10,
+        discount_rate: 0.10,
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
         id:2,
         product_id: 1,
         expires_at: new Date('2016-06-26 14:26:16 UTC'),
-        promo_code: 'test1',
-        discount_rate: 20,
+        promo_code: 'Monster1',
+        discount_rate: 0.20,
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       } ,{
         id:3,
         product_id: 2,
         expires_at: new Date('2016-06-26 14:26:16 UTC'),
-        promo_code: 'Monster1',
-        discount_rate: 10,
+        promo_code: 'Monster2',
+        discount_rate: 0.10,
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       } ,{
         id:4,
         product_id: null,
         expires_at: new Date('2016-06-26 14:26:16 UTC'),
-        promo_code: 'Monster2',
-        discount_rate: 10,
+        promo_code: 'Monster3',
+        discount_rate: 0.10,
         created_at: new Date('2016-06-26 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }

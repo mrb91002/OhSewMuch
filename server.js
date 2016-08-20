@@ -19,10 +19,12 @@ const cookieParser = require('cookie-parser');
 const customers = require('./routes/customers');
 const products = require('./routes/products');
 const token = require('./routes/token');
+const promos = require('./routes/promos');
 
 // Admin Routes
 const customersAdmin = require('./routes/admin/customers');
 const productsAdmin = require('./routes/admin/products');
+const promosAdmin = require('./routes/admin/promos');
 
 const app = express();
 
@@ -49,10 +51,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', customers);
 app.use('/api', products);
 app.use('/api', token);
+app.use('/api', promos);
 
 // Admin Routes
 app.use('/api/admin', customersAdmin);
 app.use('/api/admin', productsAdmin);
+app.use('/api/admin', promosAdmin);
 
 // Page not found handler
 app.use((_req, res) => {
