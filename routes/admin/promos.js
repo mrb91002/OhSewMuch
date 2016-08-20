@@ -12,18 +12,19 @@ const val = require('../../validations/promos');
 const { checkAdmin } = require('../../modules/middleware');
 
 // Route to create a promo
+// Route needs testing from JS (didn't figure out how to send a date with http)
 router.post('/promos', checkAdmin, ev(val.post), (req, res, next) => {
-  const promoToInsert = req.body;
+  const promo = req.body;
 
   knex('promos')
-    .where('promo_code', promoToInsert.promoCode)
+    .where('promo_code', promo.promoCode)
     .first()
     .then((exists) => {
       if (exists) {
         throw boom.conflict('Promo code already exists');
       }
       return knex('promos')
-        .insert(decamelizeKeys(promoToInsert), '*');
+        .insert(decamelizeKeys(promo), '*');
     })
     .then((promos) => {
       res.send(camelizeKeys(promos[0]));
@@ -33,20 +34,23 @@ router.post('/promos', checkAdmin, ev(val.post), (req, res, next) => {
     });
 });
 
-// Route to delete a promos
+// Route to immediately expire a promo
 // Route tested and working
 router.delete('/promo/:id', checkAdmin, ev(val.delete), (req, res, next) => {
+  const id = req.params.id;
+
   knex('promos')
-    .where('id', req.params.id)
+    .where('id', id)
     .first()
     .then((exists) => {
       if (!exists) {
         throw boom.notFound('Invalid promo ID');
       }
 
-      const delPromo = { expiresAt: new Date() };
+      const toUpdate = { expiresAt: new Date() };
+
       return knex('promos')
-        .update(decamelizeKeys(delPromo), '*');
+        .update(decamelizeKeys(toUpdate), '*');
     })
     .then((promos) => {
       res.send(camelizeKeys(promos[0]));

@@ -18,9 +18,10 @@
     "knex": "knex",
     "heroku-postbuild": "knex migrate:latest",
     "nf": "nf start",
-    "resetdb": "npm run knex migrate:rollback; npm run knex migrate:latest; npm run knex seed:run"
+    "resetdb": "knex migrate:rollback; knex migrate:latest; knex seed:run"
   },
   "dependencies": {
+    "axios": "^0.13.1",
     "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.15.2",
     "boom": "^3.2.2",
