@@ -135,6 +135,20 @@ nav ul .buffer  {
   display: block;
 }
 
+/*.superman-show-left {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  margin-left: 300px;
+  margin-top: 500px;
+  display: block;*/
+  /*-ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);*/
+  /*transform:rotateX(180deg);
+
+}*/
+
 
 
 
@@ -289,7 +303,7 @@ button {
 }
 
 .hill {
-  width: 1495px;
+  width: 1580px;
   /*height: 500px;*/
   height: 1100px;
 }
