@@ -20,11 +20,13 @@ const customers = require('./routes/customers');
 const products = require('./routes/products');
 const token = require('./routes/token');
 const promos = require('./routes/promos');
+const orders = require('./routes/orders');
 
 // Admin Routes
 const customersAdmin = require('./routes/admin/customers');
 const productsAdmin = require('./routes/admin/products');
 const promosAdmin = require('./routes/admin/promos');
+const ordersAdmin = require('./routes/admin/orders');
 
 const app = express();
 
@@ -52,13 +54,15 @@ app.use('/api', customers);
 app.use('/api', products);
 app.use('/api', token);
 app.use('/api', promos);
+app.use('/api', orders);
 
 // Admin Routes
 app.use('/api/admin', customersAdmin);
 app.use('/api/admin', productsAdmin);
 app.use('/api/admin', promosAdmin);
+app.use('/api/admin', ordersAdmin);
 
-// Page not found handler
+// Page not found handler (for push-state serving of SPA)
 app.use((_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

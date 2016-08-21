@@ -29,4 +29,16 @@ const checkAdmin = function(req, res, next) {
   });
 };
 
-module.exports = { checkAuth, checkAdmin };
+const processToken = function(req, res, next) {
+  const jwtSecret = process.env.JWT_SECRET;
+  jwt.verify(req.cookies.accessToken, jwtSecret, (err, decoded) => {
+    if (err) {
+      return next();
+    }
+    console.log('test');
+    req.token = decoded;
+    return next();
+  });
+};
+
+module.exports = { checkAuth, checkAdmin, processToken };

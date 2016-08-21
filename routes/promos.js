@@ -22,7 +22,6 @@ router.get('/promo/:code', ev(val.get), (req, res, next) => {
       }
 
       const promo = camelizeKeys(promoExists);
-      delete promo.id;
       delete promo.updatedAt;
 
       res.send(promo);
