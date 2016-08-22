@@ -21,7 +21,7 @@ module.exports = {
       presets: ['es2015', 'react']
     },
     postcss: {
-      processors: [require('autoprefixer')(['last 99 versions'])]
+      processors: [require('autoprefixer')(['last 8 versions'])]
     }
   },
 

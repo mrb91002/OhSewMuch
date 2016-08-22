@@ -1,21 +1,25 @@
-import App from 'components/app';
-import { red500, blue500 } from 'material-ui/styles/colors';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { blue700, blue500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Routes from 'components/Routes';
 
 injectTapEventPlugin();
 const muiTheme = getMuiTheme({
+  flatButton: {
+    buttonFilterColor: blue700,
+    textColor: 'white'
+  },
   palette: {
-    primary1Color: red500
+    primary1Color: blue500
   }
 });
 
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
-    <App />
+    <Routes />
   </MuiThemeProvider>,
   document.getElementById('app')
 );
