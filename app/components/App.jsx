@@ -1,5 +1,6 @@
 import { withRouter } from 'react-router';
 import AppBar from 'material-ui/AppBar';
+import axios from 'axios';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import FlatButton from 'material-ui/FlatButton';
 import React from 'react';
@@ -7,13 +8,21 @@ import React from 'react';
 const App = React.createClass({
   getInitialState() {
     return {
-      test: '',
-      testArray: []
+      test: 'testing',
+      test2: 'fuck that!',
+      products: []
     }
   },
 
   componentWillMount() {
     console.log('componentWillMount');
+    axios.get('/api/products')
+      .then((res) => {
+        this.setState({ products: res.data });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
 
   componentDidMount() {
@@ -54,14 +63,11 @@ const App = React.createClass({
       </AppBar>
 
       {/* React.cloneElement is the glue that passes in props to children created with React Router. React router instantiates classes for us, and cloning the existing instance is the only way to set props.*/}
-      {/* {React.cloneElement(this.props.children, {
-        decrementVotes: this.decrementVotes,
-        editing: this.state.editing,
-        incrementVotes: this.incrementVotes,
-        posts: this.state.posts,
-        stopEditingPost: this.stopEditingPost,
-        updatePost: this.updatePost
-      })} */}
+      {React.cloneElement(this.props.children, {
+        test: this.state.test,
+        test2: this.state.test2,
+        products: this.state.products
+      })}
     </div>;
   }
   // handleTouchTap(event) {

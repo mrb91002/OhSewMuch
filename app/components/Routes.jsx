@@ -5,15 +5,16 @@ import {
   Router
 } from 'react-router';
 import App from 'components/App';
-import Home from 'components/Home';
+import HomePage from 'components/HomePage';
 import React from 'react';
+import ProductPage from 'components/ProductPage';
 
 const Routes = React.createClass({
   render() {
     return <Router history={browserHistory}>
       <Route component={App} path="/">
-        <IndexRoute component={Home} />
-        {/* <Route component={Posts} path="topics/:topic" /> */}
+        <IndexRoute component={HomePage} />
+        <Route component={ProductPage} path="product/:name" />
       </Route>
     </Router>;
   }
