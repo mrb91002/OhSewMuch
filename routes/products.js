@@ -10,38 +10,27 @@ const ev = require('express-validation');
 const val = require('../validations/products');
 
 router.get('/products', (_req, res, next) => {
+  let resultProducts;
+
   knex('products')
     .where('deleted', null)
     .then((products) => {
-      let prods = camelizeKeys(products);
+      resultProducts = camelizeKeys(products);
+      return Promise.all(resultProducts.map((prod) => {
+        delete prod.createdAt;
+        delete prod.updatedAt;
+        delete prod.deleted;
 
-      prods = prods.map((element) => {
-        delete element.createdAt;
-        delete element.updatedAt;
-        delete element.deleted;
-
-        return element;
-      });
-
-      res.send(prods);
+        return knex('product_images')
+          .select('alt_text', 'display_order', 'image_url')
+          .where('product_id', prod.id)
+          .then((imgs) => {
+            prod.images = imgs;
+          });
+      }));
     })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-router.get('/products/:id', (req, res, next) => {
-  const id = Number.parseInt(req.params.id)
-
-  if (Number.isNaN(id)) {
-    return next();
-  }
-
-  knex('products')
-    .where('id', id)
-    .first()
-    .then((product) => {
-      res.send(camelizeKeys(product));
+    .then(() => {
+      res.send(resultProducts);
     })
     .catch((err) => {
       next(err);

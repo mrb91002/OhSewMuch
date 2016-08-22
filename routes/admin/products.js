@@ -11,9 +11,21 @@ const val = require('../../validations/products');
 const { checkAdmin } = require('../../modules/middleware');
 
 router.get('/products', checkAdmin, (_req, res, next) => {
+  let resultProducts;
+
   knex('products')
     .then((products) => {
-      res.send(camelizeKeys(products))
+      resultProducts = camelizeKeys(products);
+      return Promise.all(resultProducts.map((prod) => {
+        return knex('product_images')
+          .where('product_id', prod.id)
+          .then((imgs) => {
+            prod.images = imgs;
+          });
+      }));
+    })
+    .then(() => {
+      res.send(resultProducts);
     })
     .catch((err) => {
       next(err);
@@ -22,23 +34,49 @@ router.get('/products', checkAdmin, (_req, res, next) => {
 
 router.post('/products', checkAdmin, ev(val.post), (req, res, next) => {
   const productInfo = req.body;
+  let images = productInfo.images;
+  let product;
+
+  if (images.length === 0) {
+    return next(boom.notAcceptable('Product must contain at least 1 image'));
+  }
+
+  delete productInfo.images;
 
   knex('products')
-  .insert(decamelizeKeys(productInfo), '*')
-  .then((products) => {
-    res.send(camelizeKeys(products[0]));
-  })
-  .catch((err) => {
-    next(err)
-  });
+    .insert(decamelizeKeys(productInfo), '*')
+    .then((products) => {
+      product = camelizeKeys(products[0]);
+
+      images = images.map((img) => {
+        img.productId = product.id;
+
+        return img;
+      });
+
+      return knex('product_images')
+        .insert(decamelizeKeys(images), '*');
+    })
+    .then((newImages) => {
+      product.images = newImages;
+
+      res.send(product);
+    })
+    .catch((err) => {
+      next(err)
+    });
 });
 
-router.patch('/api/admin/products/:id', checkAdmin, ev(val.patch),
-  (req, res,next) => {
-  const updatedProduct = req.body;
+router.patch('/products/:id', checkAdmin, ev(val.patch), (req, res,next) => {
+  let updatedProduct = req.body;
+  let images = updatedProduct.images;
+  let newProduct;
+
+  delete updatedProduct.images;
   const id = req.params.id;
-  if (isNaN(id)) {
-    next(err)
+
+  if (images.length === 0) {
+    return next(boom.notAcceptable('Product must contain at least 1 image'));
   }
 
   knex('products')
@@ -54,7 +92,25 @@ router.patch('/api/admin/products/:id', checkAdmin, ev(val.patch),
         .update(decamelizeKeys(updatedProduct), '*');
     })
     .then((products) => {
-      res.send(camelizeKeys(products[0]));
+      newProduct = camelizeKeys(products[0]);
+      images = images.map((image) => {
+        image.productId = newProduct.id;
+
+        return image;
+      });
+
+      return knex('product_images')
+        .where('product_id', newProduct.id)
+        .del();
+    })
+    .then(() => {
+      return knex('product_images')
+        .insert(decamelizeKeys(images), '*')
+    })
+    .then((newImages) => {
+      newProduct.images = newImages;
+
+      res.send(newProduct);
     })
     .catch((err) => {
       next(err);

@@ -45,7 +45,7 @@ router.post('/orders', ev(val.post), processToken, (req, res, next) => {
   delete order.products;
 
   if (orderProducts.length === 0) {
-    throw boom.notAcceptable('Order must contain products');
+    return next(boom.notAcceptable('Order must contain products'));
   }
 
   knex('customers')
