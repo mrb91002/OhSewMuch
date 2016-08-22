@@ -16,7 +16,7 @@
     "start": "brunch watch --server",
     "test": "mocha",
     "knex": "knex",
-    "heroku-postbuild": "knex migrate:latest",
+    "heroku-postbuild": "knex migrate:latest; brunch build --production",
     "nf": "nf start",
     "resetdb": "knex migrate:rollback; knex migrate:latest; knex seed:run"
   },
