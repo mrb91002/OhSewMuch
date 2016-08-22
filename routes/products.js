@@ -14,6 +14,7 @@ router.get('/products', (_req, res, next) => {
 
   knex('products')
     .where('deleted', null)
+    .orderBy('name')
     .then((products) => {
       resultProducts = camelizeKeys(products);
       return Promise.all(resultProducts.map((prod) => {
