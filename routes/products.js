@@ -25,8 +25,9 @@ router.get('/products', (_req, res, next) => {
         return knex('product_images')
           .select('alt_text', 'display_order', 'image_url')
           .where('product_id', prod.id)
+          .orderBy('display_order')
           .then((imgs) => {
-            prod.images = imgs;
+            prod.images = camelizeKeys(imgs);
           });
       }));
     })

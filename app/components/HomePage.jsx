@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductInGrid from 'components/ProductInGrid';
+import weakKey from 'weak-key';
 
 const HomePage = React.createClass({
   contextTypes: {
@@ -23,12 +24,17 @@ const HomePage = React.createClass({
     };
 
 
-    return <div>
+    return <div className="container">
       <h1 style={h1Style}>This is the Home Page</h1>
       <p style={pStyle}>Passed down props: {this.props.test}</p>
-      {products.map((product) => {
-        return <ProductInGrid />
-      })}
+      <div className="row">
+        {products.map((product) => {
+          return <ProductInGrid
+            key={weakKey(product)}
+            product={product}
+          />
+        })}
+      </div>
     </div>;
   }
 });
