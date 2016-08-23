@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import axios from 'axios';
+import cookie from 'react-cookie';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import FlatButton from 'material-ui/FlatButton';
 import React from 'react';
@@ -9,18 +10,28 @@ const App = React.createClass({
   getInitialState() {
     return {
       products: [],
-      cart: []
+      cart: [],
+      cookies: {}
     }
   },
 
   componentWillMount() {
-    // console.log('componentWillMount');
+    // Get the products from API
     axios.get('/api/products')
       .then((res) => {
+        // Get the cart from local storage
         const nextCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Get the cookies from the browser
+        const nextCookies = {
+          loggedIn: cookie.load('loggedIn'),
+          admin: cookie.load('admin')
+        };
+
         this.setState({
           products: res.data,
-          cart: nextCart
+          cart: nextCart,
+          cookies: nextCookies
         });
       })
       .catch((err) => {
@@ -53,6 +64,15 @@ const App = React.createClass({
     this.setState({ cart: nextCart });
   },
 
+  updateCookies() {
+    const nextCookies = {
+      loggedIn: cookie.load('loggedIn'),
+      admin: cookie.load('admin')
+    };
+
+    this.setState({ cookies: nextCookies });
+  },
+
   getChildrenProps() {
     const matchPath = this.props.routes.reduce((accum, route) => {
       // Sometimes route.path is undefined, so default to empty string
@@ -61,14 +81,20 @@ const App = React.createClass({
 
     const props = {
       '/': {
-        products: this.state.products,
-        cart: this.state.cart,
         addToCart: this.addToCart,
-        removeFromCart: this.removeFromCart,
-        clearCart: this.clearCart
+        cart: this.state.cart,
+        clearCart: this.clearCart,
+        cookies: this.state.cookies,
+        products: this.state.products,
+        removeFromCart: this.removeFromCart
+      },
+      '/register': {
+        cookies: this.state.cookies,
+        updateCookies: this.updateCookies
       }
     };
 
+    props['/login'] = props['/register'];
     props['/product/:id'] = props['/'];
 
     return props[matchPath];
