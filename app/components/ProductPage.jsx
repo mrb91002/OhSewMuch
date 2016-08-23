@@ -1,12 +1,19 @@
 import React from 'react';
 import ProductImages from 'components/ProductImages';
 import weakKey from 'weak-key';
+import ReactDOM from 'react-dom';
 
 
 const ProductPage = React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object.isRequired
   },
+
+  componentDidMount() {
+    console.log('test');
+    $(window).scrollTop(0);
+  },
+
 
   render() {
     if (this.props.products.length === 0) {
