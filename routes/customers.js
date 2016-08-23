@@ -176,9 +176,9 @@ router.patch('/customer', checkAuth, ev(val.patch), (req, res, next) => {
 // Route tested and working
 router.post('/customers', ev(val.post), (req, res, next) => {
   const cust = processShipAddress(req.body);
-  const isSameAddress = verifySameAddress(cust);
   let primaryAddress = getPrimaryAddress(cust);
   let shipAddress = getShipAddress(cust);
+  const isSameAddress = verifySameAddress(primaryAddress, shipAddress);
 
   Lob.verification.verify(decamelizeKeys(primaryAddress))
     .then((lobPriRes) => {

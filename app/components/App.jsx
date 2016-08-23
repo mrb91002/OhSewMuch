@@ -35,6 +35,23 @@ const App = React.createClass({
     this.props.router.push('/');
   },
 
+  getChildrenProps() {
+    const matchPath = this.props.routes.reduce((accum, route) => {
+      // Sometimes route.path is undefined, so default to empty string
+      return `${accum}${route.path || ''}`;
+    }, '');
+
+    const props = {
+      '/': {
+        products: this.state.products
+      }
+    };
+
+    props['product/:id'] = props['/'];
+
+    return props[matchPath];
+  },
+
   render() {
     // console.log('render');
 
@@ -61,9 +78,10 @@ const App = React.createClass({
       </AppBar>
 
       {/* React.cloneElement is the glue that passes in props to children created with React Router. React router instantiates classes for us, and cloning the existing instance is the only way to set props.*/}
-      {React.cloneElement(this.props.children, {
+      {React.cloneElement(this.props.children, this.getChildrenProps())}
+      {/* {React.cloneElement(this.props.children, {
         products: this.state.products
-      })}
+      })} */}
     </div>;
   }
   // handleTouchTap(event) {

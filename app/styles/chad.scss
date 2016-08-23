@@ -1,4 +1,4 @@
-.login-form {
+.login-form, .reg-form {
   margin-top: 20px;
 }
 
@@ -6,12 +6,16 @@
   margin-bottom: 20px;
 }
 
-.row .col.login-form-button {
+.row .col.login-form-button, .row .col.reg-form-button {
   padding: 0px;
 }
 
-.login-form-button-row {
+.login-form-button-row, .reg-form-button-row {
   margin-top: 50px;
+}
+
+.reg-form-row {
+  margin-bottom: 0;
 }
 
 // Materialize Overrides!!!!

@@ -69,14 +69,14 @@ module.exports.post = {
       .required(),
     addressState: Joi.string()
       .label('State')
-      .max(2)
       .min(2)
+      .max(2)
       .trim()
       .required(),
     addressZip: Joi.string()
       .label('Zip')
+      .min(5)
       .max(10)
-      .min(10)
       .trim()
       .required(),
     addressCountry: Joi.string()

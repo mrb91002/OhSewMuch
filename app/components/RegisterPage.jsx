@@ -12,6 +12,20 @@ import TextField from 'material-ui/TextField';
 const pw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
 const schema = Joi.object({
+  firstName: Joi.string()
+    .trim()
+    .max(255),
+  lastName: Joi.string()
+    .trim()
+    .max(255),
+  email: Joi.string()
+    .email()
+    .trim()
+    .min(6),
+  phone: Joi.string()
+    .trim()
+    .min(7)
+    .max(20),
   userName: Joi.string()
     .trim()
     .min(6)
@@ -20,7 +34,33 @@ const schema = Joi.object({
     .trim()
     .min(8)
     .max(255)
-    .regex(pw, '1 Cap, 1 Lower, 1 Special')
+    .regex(pw, '1 Cap, 1 Lower, 1 Special'),
+  confirmPassword: Joi.string()
+    .trim()
+    .min(8)
+    .max(255)
+    .regex(pw, '1 Cap, 1 Lower, 1 Special'),
+  addressLine1: Joi.string()
+    .trim()
+    .max(255),
+  addressLine2: Joi.string()
+    .allow('')
+    .trim()
+    .max(255)
+    .optional(),
+  addressCity: Joi.string()
+    .trim()
+    .max(255),
+  addressState: Joi.string()
+    .trim()
+    .length(2),
+  addressZip: Joi.string()
+    .trim()
+    .min(5)
+    .max(10),
+  addressCountry: Joi.string()
+    .trim()
+    .length(2)
 });
 
 const Register = React.createClass({
@@ -32,8 +72,19 @@ const Register = React.createClass({
     return {
       errors: {},
       reg: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
         userName: '',
-        password: ''
+        password: '',
+        confirmPassword: '',
+        addressLine1: '',
+        addressLine2: '',
+        addressCity: '',
+        addressState: '',
+        addressZip: '',
+        addressCountry: ''
       },
       regFailText: '',
       open: false,
@@ -41,19 +92,30 @@ const Register = React.createClass({
   },
 
   handleChange(event) {
-    const { name, value } = event.target;
+    const { name } = event.target;
+    let { value } = event.target;
+
+    if (name === 'addressState' || name === 'addressCountry') {
+      value = value.toUpperCase();
+    }
+
+    if (name === 'addressCity' && value.length === 1) {
+      value = value.toUpperCase();
+    }
+
     const nextReg = Object.assign({}, this.state.reg, { [name]: value });
 
-    this.setState({ login: nextReg });
+    this.setState({ reg: nextReg });
   },
 
   handleTouchTapCancel() {
-    this.props.router.push('/');
+    // this.props.router.push('/');
+    this.props.router.goBack();
   },
 
-  handleTouchTapLogin() {
-    console.log('login');
-    const result = Joi.validate(this.state.login, schema, {
+  handleTouchTapReg() {
+    const reg = Object.assign({}, this.state.reg);
+    const result = Joi.validate(reg, schema, {
       abortEarly: false,
       allowUnknown: true
     });
@@ -65,31 +127,53 @@ const Register = React.createClass({
         nextErrors[detail.path] = detail.message;
       }
 
-      return this.setState({ errors: nextErrors });
+      return this.setState({
+        errors: nextErrors,
+        open: true,
+        regFailText: 'Registration form is incomplete!'
+      });
     }
 
-    // const nextPost = Object.assign({}, result.value, { votes: 1 });
+    if (reg.password !== reg.confirmPassword) {
+      return this.setState({
+        open: true,
+        regFailText: 'Passwords do not match!'
+      });
+    }
 
-    // this.props.updatePost(this.props.post, nextPost);
-    // console.log('error free');
+    delete reg.confirmPassword;
+    for (const key in reg) {
+      if (reg[key] === '') {
+        delete reg[key];
+      }
+    }
 
-
-    axios.post('/api/token', this.state.login)
+    axios.post('/api/customers', reg)
       .then((res) => {
-        // console.log(res);
+        return axios.post('api/token', {
+          userName: reg.userName,
+          password: reg.password
+        });
+      })
+      .then((res) => {
         this.props.router.push('/');
       })
       .catch((err) => {
-        // console.error(err.response.data);
         this.setState({
           open: true,
-          loginFailText: err.response.data
+          regFailText: err.response.data
         });
       });
   },
 
+  handleRequestClose() {
+    this.setState({
+      open: false,
+      regFailText: ''
+    });
+  },
+
   handleBlur(event) {
-    console.log('blur');
     const { name, value } = event.target;
     const nextErrors = Object.assign({}, this.state.errors);
     const result = Joi.validate({ [name]: value }, schema);
@@ -106,74 +190,264 @@ const Register = React.createClass({
     this.setState({ errors: nextErrors });
   },
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-      loginFailText: ''
-    });
+  handleKeyUp(event) {
+    if (event.which === 13) {
+      this.handleTouchTapReg();
+    }
   },
 
   render() {
-    const { errors, login } = this.state;
+    const { errors, reg } = this.state;
 
     // Necessary to make change event work after blur event.
+    // Can't be done through CSS.
     const styleTextField = {
       display: 'block'
     };
 
-    return <div className="container">
-      <div className="row login-form">
-        <Paper
-          className="col s12 m8 offset-m2 center-align"
-          rounded={false}
-          zDepth={1}
-        >
-          <h1>Login</h1>
+    const styleRaisedButton = {
+      borderRadius: '3px'
+    };
 
+    const stylePaper = {
+      borderRadius: '5px'
+    };
+
+    const  styleError = {
+      marginTop: '-20px'
+    };
+
+    const failMessage = <div>{this.state.regFailText}</div>;
+
+    return <div className="container">
+      <div className="row reg-form">
+        <Paper
+          className="col s12 m10 offset-m1 center-align"
+          onKeyUp={this.handleKeyUp}
+          rounded={false}
+          style={stylePaper}
+          zDepth={3}
+        >
+          <h1>User Registration</h1>
+
+          <div className="row reg-form-row">
+            <div className="col s6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.firstName}
+                floatingLabelText="First Name"
+                fullWidth={true}
+                hintText="First name..."
+                name="firstName"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.firstName}
+              />
+            </div>
+
+            <div className="col s6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.lastName}
+                floatingLabelText="Last Name"
+                fullWidth={true}
+                hintText="Last name..."
+                name="lastName"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.lastName}
+              />
+            </div>
+          </div>
+
+          <div className="row reg-form-row">
+            <div className="col s12 l6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.email}
+                floatingLabelText="Email"
+                fullWidth={true}
+                hintText="Email address..."
+                name="email"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.email}
+              />
+            </div>
+            <div className="col s12 l6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.phone}
+                floatingLabelText="Phone"
+                fullWidth={true}
+                hintText="Phone number..."
+                name="phone"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                type='phone'
+                value={reg.phone}
+              />
+            </div>
+          </div>
           <TextField
-            className="login-form-button"
+            errorStyle={styleError}
             errorText={errors.userName}
             floatingLabelText="User Name"
             fullWidth={true}
-            hintText="Enter your user name..."
+            hintText="User name..."
             name="userName"
             onBlur={this.handleBlur}
             onChange={this.handleChange}
             style={styleTextField}
-            value={login.userName}
+            value={reg.userName}
           />
+          <div className="row reg-form-row">
+            <div className="col s6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.password}
+                floatingLabelText="Password"
+                fullWidth={true}
+                hintText="Enter password..."
+                name="password"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                type="password"
+                value={reg.password}
+              />
+            </div>
+            <div className="col s6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.confirmPassword}
+                floatingLabelText="Confirm Password"
+                fullWidth={true}
+                hintText="Re-enter password..."
+                name="confirmPassword"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                type="password"
+                value={reg.confirmPassword}
+              />
+            </div>
+          </div>
 
-          <TextField
-            className="login-form-button"
-            errorText={errors.password}
-            floatingLabelText="Password"
-            fullWidth={true}
-            hintText="Enter your password..."
-            name="password"
-            onBlur={this.handleBlur}
-            onChange={this.handleChange}
-            style={styleTextField}
-            type="password"
-            value={login.password}
-          />
+          <div className="row reg-form-row">
+            <div className="col s12 l6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.addressLine1}
+                floatingLabelText="Street address"
+                fullWidth={true}
+                hintText="Address line 1..."
+                name="addressLine1"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.addressLine1}
+              />
+            </div>
+            <div className="col s12 l6">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.addressLine2}
+                floatingLabelText="Apt / Suite / Other"
+                fullWidth={true}
+                hintText="Address line 2..."
+                name="addressLine2"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.addressLine2}
+              />
+            </div>
+          </div>
 
-          <div className="row login-form-button-row">
+          <div className="row reg-form-row">
+            <div className="col s6 l5">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.addressCity}
+                floatingLabelText="City"
+                fullWidth={true}
+                hintText="City name..."
+                name="addressCity"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.addressCity}
+              />
+            </div>
+            <div className="col s6 l2">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.addressState}
+                floatingLabelText="State"
+                fullWidth={true}
+                hintText="State abrv."
+                name="addressState"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.addressState}
+              />
+            </div>
+            <div className="col s6 l3">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.addressZip}
+                floatingLabelText="Zip code"
+                fullWidth={true}
+                hintText="5-digit zip code..."
+                name="addressZip"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.addressZip}
+              />
+            </div>
+            <div className="col s6 l2">
+              <TextField
+                errorStyle={styleError}
+                errorText={errors.addressCountry}
+                floatingLabelText="Country"
+                fullWidth={true}
+                hintText="Country abrv..."
+                name="addressCountry"
+                onBlur={this.handleBlur}
+                onChange={this.handleChange}
+                style={styleTextField}
+                value={reg.addressCountry}
+              />
+            </div>
+          </div>
+
+          <div className="row reg-form-button-row">
             <RaisedButton
-              className="col s4 offset-s1 l3 offset-l2 login-form-button"
+              className="col s4 offset-s1 l3 offset-l2 reg-form-button"
               icon={<Send />}
-              label="Login"
+              label="Register"
               labelPosition="before"
-              onTouchTap={this.handleTouchTapLogin}
+              onTouchTap={this.handleTouchTapReg}
               primary={true}
+              // style={styleRaisedButton}
             />
 
             <RaisedButton
-              className="col s4 offset-s2 l3 offset-l2 login-form-button"
+              className="col s4 offset-s2 l3 offset-l2 reg-form-button"
               icon={<Cancel />}
               label="Cancel"
               labelPosition="before"
               onTouchTap={this.handleTouchTapCancel}
               primary={true}
+              // secondary={true}
+              // style={styleRaisedButton}
             />
           </div>
         </Paper>
@@ -181,8 +455,8 @@ const Register = React.createClass({
       </div>
       <Snackbar
         open={this.state.open}
-        message={this.state.loginFailText}
-        autoHideDuration={4000}
+        message={failMessage}
+        autoHideDuration={3000}
         onRequestClose={this.handleRequestClose}
       />
     </div>;

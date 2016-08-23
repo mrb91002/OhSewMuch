@@ -13,10 +13,11 @@ const muiTheme = getMuiTheme({
 
   palette: {
     primary1Color: '#952727',
-    primary2Color: '#F110EC'
+    primary2Color: '#F110EC',
     // primary1Color: cyan500,
     // primary2Color: cyan700,
     // primary3Color: grey400,
+    accent1Color: blue500,
     // accent1Color: pinkA200,
     // accent2Color: grey100,
     // accent3Color: grey500,

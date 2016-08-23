@@ -9,18 +9,13 @@ import Snackbar from 'material-ui/Snackbar';
 import Send from 'material-ui/svg-icons/content/send';
 import TextField from 'material-ui/TextField';
 
-const pw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-
 const schema = Joi.object({
   userName: Joi.string()
     .trim()
-    .min(6)
     .max(255),
   password: Joi.string()
     .trim()
-    .min(8)
     .max(255)
-    .regex(pw, '1 Cap, 1 Lower, 1 Special')
 });
 
 const Login = React.createClass({
@@ -87,24 +82,24 @@ const Login = React.createClass({
       return this.setState({ errors: nextErrors });
     }
 
-    // const nextPost = Object.assign({}, result.value, { votes: 1 });
-
-    // this.props.updatePost(this.props.post, nextPost);
-    // console.log('error free');
-
-
     axios.post('/api/token', this.state.login)
       .then((res) => {
         // console.log(res);
         this.props.router.push('/');
       })
       .catch((err) => {
-        // console.error(err.response.data);
         this.setState({
           open: true,
           loginFailText: err.response.data
         });
       });
+  },
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+      loginFailText: ''
+    });
   },
 
   handleBlur(event) {
@@ -125,17 +120,11 @@ const Login = React.createClass({
     this.setState({ errors: nextErrors });
   },
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-      loginFailText: ''
-    });
-  },
-
   render() {
     const { errors, login } = this.state;
 
     // Necessary to make change event work after blur event.
+    // Can't be done through CSS.
     const styleTextField = {
       display: 'block'
     };
@@ -145,7 +134,7 @@ const Login = React.createClass({
         <Paper
           className="col s12 m8 offset-m2 center-align"
           rounded={false}
-          zDepth={1}
+          zDepth={3}
         >
           <h1>Login</h1>
 
@@ -201,7 +190,7 @@ const Login = React.createClass({
       <Snackbar
         open={this.state.open}
         message={this.state.loginFailText}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
         onRequestClose={this.handleRequestClose}
       />
     </div>;
