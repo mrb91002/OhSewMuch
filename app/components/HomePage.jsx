@@ -40,7 +40,7 @@ const HomePage = React.createClass({
         <img src="./images/cloud6.png" className="shift-clouds" alt="" />
       </div>
 
-      <div className="product-container">
+      {/* <div className="product-container"> */}
         <div className="container">
           <h1 className="center-align">Products</h1>
           <div className="row">
@@ -52,7 +52,7 @@ const HomePage = React.createClass({
             })}
           </div>
         </div>
-      </div>
+      {/* </div> */}
 
       <div className="wrap-clouds2">
         <img src="/images/cloud6.png" className="shift-clouds2" alt=""
