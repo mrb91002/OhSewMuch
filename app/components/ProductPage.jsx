@@ -11,10 +11,18 @@ const ProductPage = React.createClass({
   },
 
   componentDidMount() {
-    console.log('test');
     $(window).scrollTop(0);
   },
 
+  handleTouchTapCart() {
+    const id = Number.parseInt(this.props.params.id);
+    const { products } = this.props;
+    const product = products.filter((product) => {
+      return product.id === id;
+    })[0];
+
+    this.props.addToCart(product);
+  },
 
   render() {
     if (this.props.products.length === 0) {
@@ -34,9 +42,6 @@ const ProductPage = React.createClass({
       return prod1 < prod2;
     });
 
-    console.log(productPics);
-
-    // console.log(product);
     return <div>
       <div className="row product-space container">
         <div className="col s5">
@@ -83,6 +88,7 @@ const ProductPage = React.createClass({
                   backgroundColor="rgba(149, 39, 39, 0.9)"
                   labelColor="#fff"
                   style = {styleButton}
+                  onTouchTap={this.handleTouchTapCart}
                 />
               </div>
 

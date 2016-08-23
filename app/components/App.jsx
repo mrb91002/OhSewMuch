@@ -17,7 +17,11 @@ const App = React.createClass({
     // console.log('componentWillMount');
     axios.get('/api/products')
       .then((res) => {
-        this.setState({ products: res.data });
+        const nextCart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.setState({
+          products: res.data,
+          cart: nextCart
+        });
       })
       .catch((err) => {
         console.error(err);
@@ -31,11 +35,20 @@ const App = React.createClass({
   addToCart(product) {
     const nextCart = this.state.cart.concat(product);
 
+    localStorage.setItem('cart', JSON.stringify(nextCart));
     this.setState({ cart: nextCart });
   },
 
   removeFromCart(product) {
     const nextCart = this.state.cart.filter((element) => element !== product);
+    localStorage.setItem('cart', JSON.stringify(nextCart));
+
+    this.setState({ cart: nextCart });
+  },
+
+  clearCart() {
+    const nextCart = [];
+    localStorage.setItem('cart', JSON.stringify(nextCart));
 
     this.setState({ cart: nextCart });
   },
@@ -51,7 +64,8 @@ const App = React.createClass({
         products: this.state.products,
         cart: this.state.cart,
         addToCart: this.addToCart,
-        removeFromCart: this.removeFromCart
+        removeFromCart: this.removeFromCart,
+        clearCart: this.clearCart
       }
     };
 
