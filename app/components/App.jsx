@@ -24,16 +24,20 @@ const App = React.createClass({
       });
   },
 
-  componentDidMount() {
-    // console.log('componentDidMount');
-  },
-
-  handleTouchTap() {
-    // console.log('handleTouchtap');
-  },
-
   handleTitleTouchTap() {
     this.props.router.push('/');
+  },
+
+  addToCart(product) {
+    const nextCart = this.state.cart.concat(product);
+
+    this.setState({ cart: nextCart });
+  },
+
+  removeFromCart(product) {
+    const nextCart = this.state.cart.filter((element) => element !== product);
+
+    this.setState({ cart: nextCart });
   },
 
   getChildrenProps() {
@@ -45,7 +49,9 @@ const App = React.createClass({
     const props = {
       '/': {
         products: this.state.products,
-        cart: this.state.cart
+        cart: this.state.cart,
+        addToCart: this.addToCart,
+        removeFromCart: this.removeFromCart
       }
     };
 
