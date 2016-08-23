@@ -36,9 +36,11 @@ const HomePage = React.createClass({
             />
         </div>
       </div>
-      <div className="wrap-clouds">
+      {/* <div className="wrap-clouds"> */}
+      <div className="s12 wrap-clouds">
         <img src="./images/cloud6.png" className="shift-clouds" alt="" />
       </div>
+      {/* </div> */}
 
       {/* <div className="product-container"> */}
         <div className="container">
