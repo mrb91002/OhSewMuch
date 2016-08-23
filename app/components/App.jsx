@@ -8,14 +8,12 @@ import React from 'react';
 const App = React.createClass({
   getInitialState() {
     return {
-      test: 'testing',
-      test2: 'fuck that!',
       products: []
     }
   },
 
   componentWillMount() {
-    console.log('componentWillMount');
+    // console.log('componentWillMount');
     axios.get('/api/products')
       .then((res) => {
         this.setState({ products: res.data });
@@ -26,11 +24,11 @@ const App = React.createClass({
   },
 
   componentDidMount() {
-    console.log('componentDidMount');
+    // console.log('componentDidMount');
   },
 
   handleTouchTap() {
-    console.log('handleTouchtap');
+    // console.log('handleTouchtap');
   },
 
   handleTitleTouchTap() {
@@ -38,7 +36,7 @@ const App = React.createClass({
   },
 
   render() {
-    console.log('render');
+    // console.log('render');
 
     const styleFlatButton = {
       height: '64px',
@@ -64,8 +62,6 @@ const App = React.createClass({
 
       {/* React.cloneElement is the glue that passes in props to children created with React Router. React router instantiates classes for us, and cloning the existing instance is the only way to set props.*/}
       {React.cloneElement(this.props.children, {
-        test: this.state.test,
-        test2: this.state.test2,
         products: this.state.products
       })}
     </div>;

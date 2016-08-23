@@ -6,9 +6,19 @@ const ProductPage = React.createClass({
   },
 
   render() {
+    console.log('render');
+    if (this.props.products.length === 0) {
+      return <div></div>;
+    }
+
+    const id = Number.parseInt(this.props.routeParams.id);
+    const product = this.props.products.filter((prod) => {
+      return prod.id === id;
+    })[0];
     return <div>
+
+      <img src={product.images[0].imageUrl} />
       <h1>This is the Product Page</h1>
-      <p>Passed down props: {this.props.test2}</p>
     </div>;
   }
 });

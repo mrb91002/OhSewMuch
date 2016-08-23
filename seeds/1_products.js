@@ -91,7 +91,7 @@ exports.seed = function(knex) {
         updated_at: new Date('2016-06-26 14:26:16 UTC')
       }, {
         id:9,
-        name: "Reversible Superman Batman Superhero Cape Costume",
+        name: "Superman/Batman Cape",
         category: 5,
         price: 19.95,
         description:

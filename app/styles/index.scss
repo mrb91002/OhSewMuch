@@ -12,6 +12,57 @@ p {
   font-family: Montserrat;
 }
 
-.container {
-  background-color: green;
+.parallax-container.first-para {
+  height: 550px;
+}
+
+.wrap-clouds {
+  width: 100%;
+  height: auto;
+}
+
+.shift-clouds {
+  position: relative;
+  width: 100%;
+  margin-top: -400px;
+}
+
+.wrap-clouds2 {
+  width: 100%;
+  height: auto;
+}
+
+.shift-clouds2 {
+  position: relative;
+  width: 100%;
+  margin-top: -200px;
+}
+
+.city-shift {
+  margin-top:-490px;
+  // height: 1650px;
+}
+
+.parallax-container {
+  height: 900px;
+}
+
+.hill-push {
+  margin-top: -700px;
+}
+
+.hill {
+  width: 1580px;
+  height: 1100px;
+}
+
+.product {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.product-container {
+  background-color: #fff;
+  height: auto;
+  width: 100%;
 }

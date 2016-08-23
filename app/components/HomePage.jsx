@@ -7,6 +7,10 @@ const HomePage = React.createClass({
     muiTheme: React.PropTypes.object.isRequired
   },
 
+  componentDidMount() {
+    $('.parallax').parallax();
+  },
+
   render() {
     let { products } = this.props;
 
@@ -24,17 +28,44 @@ const HomePage = React.createClass({
     };
 
 
-    return <div className="container">
-      <h1 style={h1Style}>This is the Home Page</h1>
-      <p style={pStyle}>Passed down props: {this.props.test}</p>
-      <div className="row">
-        {products.map((product) => {
-          return <ProductInGrid
-            key={weakKey(product)}
-            product={product}
-          />
-        })}
+    return <div>
+      <div className="parallax-container first-para">
+        <div className="parallax">
+          <img
+            src="http://superheroesofvictoria.org/wp-content/uploads/2014/02/superhero-kids-day.png"
+            />
+        </div>
       </div>
+      <div className="wrap-clouds">
+        <img src="./images/cloud6.png" className="shift-clouds" alt="" />
+      </div>
+
+      <div className="product-container">
+        <div className="container">
+          <h1 className="center-align">Products</h1>
+          <div className="row">
+            {products.map((product) => {
+              return <ProductInGrid
+                key={weakKey(product)}
+                product={product}
+              />
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="wrap-clouds2">
+        <img src="./images/cloud6.png" className="shift-clouds2" alt=""
+         />
+      </div>
+      <div className="parallax-container city-shift">
+         <div className="parallax">
+           <img src="./images/lightcity.png" alt="" />
+         </div>
+     </div>
+     <div className=" hill-push">
+       <img src="./images/hill2.png" className="hill" alt="" />
+     </div>
     </div>;
   }
 });
