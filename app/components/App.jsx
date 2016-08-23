@@ -8,7 +8,8 @@ import React from 'react';
 const App = React.createClass({
   getInitialState() {
     return {
-      products: []
+      products: [],
+      cart: []
     }
   },
 
@@ -43,7 +44,8 @@ const App = React.createClass({
 
     const props = {
       '/': {
-        products: this.state.products
+        products: this.state.products,
+        cart: this.state.cart
       }
     };
 
