@@ -47,7 +47,7 @@ const App = React.createClass({
       }
     };
 
-    props['product/:id'] = props['/'];
+    props['/product/:id'] = props['/'];
 
     return props[matchPath];
   },
