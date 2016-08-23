@@ -66,7 +66,8 @@ const Login = React.createClass({
   // },
 
   handleTouchTapCancel() {
-    this.props.router.push('/');
+    // this.props.router.push('/');
+    this.props.router.goBack();
   },
 
   handleTouchTapLogin() {
