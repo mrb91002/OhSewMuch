@@ -55,16 +55,16 @@ const HomePage = React.createClass({
       </div>
 
       <div className="wrap-clouds2">
-        <img src="./images/cloud6.png" className="shift-clouds2" alt=""
+        <img src="/images/cloud6.png" className="shift-clouds2" alt=""
          />
       </div>
       <div className="parallax-container city-shift">
          <div className="parallax">
-           <img src="./images/lightcity.png" alt="" />
+           <img src="/images/lightcity.png" alt="" />
          </div>
      </div>
      <div className=" hill-push">
-       <img src="./images/hill2.png" className="hill" alt="" />
+       <img src="/images/hill2.png" className="hill" alt="" />
      </div>
     </div>;
   }

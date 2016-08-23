@@ -2,6 +2,7 @@ import React from 'react';
 import ProductImages from 'components/ProductImages';
 import weakKey from 'weak-key';
 import ReactDOM from 'react-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 const ProductPage = React.createClass({
@@ -19,6 +20,10 @@ const ProductPage = React.createClass({
     if (this.props.products.length === 0) {
       return <div></div>;
     }
+
+    const styleButton = {
+      margin: '50px',
+      };
 
     const id = Number.parseInt(this.props.routeParams.id);
     const product = this.props.products.filter((prod) => {
@@ -54,11 +59,13 @@ const ProductPage = React.createClass({
           <div className="col s10 offset-1 product-info-space">
             <div className="col s12 product-info-inner">
               <h1>{product.name}</h1>
+              <h5>dimensions: {product.dimensions}</h5>
               <h5 className="col s6">${product.price}</h5>
               <p className="col s4 question">Ask a question</p>
-              <h5>dimensions: {product.dimensions}</h5>
 
-              {/* <input type="button" value="-"/>
+
+{/*
+              <input type="button" value="-"/>
               <label className="show">{3}</label>
               <input
                 type="text"
@@ -69,38 +76,39 @@ const ProductPage = React.createClass({
               />
               <input type="button" value="+"/> */}
 
+              <div className="center">
+                <RaisedButton
+                  className="buttonTest"
+                  label="ADD TO CART"
+                  backgroundColor="rgba(149, 39, 39, 0.9)"
+                  labelColor="#fff"
+                  style = {styleButton}
+                />
+              </div>
+
             </div>
           </div>
           <div className="col s10 offset-1 social-media">
             <div className="col s12 product-info-inner">
-              <img src="./images/Facebook.png" />
-              <img src="./images/cloud6.png" className="shift-clouds2" alt=""
-               />
+              <img src="/images/facebook.png" width="65" />
+              <img src="/images/twitter.png" width="65" />
+              <img src="/images/instagram.png" width="65" />
+              <img src="/images/pinterest.png" width="65" />
+              <img src="/images/tumblr.png" width="65" />
             </div>
           </div>
         </div>
+
         <div className="col s12 description">
           <h1>Item Details</h1>
           {product.description}
         </div>
-
-
-        {/* This code is not working */}
-        <div className="wrap-clouds2">
-          <img src="./images/cloud6.png" className="shift-clouds2" alt=""
-           />
-        </div>
-        <div className="parallax-container city-shift">
-           <div className="parallax">
-             <img src="./images/lightcity.png" alt="" />
-           </div>
-       </div>
-       <div className=" hill-push">
-         <img src="./images/hill2.png" className="hill" alt="" />
-       </div>
-       {/* the above code is not working */}
-
       </div>
+
+      <div className="wrap-clouds2">
+        <img src="/images/cloud-third.png" className="third-cloud" alt=""/>
+      </div>
+
     </div>
   }
 });

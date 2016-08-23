@@ -64,19 +64,28 @@ const App = React.createClass({
       cursor: 'pointer'
     };
 
-    return <div>
-      <AppBar
-        onTitleTouchTap={this.handleTitleTouchTap}
-        title="Oh Sew Much"
-        titleStyle={styleTitle}
-      >
-        <FlatButton
-          label="New Post"
-          onTouchTap={this.handleTouchTap}
-          style={styleFlatButton}
-        />
-      </AppBar>
+    const styleNav = {
+      position: 'fixed'
 
+
+    };
+
+    return <div>
+        <AppBar
+          onTitleTouchTap={this.handleTitleTouchTap}
+          title="Oh Sew Much"
+          titleStyle={styleTitle}
+          style={styleNav}
+          zDepth={2}
+        >
+          <FlatButton
+            label="New Post"
+            onTouchTap={this.handleTouchTap}
+            style={styleFlatButton}
+          />
+        </AppBar>
+        <div style={{height: '64px'}}>
+        </div>
       {/* React.cloneElement is the glue that passes in props to children created with React Router. React router instantiates classes for us, and cloning the existing instance is the only way to set props.*/}
       {React.cloneElement(this.props.children, this.getChildrenProps())}
       {/* {React.cloneElement(this.props.children, {
