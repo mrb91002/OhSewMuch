@@ -9,12 +9,27 @@ const PaymentPage = React.createClass({
     muiTheme: React.PropTypes.object.isRequired
   },
 
+  getInitialState() {
+    return {
+      errors: {},
+      open: false,
+      payFailText: ''
+    };
+  },
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+      payFailText: ''
+    });
+  },
+
   render() {
     return <div className="container">
-      <div className="row login-form">
+      <div className="row payment-form">
         <Paper
           className="col s12 m8 offset-m2 center-align"
-          onKeyUp={this.handleKeyUp}
+          // onKeyUp={this.handleKeyUp}
           rounded={false}
           zDepth={3}
         >
@@ -25,7 +40,7 @@ const PaymentPage = React.createClass({
       </div>
       <Snackbar
         open={this.state.open}
-        message={this.state.loginFailText}
+        message={this.state.payFailText}
         autoHideDuration={3000}
         onRequestClose={this.handleRequestClose}
       />
