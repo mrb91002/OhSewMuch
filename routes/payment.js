@@ -12,7 +12,9 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 // To process a payment with a nonce
 router.post('/payment', ev(val.post), (req, res, next) => {
-  // res.send(req.body);
+
+  const { nonce } = req.body;
+  const amount = Number.parseInt(req.body.amount * 100);
 
   // Test token
   const token = 'sq0atb-YNNIgBEgcqBGnmR8oU9Rbg';
@@ -30,7 +32,7 @@ router.post('/payment', ev(val.post), (req, res, next) => {
   const url = `https://connect.squareup.com/v2/locations/${locationId}/transactions`;
 
   // Generate one per transaction!
-  const idempotency_key = uuid.v4();
+  const idempotency_key = uuid.v1();
 
   // Required params:
   // card_nonce
@@ -40,6 +42,15 @@ router.post('/payment', ev(val.post), (req, res, next) => {
   //   "amount": 5000,
   //   "currency": "USD"
   // }
+
+  const objToSquare = {
+    card_nonce: nonce,
+    idempotency_key,
+    amount_money: {
+      amount,
+      currency: 'USD'
+    }
+  };
 
 // Sample full request body
 //   {
@@ -127,20 +138,20 @@ router.post('/payment', ev(val.post), (req, res, next) => {
 
   const config = {
     headers: {
-      Authorization: 'Bearer ' + token,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      Authorization: 'Bearer ' + token
+      // Accept: 'application/json',
+      // 'Content-Type': 'application/json'
     }
   };
 
-  axios.post(url, sample, config)
+  axios.post(url, objToSquare, config)
   .then((squareRes) => {
-    // res.send(squareRes.data);
+    res.send(squareRes.data);
     console.log(squareRes.data);
     // console.log();
   })
   .catch((err) => {
-    console.log(err);
+    console.log(err.response.data);
   });
 
 
@@ -148,6 +159,8 @@ router.post('/payment', ev(val.post), (req, res, next) => {
 //   timeout: 1000,
 //   headers: {'X-Custom-Header': 'foobar'}
 // });
+
+  // res.send(req.body);
 
 });
 

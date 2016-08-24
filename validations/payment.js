@@ -8,13 +8,13 @@ module.exports.post = {
   },
 
   body: {
+    amount: Joi.number()
+    .label('Amout')
+    .min(1.01)
+    .required(),
     nonce: Joi.string()
       .label('Nonce')
       .trim()
-      .required(),
-    amount: Joi.number()
-      .label('Amout')
-      .min(0.01)
       .required()
   }
 };

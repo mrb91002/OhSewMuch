@@ -32,7 +32,7 @@ const HomePage = React.createClass({
       <div className="parallax-container first-para">
         <div className="parallax">
           <img
-            src="http://superheroesofvictoria.org/wp-content/uploads/2014/02/superhero-kids-day.png"
+            src="https://superheroesofvictoria.org/wp-content/uploads/2014/02/superhero-kids-day.png"
             />
         </div>
       </div>
