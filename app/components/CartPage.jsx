@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductInGrid from 'components/ProductInGrid';
+import CartItems from 'components/CartItems';
 import weakKey from 'weak-key';
 import Paper from 'material-ui/Paper';
 
@@ -36,32 +36,39 @@ const CartPage = React.createClass({
             style={stylePaper}
             zDepth={3}
           >
+            <div className="cart-group">
+              <div className="col s9 blue">
+                  <div className="col s4"></div>
+                  <div className="col s4 align-center">Product Name</div>
+                  <div className="col s2 align-center">Qty</div>
+                  <div className="col s2 align-center">Price</div>
 
-          <div className="col s9 blue">
 
-            <div>
-              <div className="Cart-Product">
-                <div className="col s4 purple">
-                <img src={cartItems[0].images[0].imageUrl} height="150px" width="150px" />
-                </div>
-                <div height="156px"  className="col s4 orange">{cartItems[0].name}</div>
-                <div height="156px"  className="col s2 purple">
-                  <p>7</p>
-                </div>
-                <div height="156px" className="col s2">{cartItems[0].price}</div>
+                {/* <div className="Cart-Product">
+                  <div className="col s6 l4 purple">
+                    <img src={cartItems[0].images[0].imageUrl} height="150px" width="150px" />
+                  </div>
+                  <div   className="col s6 l4 orange fill">
+                    <p>{cartItems[0].name}</p>
+                  </div>
+                  <div  className="col s6 l2 purple fill">
+                    <p>7</p>
+                  </div>
+                  <div className="col s16 l2 fill">
+                    <p>${cartItems[0].price}</p>
+                  </div>
+                </div> */}
+
+
+                {cartItems.map((cartItem) => {
+                  return <CartItems
+                    key={weakKey(cartItem)}
+                    cartItem={cartItem}
+                  />
+                })}
+
+
               </div>
-            </div>
-{/*
-            <div className="row">
-              <div className="Cart-Product">
-                <div className="col s4 purple">
-                <img src={cartItems[0].images[0].imageUrl} height="150px" width="150px" />
-                </div>
-                <div className="col s4 orange">{cartItems[0].name}</div>
-                <div className="col s2 purple">{7}</div>
-                <div className="col s2 orange">{cartItems[0].price}</div>
-              </div>
-            </div> */}
 
           </div>
 

@@ -36,6 +36,7 @@ const App = React.createClass({
       })
       .catch((err) => {
         console.error(err);
+        err.response;
       });
   },
 
@@ -129,7 +130,7 @@ const App = React.createClass({
     props['/login'] = props['/register'];
     props['/product/:id'] = props['/'];
     props['/cart'] = props['/'];
-    
+
     return props[matchPath];
   },
 
