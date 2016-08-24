@@ -21,6 +21,7 @@ const products = require('./routes/products');
 const token = require('./routes/token');
 const promos = require('./routes/promos');
 const orders = require('./routes/orders');
+const payment = require('./routes/payment');
 
 // Admin Routes
 const customersAdmin = require('./routes/admin/customers');
@@ -55,6 +56,7 @@ app.use('/api', products);
 app.use('/api', token);
 app.use('/api', promos);
 app.use('/api', orders);
+app.use('/api', payment);
 
 // Admin Routes
 app.use('/api/admin', customersAdmin);

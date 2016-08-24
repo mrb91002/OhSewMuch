@@ -44,6 +44,7 @@
     "lob": "^3.9.0",
     "material-ui": "^0.15.4",
     "morgan": "^1.7.0",
+    "node-uuid": "^1.4.7",
     "pg": "^6.0.3",
     "postcss-brunch": "^2.0.1",
     "react": "^15.3.1",

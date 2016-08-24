@@ -314,3 +314,12 @@ http --session admin get localhost:8000/api/customers
 
 To post a customer with a un/pw:
 http post localhost:8000/api/customers firstName=Chad lastName=Latham email=chadlatham33@gmail.com addressLine1='6821 S Gove St' addressCity=Tacoma addressState=WA addressZip=98409-1111 addressCountry=US shipFirstName=Chad shipLastName=Latham shipAddressLine1='6821 S Gove St' shipAddressCity=Tacoma shipAddressState=WA shipAddressZip=98409-1111 shipAddressCountry=US phone=253.335.7059 userName=guest2 password=GuestUser1!
+--------------------------------------------------------------------------------
+
+The Square API:
+curl -H "Authorization: Bearer sq0atb-YNNIgBEgcqBGnmR8oU9Rbg" https://connect.squareup.com/v2/locations
+http get https://connect.squareup.com/v2/locations Authorization:"Bearer sq0atb-YNNIgBEgcqBGnmR8oU9Rbg"
+
+request_headers = {'Authorization': 'Bearer ' + access_token,
+                   'Accept':        'application/json',
+                   'Content-Type':  'application/json'}
