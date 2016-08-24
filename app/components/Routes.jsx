@@ -11,7 +11,7 @@ import React from 'react';
 import ProductPage from 'components/ProductPage';
 import LoginPage from 'components/LoginPage';
 import RegisterPage from 'components/RegisterPage';
-import Cart from 'components/Cart';
+import CartPage from 'components/CartPage';
 
 const Routes = React.createClass({
   handleChange(prevState, nextState, replace) {
@@ -36,7 +36,7 @@ const Routes = React.createClass({
         />
         <Route component={LoginPage} path="login" />
         <Route component={RegisterPage} path="register" />
-        {/* <Route component={Cart} path="cart" /> */}
+        <Route component={CartPage} path="cart" />
         {/* The 404 error handler */}
         <Route component={NotFound} path="*" />
       </Route>

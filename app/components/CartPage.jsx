@@ -4,7 +4,7 @@ import weakKey from 'weak-key';
 import Paper from 'material-ui/Paper';
 
 
-const Cart = React.createClass({
+const CartPage = React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object.isRequired
   },
@@ -79,4 +79,4 @@ const Cart = React.createClass({
   }
 });
 
-export default Cart;
+export default CartPage;
