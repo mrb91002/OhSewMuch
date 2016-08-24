@@ -32,13 +32,14 @@ const HomePage = React.createClass({
       <div className="parallax-container first-para">
         <div className="parallax">
           <img
-            src="https://superheroesofvictoria.org/wp-content/uploads/2014/02/superhero-kids-day.png"
+            src="/images/superhero-kids-day.png"
+            alt="super-hero kids"
             />
         </div>
       </div>
       {/* <div className="wrap-clouds"> */}
       <div className="s12 wrap-clouds">
-        <img src="./images/cloud6.png" className="shift-clouds" alt="" />
+        <img src="/images/cloud6.png" className="shift-clouds" alt="fluffy white clouds" />
       </div>
       {/* </div> */}
 
