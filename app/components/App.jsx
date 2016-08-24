@@ -43,6 +43,38 @@ const App = React.createClass({
     this.props.router.push('/');
   },
 
+  handleTouchTapLogin() {
+    this.props.router.push('/login');
+  },
+
+  handleTouchTapReg() {
+    this.props.router.push('/register');
+  },
+
+  handleTouchTapCart() {
+    this.props.router.push('/cart');
+  },
+
+  handleTouchTapEmptyCart() {
+    this.clearCart();
+  },
+
+  handleTouchTapAdmin() {
+    // this.props.router.push('/adminhome');
+    console.log('admin');
+  },
+
+  handleTouchTapLogout() {
+    axios.delete('/api/token')
+      .then(() => {
+        this.updateCookies();
+        this.props.router.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
   addToCart(product) {
     const nextCart = this.state.cart.concat(product);
 
@@ -101,11 +133,41 @@ const App = React.createClass({
   },
 
   render() {
-    // console.log('render');
+    const hideWhenLoggedIn = () => {
+      if (!this.state.cookies.loggedIn) {
+        return { display: 'block' };
+      }
+
+      return { display: 'none' };
+    };
+
+    const showWhenLoggedIn = () => {
+      if (this.state.cookies.loggedIn) {
+        return { display: 'block' };
+      }
+
+      return { display: 'none' };
+    };
+
+    const showWhenAdmin = () => {
+      if (this.state.cookies.admin) {
+        return { display: 'block' };
+      }
+
+      return { display: 'none' };
+    };
+
+    const showWhenCart = () => {
+      if (this.state.cart.length) {
+        return { display: 'block' };
+      }
+
+      return { display: 'none' };
+    };
 
     const styleFlatButton = {
       height: '64px',
-      lineHeight: '64px'
+      lineHeight: '64px',
     };
 
     const styleTitle = {
@@ -114,8 +176,6 @@ const App = React.createClass({
 
     const styleNav = {
       position: 'fixed'
-
-
     };
 
     return <div>
@@ -127,37 +187,45 @@ const App = React.createClass({
           zDepth={2}
         >
           <FlatButton
-            label="New Post"
-            onTouchTap={this.handleTouchTap}
-            style={styleFlatButton}
+            label="Login"
+            onTouchTap={this.handleTouchTapLogin}
+            style={Object.assign({}, styleFlatButton, hideWhenLoggedIn())}
+          />
+          <FlatButton
+            label="Register"
+            onTouchTap={this.handleTouchTapReg}
+            style={Object.assign({}, styleFlatButton, hideWhenLoggedIn())}
+          />
+          <FlatButton
+            label="Logout"
+            onTouchTap={this.handleTouchTapLogout}
+            style={Object.assign({}, styleFlatButton, showWhenLoggedIn())}
+          />
+          <FlatButton
+            label="Admin"
+            onTouchTap={this.handleTouchTapAdmin}
+            style={Object.assign({}, styleFlatButton, showWhenAdmin())}
+          />
+          <FlatButton
+            label={"Cart - " + this.state.cart.length}
+            onTouchTap={this.handleTouchTapCart}
+            style={Object.assign({}, styleFlatButton, showWhenCart())}
+          />
+          <FlatButton
+            label="Empty Cart"
+            onTouchTap={this.handleTouchTapEmptyCart}
+            style={Object.assign({}, styleFlatButton, showWhenCart())}
           />
         </AppBar>
         <div style={{height: '64px'}}>
         </div>
-      {/* React.cloneElement is the glue that passes in props to children created with React Router. React router instantiates classes for us, and cloning the existing instance is the only way to set props.*/}
+      {/* React.cloneElement is the glue that passes in props to children created with React Router. React router instantiates classes for us, and cloning the existing instance is the only way to set props. */}
       {React.cloneElement(this.props.children, this.getChildrenProps())}
       {/* {React.cloneElement(this.props.children, {
         products: this.state.products
       })} */}
     </div>;
   }
-  // handleTouchTap(event) {
-  //   console.log(event.target);
-  // },
-  //
-  // render() {
-  //   // console.log(getMuiTheme());
-  //   return <div>
-  //   <AppBar
-  //     onTouchTap={this.handleTouchTap}
-  //     title="Oh Sew Much"
-  //   />
-  //
-  //     <h1>
-  //       Hello world
-  //     </h1>
-  //   </div>;
-  // }
 });
 
 

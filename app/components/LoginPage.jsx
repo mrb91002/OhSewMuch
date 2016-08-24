@@ -66,7 +66,6 @@ const Login = React.createClass({
   },
 
   handleTouchTapLogin() {
-    console.log('login');
     const result = Joi.validate(this.state.login, schema, {
       abortEarly: false,
       allowUnknown: true
@@ -84,7 +83,7 @@ const Login = React.createClass({
 
     axios.post('/api/token', this.state.login)
       .then((res) => {
-        // console.log(res);
+        this.props.updateCookies();
         this.props.router.push('/');
       })
       .catch((err) => {
@@ -103,7 +102,6 @@ const Login = React.createClass({
   },
 
   handleBlur(event) {
-    console.log('blur');
     const { name, value } = event.target;
     const nextErrors = Object.assign({}, this.state.errors);
     const result = Joi.validate({ [name]: value }, schema);
@@ -120,6 +118,12 @@ const Login = React.createClass({
     this.setState({ errors: nextErrors });
   },
 
+  handleKeyUp(event) {
+    if (event.which === 13) {
+      this.handleTouchTapLogin();
+    }
+  },
+
   render() {
     const { errors, login } = this.state;
 
@@ -133,6 +137,7 @@ const Login = React.createClass({
       <div className="row login-form">
         <Paper
           className="col s12 m8 offset-m2 center-align"
+          onKeyUp={this.handleKeyUp}
           rounded={false}
           zDepth={3}
         >

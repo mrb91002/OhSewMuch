@@ -156,6 +156,7 @@ const Register = React.createClass({
         });
       })
       .then((res) => {
+        this.props.updateCookies();
         this.props.router.push('/');
       })
       .catch((err) => {
