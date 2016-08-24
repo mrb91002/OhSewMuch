@@ -25,8 +25,9 @@ const CartItems = React.createClass({
         <div className="col s6 l4">
           <img
             src={this.props.cartItem.images[0].imageUrl}
-            height="150px"
-            width="150px"
+            // height="150px"
+            width="70%"
+            // width="150px"
             onTouchTap={this.handleTouchTap}
           />
         </div>

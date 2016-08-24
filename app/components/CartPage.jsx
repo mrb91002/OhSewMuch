@@ -26,7 +26,9 @@ const CartPage = React.createClass({
 
     return <div>
       <div className="container">
-        5 Items In Your Cart
+        <div className="row">
+          5 Items In Your Cart
+        </div>
       </div>
       <div className="container">
         <div className="row">
@@ -36,45 +38,31 @@ const CartPage = React.createClass({
             style={stylePaper}
             zDepth={3}
           >
-            <div className="cart-group">
+            <div className="cart-group row">
               <div className="col s9">
-                  <div className="col s4"></div>
-                  <div className="col s4 align-center">Product Name</div>
+                <div className="row">
+                  <div className="col s4 align-center offset-s4">Product Name</div>
                   <div className="col s2 align-center">Qty</div>
                   <div className="col s2 align-center">Price</div>
-
-
-                {/* <div className="Cart-Product">
-                  <div className="col s6 l4 purple">
-                    <img src={cartItems[0].images[0].imageUrl} height="150px" width="150px" />
-                  </div>
-                  <div   className="col s6 l4 orange fill">
-                    <p>{cartItems[0].name}</p>
-                  </div>
-                  <div  className="col s6 l2 purple fill">
-                    <p>7</p>
-                  </div>
-                  <div className="col s16 l2 fill">
-                    <p>${cartItems[0].price}</p>
-                  </div>
-                </div> */}
-
+                </div>
 
                 {cartItems.map((cartItem) => {
-                  return <CartItems
-                    key={weakKey(cartItem)}
-                    cartItem={cartItem}
-                  />
+                  return <div className="row">
+                    <CartItems
+                      key={weakKey(cartItem)}
+                      cartItem={cartItem}
+                    />
+                  </div>
                 })}
 
 
               </div>
 
+              <div className="col s3">
+              Right Side
+              </div>
           </div>
 
-          <div className="col s3">
-            Right Side
-          </div>
 
           </Paper>
         </div>
