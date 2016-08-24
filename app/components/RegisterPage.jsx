@@ -63,7 +63,7 @@ const schema = Joi.object({
     .length(2)
 });
 
-const Register = React.createClass({
+const RegisterPage = React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object.isRequired
   },
@@ -464,4 +464,4 @@ const Register = React.createClass({
   }
 });
 
-export default withRouter(Register);
+export default withRouter(RegisterPage);

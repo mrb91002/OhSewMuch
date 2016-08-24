@@ -18,7 +18,7 @@ const schema = Joi.object({
     .max(255)
 });
 
-const Login = React.createClass({
+const LoginPage = React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object.isRequired
   },
@@ -202,4 +202,4 @@ const Login = React.createClass({
   }
 });
 
-export default withRouter(Login);
+export default withRouter(LoginPage);

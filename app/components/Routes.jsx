@@ -5,13 +5,14 @@ import {
   Router
 } from 'react-router';
 import App from 'components/App';
-import HomePage from 'components/HomePage';
-import NotFound from 'components/NotFound';
-import React from 'react';
-import ProductPage from 'components/ProductPage';
-import LoginPage from 'components/LoginPage';
-import RegisterPage from 'components/RegisterPage';
 import CartPage from 'components/CartPage';
+import HomePage from 'components/HomePage';
+import LoginPage from 'components/LoginPage';
+import NotFound from 'components/NotFound';
+import PaymentPage from 'components/PaymentPage';
+import ProductPage from 'components/ProductPage';
+import React from 'react';
+import RegisterPage from 'components/RegisterPage';
 
 const Routes = React.createClass({
   handleChange(prevState, nextState, replace) {
@@ -22,7 +23,6 @@ const Routes = React.createClass({
 
   handleEnter(event) {
     // console.log(event)
-
   },
 
   render() {
@@ -37,6 +37,8 @@ const Routes = React.createClass({
         <Route component={LoginPage} path="login" />
         <Route component={RegisterPage} path="register" />
         <Route component={CartPage} path="cart" />
+        <Route component={PaymentPage} path="payment" />
+        
         {/* The 404 error handler */}
         <Route component={NotFound} path="*" />
       </Route>
