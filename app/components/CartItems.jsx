@@ -22,7 +22,7 @@ const CartItems = React.createClass({
     console.log('something is going on here');
     return <div>
       <div className="Cart-Product">
-        <div className="col s6 l4 purple">
+        <div className="col s6 l4">
           <img
             src={this.props.cartItem.images[0].imageUrl}
             height="150px"
@@ -30,10 +30,10 @@ const CartItems = React.createClass({
             onTouchTap={this.handleTouchTap}
           />
         </div>
-        <div   className="col s6 l4 orange fill">
+        <div   className="col s6 l4 fill">
           <p>{this.props.cartItem.name}</p>
         </div>
-        <div  className="col s6 l2 purple fill">
+        <div  className="col s6 l2 fill">
           <p>7</p>
         </div>
         <div className="col s16 l2 fill">

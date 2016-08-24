@@ -37,7 +37,7 @@ const CartPage = React.createClass({
             zDepth={3}
           >
             <div className="cart-group">
-              <div className="col s9 blue">
+              <div className="col s9">
                   <div className="col s4"></div>
                   <div className="col s4 align-center">Product Name</div>
                   <div className="col s2 align-center">Qty</div>
@@ -72,7 +72,7 @@ const CartPage = React.createClass({
 
           </div>
 
-          <div className="col s3 green">
+          <div className="col s3">
             Right Side
           </div>
 
