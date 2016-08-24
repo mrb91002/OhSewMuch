@@ -36,7 +36,7 @@ const App = React.createClass({
       })
       .catch((err) => {
         console.error(err.response);
-      });
+      })
   },
 
   handleTitleTouchTap() {
