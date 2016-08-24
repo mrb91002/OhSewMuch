@@ -2,6 +2,7 @@ import React from 'react';
 import CartItems from 'components/CartItems';
 import weakKey from 'weak-key';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 const CartPage = React.createClass({
@@ -12,16 +13,34 @@ const CartPage = React.createClass({
   render() {
     let cartItems = this.props.cart;
 
-    if (!cartItems.length) {
-        return <div>your cart is empty</div>
-    };
-
     console.log(cartItems);
     console.log(cartItems.length);
     console.log(cartItems[0]);
 
+    const styleButton = {
+      // margin:  "auto",
+      // width: "100%"
+      // position: 'fixed',
+      // top: "60px;"
+
+    };
+
+    const lock = {
+      position: "fixed",
+      width: "20%",
+      top: "140px",
+      left: "65%"
+    };
+
     const stylePaper = {
       borderRadius: '5px'
+    };
+
+    const styleTable = {
+      // position: 'fixed',
+      // width: '20%',
+      // top: "140px",
+      // left: "65%"
     };
 
     return <div>
@@ -39,7 +58,7 @@ const CartPage = React.createClass({
             zDepth={3}
           >
             <div className="cart-group row">
-              <div className="col s9">
+              <div className="col s8">
                 <div className="row">
                   <div className="col s4 align-center offset-s4">Product Name</div>
                   <div className="col s2 align-center">Qty</div>
@@ -47,19 +66,45 @@ const CartPage = React.createClass({
                 </div>
 
                 {cartItems.map((cartItem) => {
-                  return <div className="row">
-                    <CartItems
+                  return <CartItems
                       key={weakKey(cartItem)}
                       cartItem={cartItem}
                     />
-                  </div>
                 })}
 
 
               </div>
 
-              <div className="col s3">
-              Right Side
+
+              <div className="col s4 blue" style={lock}>
+              <div className="flt">
+                <table className="green" style={styleTable}>
+                  <tbody>
+                    <tr>
+                      <td>Subtotal</td>
+                      <td>$29.95</td>
+                    </tr>
+                    <tr>
+                      <td>Shipping</td>
+                      <td>$5.00</td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td>$34.90</td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+              <RaisedButton
+                // className="buttonCenter"
+                label="Proceed To Checkout"
+                backgroundColor="rgba(149, 39, 39, 0.9)"
+                labelColor="#fff"
+                style = {styleButton}
+                onTouchTap={this.handleTouchTapCart}
+              />
+              <p>Additional Duties and Taxes May Apply</p>
               </div>
           </div>
 

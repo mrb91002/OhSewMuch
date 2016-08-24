@@ -20,7 +20,7 @@ const CartItems = React.createClass({
     };
 
     console.log('something is going on here');
-    return <div>
+    return <div className="row">
       <div className="Cart-Product">
         <div className="col s6 l4">
           <img
