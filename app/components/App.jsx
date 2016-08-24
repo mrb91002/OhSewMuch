@@ -128,7 +128,8 @@ const App = React.createClass({
 
     props['/login'] = props['/register'];
     props['/product/:id'] = props['/'];
-
+    props['/cart'] = props['/'];
+    
     return props[matchPath];
   },
 
