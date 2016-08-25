@@ -123,6 +123,11 @@ const PaymentPage = React.createClass({
     };
   },
 
+  componentWillMount() {
+    console.log('willMount');
+    
+  },
+
   componentDidMount() {
     // Sandbox AppID
     const applicationId = 'sandbox-sq0idp-JQWJQ16-z103Dcor0PDo4Q';
