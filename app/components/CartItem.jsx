@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
-const CartItems = React.createClass({
+const CartItem = React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object.isRequired
   },
@@ -13,18 +13,19 @@ const CartItems = React.createClass({
   },
 
   render() {
+    const item = this.props.item;
 
-    if (this.props.cartItem.length === 0) {
-      console.log('fail');
-      return <div></div>
-    };
+    // if (!this.props.length) {
+    //   console.log('fail');
+    //   return <div></div>
+    // };
 
     console.log('something is going on here');
     return <div className="row">
       <div className="Cart-Product">
         <div className="col s6 l4">
           <img
-            src={this.props.cartItem.images[0].imageUrl}
+            src={item.product.images[0].imageUrl}
             // height="150px"
             width="70%"
             // width="150px"
@@ -32,17 +33,17 @@ const CartItems = React.createClass({
           />
         </div>
         <div   className="col s6 l4 fill">
-          <p>{this.props.cartItem.name}</p>
+          <p>{item.product.name}</p>
         </div>
         <div  className="col s6 l2 fill">
-          <p>7</p>
+          <p>{item.quantity}</p>
         </div>
         <div className="col s16 l2 fill">
-          <p>${`${this.props.cartItem.price * 5}`}</p>
+          <p>${`${(item.product.price * item.quantity).toFixed(2)}`}</p>
         </div>
       </div>
     </div>
   }
 });
 
-export default withRouter(CartItems);
+export default withRouter(CartItem);

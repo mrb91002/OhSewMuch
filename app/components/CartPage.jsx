@@ -1,8 +1,9 @@
-import React from 'react';
-import CartItems from 'components/CartItems';
-import weakKey from 'weak-key';
+import { withRouter } from 'react-router';
+import CartItem from 'components/CartItem';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import React from 'react';
+import weakKey from 'weak-key';
 
 
 const CartPage = React.createClass({
@@ -10,23 +11,31 @@ const CartPage = React.createClass({
     muiTheme: React.PropTypes.object.isRequired
   },
 
-  render() {
-    let cartItems = this.props.cart;
+  handleTouchTapCheckout() {
+    this.props.router.push('/payment');
+  },
 
-    console.log(cartItems);
-    console.log(cartItems.length);
-    console.log(cartItems[0]);
+  render() {
+    const cart = this.props.cart;
+
+    const quantity = cart.reduce((accum, item) => {
+      return accum + item.quantity;
+    }, 0);
+
+    const subTotal = cart.reduce((accum, item) => {
+      return accum + item.quantity * item.product.price;
+    }, 0);
+
+    console.log(cart);
+
 
     const styleButton = {
-      // margin:  "auto",
-      // width: "100%"
-      // position: 'fixed',
-      // top: "60px;"
-
     };
+
 
     const lock = {
       position: "fixed",
+      borderLeft: "1px solid rgb(149, 39, 39)",
       width: "20%",
       top: "140px",
       left: "65%"
@@ -43,10 +52,11 @@ const CartPage = React.createClass({
       // left: "65%"
     };
 
+
     return <div>
       <div className="container">
         <div className="row">
-          5 Items In Your Cart
+          {quantity} Items In Your Cart
         </div>
       </div>
       <div className="container">
@@ -65,10 +75,10 @@ const CartPage = React.createClass({
                   <div className="col s2 align-center">Price</div>
                 </div>
 
-                {cartItems.map((cartItem) => {
-                  return <CartItems
-                      key={weakKey(cartItem)}
-                      cartItem={cartItem}
+                {cart.map((item) => {
+                  return <CartItem
+                      key={weakKey(item)}
+                      item={item}
                     />
                 })}
 
@@ -76,17 +86,17 @@ const CartPage = React.createClass({
               </div>
 
 
-              <div className="col s4 blue" style={lock}>
+              <div className="col s4" style={lock}>
               <div className="flt">
-                <table className="green" style={styleTable}>
+                <table style={styleTable}>
                   <tbody>
                     <tr>
                       <td>Subtotal</td>
-                      <td>$29.95</td>
+                      <td>${subTotal.toFixed(2)}</td>
                     </tr>
                     <tr>
                       <td>Shipping</td>
-                      <td>$5.00</td>
+                      <td>FREE</td>
                     </tr>
                     <tr>
                       <td>Total</td>
@@ -102,7 +112,7 @@ const CartPage = React.createClass({
                 backgroundColor="rgba(149, 39, 39, 0.9)"
                 labelColor="#fff"
                 style = {styleButton}
-                onTouchTap={this.handleTouchTapCart}
+                onTouchTap={this.handleTouchTapCheckout}
               />
               <p>Additional Duties and Taxes May Apply</p>
               </div>
@@ -119,4 +129,4 @@ const CartPage = React.createClass({
   }
 });
 
-export default CartPage;
+export default withRouter(CartPage);

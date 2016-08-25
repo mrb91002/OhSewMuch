@@ -76,16 +76,38 @@ const App = React.createClass({
   },
 
   addToCart(product) {
-    const nextCart = this.state.cart.concat(product);
+    let exists = false;
+    let nextCart = this.state.cart.map((item) => {
+      if (product.id === item.product.id ) {
+        item.quantity += 1;
+        exists = true;
+      }
+
+      return item;
+    });
+
+    if (!exists) {
+      nextCart = nextCart.concat({ product, quantity: 1 });
+    }
 
     localStorage.setItem('cart', JSON.stringify(nextCart));
     this.setState({ cart: nextCart });
   },
 
   removeFromCart(product) {
-    const nextCart = this.state.cart.filter((element) => element !== product);
-    localStorage.setItem('cart', JSON.stringify(nextCart));
+    const nextCart = this.state.filter((item) => {
+      if (item.product.id === product.id) {
+        if (item.quantity === 1) {
+          return false;
+        }
 
+        item.quantity -= 1;
+
+        return true;
+      }
+    });
+
+    localStorage.setItem('cart', JSON.stringify(nextCart));
     this.setState({ cart: nextCart });
   },
 
@@ -134,6 +156,10 @@ const App = React.createClass({
   },
 
   render() {
+    const quantity = this.state.cart.reduce((accum, item) => {
+      return accum + item.quantity;
+    }, 0);
+
     const hideWhenLoggedIn = () => {
       if (!this.state.cookies.loggedIn) {
         return { display: 'block' };
@@ -208,7 +234,7 @@ const App = React.createClass({
             style={Object.assign({}, styleFlatButton, showWhenAdmin())}
           />
           <FlatButton
-            label={"Cart - " + this.state.cart.length}
+            label={"Cart - " + quantity}
             onTouchTap={this.handleTouchTapCart}
             style={Object.assign({}, styleFlatButton, showWhenCart())}
           />
