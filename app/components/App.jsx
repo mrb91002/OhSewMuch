@@ -64,6 +64,7 @@ const App = React.createClass({
 
   handleTouchTapEmptyCart() {
     this.clearCart();
+    this.props.router.push('/');
   },
 
   handleTouchTapAdmin() {
