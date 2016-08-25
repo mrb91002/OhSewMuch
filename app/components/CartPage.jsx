@@ -69,12 +69,21 @@ const CartPage = React.createClass({
           >
             <div className="cart-group row">
               <div className="col s8 border-right">
-                <div className="row">
-                  <div className="col s4 align-center offset-s4">Product Name</div>
-                  <div className="col s2 align-center">Qty</div>
-                  <div className="col s2 align-center">Price</div>
+                <div className="section">
+                  <div className="row">
+                    <div className="col s4 align-center offset-s4">
+                      Product Name
+                    </div>
+                    <div className="col s2 align-center">Qty</div>
+                    <div className="col s2 align-center">Price</div>
+                  </div>
+                  <div className="divider"
+                    style = {{
+                      backgroundColor: "rgb(149, 39, 39)",
+                      border: "0px"
+                    }}>
+                  </div>
                 </div>
-
                 {cart.map((item) => {
                   return <CartItem
                       key={weakKey(item)}
