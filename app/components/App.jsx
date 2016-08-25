@@ -19,6 +19,13 @@ const App = React.createClass({
     // Get the products from API
     axios.get('/api/products')
       .then((res) => {
+        // Convert string prices to numbers
+        const nextProducts = res.data.map((product) => {
+          product.price = Number.parseFloat(product.price);
+
+          return product;
+        });
+
         // Get the cart from local storage
         const nextCart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -29,7 +36,7 @@ const App = React.createClass({
         };
 
         this.setState({
-          products: res.data,
+          products: nextProducts,
           cart: nextCart,
           cookies: nextCookies
         });
@@ -145,6 +152,9 @@ const App = React.createClass({
       '/register': {
         cookies: this.state.cookies,
         updateCookies: this.updateCookies
+      },
+      '/payment': {
+        cart: this.state.cart
       }
     };
 

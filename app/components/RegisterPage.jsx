@@ -431,7 +431,7 @@ const RegisterPage = React.createClass({
 
           <div className="row reg-form-button-row">
             <RaisedButton
-              className="col s4 offset-s1 l3 offset-l2 reg-form-button"
+              className="col s4 offset-s1 l3 offset-l2 form-button"
               icon={<Send />}
               label="Register"
               labelPosition="before"
@@ -441,13 +441,12 @@ const RegisterPage = React.createClass({
             />
 
             <RaisedButton
-              className="col s4 offset-s2 l3 offset-l2 reg-form-button"
+              className="col s4 offset-s2 l3 offset-l2 form-button"
               icon={<Cancel />}
               label="Cancel"
               labelPosition="before"
               onTouchTap={this.handleTouchTapCancel}
               primary={true}
-              // secondary={true}
               // style={styleRaisedButton}
             />
           </div>

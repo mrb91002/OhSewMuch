@@ -1,8 +1,22 @@
 import { withRouter } from 'react-router';
 import axios from 'axios';
+import Cancel from 'material-ui/svg-icons/navigation/cancel';
+import Joi from 'joi';
+import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
 import Paper from 'material-ui/Paper';
+import Send from 'material-ui/svg-icons/content/send';
 import Snackbar from 'material-ui/Snackbar';
+import { Table,
+  TableBody,
+  TableFooter,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table';
+import TextField from 'material-ui/TextField';
+import weakKey from 'weak-key';
 
 const PaymentPage = React.createClass({
   contextTypes: {
@@ -131,11 +145,12 @@ const PaymentPage = React.createClass({
       }
     });
 
+    paymentForm.build();
     this.setState({ paymentForm: paymentForm });
   },
 
   // This function is called when a buyer clicks the Submit button on the webpage to charge their card.
-  requestCardNonce(event) {
+  handleTouchTapSubmit(event) {
     // console.log(e);
     // This prevents the Submit button from submitting its associated form.
     // Instead, clicking the Submit button should tell the SqPaymentForm to generate a card nonce, which the next line does.
@@ -146,34 +161,129 @@ const PaymentPage = React.createClass({
     this.state.paymentForm.requestCardNonce();
   },
 
+  handleTouchTapCancel(event) {
+    console.log('cancel');
+  },
+
   render() {
+    const total = this.props.cart.reduce((accum, item) => {
+      return accum + item.quantity * item.product.price;
+    }, 0);
+    const palette = this.context.muiTheme.palette;
+    const styleHeader = {
+      color: palette.accent1Color,
+      marginBottom: '0px'
+    };
+
+    const styleSubHeader = {
+      color: palette.textColor,
+      marginTop: '5px',
+      marginBottom: 0
+    };
+
     return <div className="container">
       <div className="row payment-form">
         <Paper
-          className="col s12 m8 offset-m2 center-align"
-          // onKeyUp={this.handleKeyUp}
+          className="col s12"
           rounded={false}
           zDepth={3}
         >
-          <h1>Payment processing via Square</h1>
+          <div className="pay-headers">
+            <h1 style={styleHeader}>Payment Summary</h1>
+            <p style={styleSubHeader}>Please review the following details for this transaction.</p>
+          </div>
+          <Table style={{tableLayout: 'auto'}}>
+            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+              <TableRow>
+                <TableHeaderColumn style={{width: '50%'}}>
+                  Product
+                </TableHeaderColumn>
+                <TableHeaderColumn style={{width: '12.5%'}}>
+                  Qty
+                  </TableHeaderColumn>
+                <TableHeaderColumn style={{width: '18.75%'}}>
+                  Price
+                </TableHeaderColumn>
+                <TableHeaderColumn style={{width: '18.75%'}}>
+                  Subtotal
+                </TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody
+              displayRowCheckbox={false}
+              showRowHover={true}
+              // displayBorder={true}
+            >
+              {this.props.cart.map((item) => {
+                console.log(item);
+                return <TableRow key={weakKey(item)}>
+                  <TableRowColumn style={{width: '50%'}}>
+                    {item.product.name}
+                  </TableRowColumn>
+                  <TableRowColumn style={{width: '12.5%'}}>
+                    {item.quantity}
+                  </TableRowColumn>
+                  <TableRowColumn style={{width: '18.75%'}}>
+                    {item.product.price.toFixed(2)}
+                  </TableRowColumn>
+                  <TableRowColumn style={{width: '18.75%'}}>
+                    {(item.product.price * item.quantity).toFixed(2)}
+                  </TableRowColumn>
+                </TableRow>;
+              })}
+              {/* <TableRow>
+                <TableRowColumn>Some cool shit</TableRowColumn>
+                <TableRowColumn>3</TableRowColumn>
+                <TableRowColumn>$34.95</TableRowColumn>
+              </TableRow> */}
+              <TableRow>
+                <TableRowColumn></TableRowColumn>
+                <TableRowColumn></TableRowColumn>
+                <TableRowColumn style={{ textAlign: 'right' }}>Total:</TableRowColumn>
+                <TableRowColumn>${total.toFixed(2)}</TableRowColumn>
+              </TableRow>
+            </TableBody>
+          </Table>
 
           {/* These div elements are the placeholder elements that are replaced by the SqPaymentForm's iframes. */}
-          <label>Card Number</label>
-          <div id="sq-card-number"></div>
-          <label>CVV</label>
-          <div id="sq-cvv"></div>
-          <label>Expiration Date</label>
-          <div id="sq-expiration-date"></div>
-          <label>Postal Code</label>
-          <div id="sq-postal-code"></div>
 
+          <div className="row">
+            <div className="col s12 m6 l4">
+              <label>Card Number</label>
+              <div id="sq-card-number"></div>
+              <label>CVV</label>
+              <div id="sq-cvv"></div>
+              <label>Expiration Date</label>
+              <div id="sq-expiration-date"></div>
+              <label>Postal Code</label>
+              <div id="sq-postal-code"></div>
+            </div>
+          </div>
           {/* After the SqPaymentForm generates a card nonce, *this* form POSTs the generated card nonce to your application's server. You should replace the action attribute of the form with the path of the URL you want to POST the nonce to (for example, "/process-card") */}
           {/* <form id="nonce-form" noValidate> */}
           <form id="nonce-form" noValidate action="/api/payment" method="post">
           {/* Whenever a nonce is generated, it's assigned as the value of this hidden input field. */}
             <input type="hidden" id="card-nonce" name="nonce" />
             {/* Clicking this Submit button kicks off the process to generate a card nonce from the buyer's card information. */}
-            <input type="button" onTouchTap={this.requestCardNonce} value="Button"/>
+            {/* <input type="button" onTouchTap={this.requestCardNonce} value="Button"/> */}
+            <div className="row">
+              <RaisedButton
+                className="col s4 offset-s1 l3 offset-l2 form-button"
+                icon={<Send />}
+                label="Submit"
+                labelPosition="before"
+                onTouchTap={this.handleTouchTapSubmit}
+                primary={true}
+              />
+              <RaisedButton
+                className="col s4 offset-s2 l3 offset-l2 form-button"
+                icon={<Cancel />}
+                label="Cancel"
+                labelPosition="before"
+                onTouchTap={this.handleTouchTapCancel}
+                primary={true}
+              />
+            </div>
           </form>
         </Paper>
 
