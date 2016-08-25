@@ -39,13 +39,16 @@ const HomePage = React.createClass({
       </div>
       {/* <div className="wrap-clouds"> */}
       <div className="s12 wrap-clouds">
-        <img src="/images/cloud6.png" className="shift-clouds" alt="fluffy white clouds" />
+        <img src="/images/cloud-production-3.png" className="shift-clouds" alt="fluffy white clouds" />
       </div>
       {/* </div> */}
 
       {/* <div className="product-container"> */}
-        <div className="container">
-          <h1 className="center-align">Products</h1>
+        <div className="container main-content">
+          <div className="blur-me">
+            <h1 className="center-align">Made with love</h1>
+            <h1 className="center-align">For the one you love!</h1>
+          </div>
           <div className="row">
             {products.map((product) => {
               return <ProductInGrid
@@ -57,7 +60,7 @@ const HomePage = React.createClass({
         </div>
       {/* </div> */}
 
-      <div className="wrap-clouds2">
+      {/* <div className="wrap-clouds2">
         <img src="/images/cloud6.png" className="shift-clouds2" alt=""
          />
       </div>
@@ -68,7 +71,16 @@ const HomePage = React.createClass({
      </div>
      <div className=" hill-push">
        <img src="/images/hill2.png" className="hill" alt="" />
+     </div> */}
+     <div className="bottom-clouds footer">
+      <img src="/images/bottom-clouds.png" />
      </div>
+
+     <footer>
+       {/* <p> */}
+         Web Design by - Team Super Secret Squirrel
+       {/* </p> */}
+     </footer>
     </div>;
   }
 });

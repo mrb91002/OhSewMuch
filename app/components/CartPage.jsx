@@ -35,14 +35,14 @@ const CartPage = React.createClass({
 
     const lock = {
       position: "fixed",
-      borderLeft: "1px solid rgb(149, 39, 39)",
       width: "20%",
       top: "140px",
       left: "65%"
     };
 
     const stylePaper = {
-      borderRadius: '5px'
+      borderRadius: '5px',
+      minHeight: '500px'
     };
 
     const styleTable = {
@@ -68,7 +68,7 @@ const CartPage = React.createClass({
             zDepth={3}
           >
             <div className="cart-group row">
-              <div className="col s8">
+              <div className="col s8 border-right">
                 <div className="row">
                   <div className="col s4 align-center offset-s4">Product Name</div>
                   <div className="col s2 align-center">Qty</div>
@@ -126,9 +126,18 @@ const CartPage = React.createClass({
           </Paper>
         </div>
       </div>
-      <div className="wrap-clouds2">
-        <img src="/images/cloud-third.png" className="third-cloud" alt=""/>
+
+
+      <div className="bottom-clouds footer">
+       <img src="/images/bottom-clouds.png" />
       </div>
+
+      <footer>
+        {/* <p> */}
+          Web Design by - Team Super Secret Squirrel
+        {/* </p> */}
+      </footer>
+
     </div>
   }
 });

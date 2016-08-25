@@ -111,9 +111,15 @@ const ProductPage = React.createClass({
         </div>
       </div>
 
-      <div className="wrap-clouds2">
-        <img src="/images/cloud-third.png" className="third-cloud" alt=""/>
+      <div className="bottom-clouds footer">
+       <img src="/images/bottom-clouds.png" />
       </div>
+
+      <footer>
+        {/* <p> */}
+          Web Design by - Team Super Secret Squirrel
+        {/* </p> */}
+      </footer>
 
     </div>
   }

@@ -67,3 +67,53 @@ td {
 // .border-top {
 //   border-top: 1px solid rgb(149, 39, 39);
 // }
+
+.main-content {
+ margin-top: -305px;
+ z-index: 2;
+}
+
+.blur-me {
+  // filter: blur(520px);
+  height: 250px;
+  width: 350px;
+  // background-color: rgba(255,255,255, 0.7);
+  margin: 0 auto;
+  border-radius: 8px;
+  margin-bottom: 50px;
+  padding-top: 20px;
+}
+
+.blur-me h1 {
+  font-family: 'Yesteryear', cursive;
+  color: #B51907;
+  font-size: 3em;
+}
+// .blur-me::before {
+//     background-image: url('pelican-blurry.jpg');
+// }
+//
+// .blur-me::before {
+//     background-image: url('pelican.jpg');
+//     filter: blur(5px);
+// }
+
+.bottom-clouds {
+    width: 100%;
+}
+
+.bottom-clouds img {
+  width: 100%;
+}
+
+footer {
+  background-color: rgb(149, 39, 39);
+  position: relative;
+  margin-top: -10px;
+  height: 50px;
+  color: #fff;
+}
+
+.border-right {
+  border-right: 1px solid rgb(149, 39, 39);
+}

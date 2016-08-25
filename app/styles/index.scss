@@ -15,18 +15,20 @@ p {
 }
 
 .parallax-container.first-para {
-  height: 550px;
-}
-
-.wrap-clouds {
-  width: 100%;
-  height: auto;
+  height: 500px;
 }
 
 .shift-clouds {
   position: relative;
   width: 100%;
-  margin-top: -400px;
+  height: 350px;
+  margin-top: -250px;
+  z-index: -1;
+}
+
+.wrap-clouds {
+  width: 100%;
+  height: auto;
 }
 
 .wrap-clouds2 {
