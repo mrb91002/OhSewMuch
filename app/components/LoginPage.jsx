@@ -144,7 +144,7 @@ const LoginPage = React.createClass({
           <h1>Login</h1>
 
           <TextField
-            className="login-form-button"
+            // className="login-form-button"
             errorText={errors.userName}
             floatingLabelText="User Name"
             fullWidth={true}
@@ -157,7 +157,7 @@ const LoginPage = React.createClass({
           />
 
           <TextField
-            className="login-form-button"
+            // className="login-form-button"
             errorText={errors.password}
             floatingLabelText="Password"
             fullWidth={true}
@@ -170,7 +170,7 @@ const LoginPage = React.createClass({
             value={login.password}
           />
 
-          <div className="row login-form-button-row">
+          <div className="row form-button-row">
             <RaisedButton
               className="col s4 offset-s1 l3 offset-l2 form-button"
               icon={<Send />}

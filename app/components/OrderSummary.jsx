@@ -9,15 +9,25 @@ import { Table,
 import React from 'react';
 import weakKey from 'weak-key';
 
+const taxRate = 0;
+
 const OrderSummary = React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object.isRequired
   },
 
-  total() {
+  subtotal() {
     return this.props.cart.reduce((accum, item) => {
       return accum + item.quantity * item.product.price;
     }, 0);
+  },
+
+  tax() {
+    return this.subtotal() * taxRate;
+  },
+
+  total() {
+    return this.subtotal() + this.tax();
   },
 
   render() {
@@ -36,7 +46,7 @@ const OrderSummary = React.createClass({
 
     return <div>
       <div className="pay-headers">
-        <h1 style={styleHeader}>Payment Summary</h1>
+        <h1 className="flow-text" style={styleHeader}>ORDER SUMMARY: Processed Securely with Square</h1>
         <p style={styleSubHeader}>Please review the following details for this transaction.</p>
       </div>
       <Table style={{tableLayout: 'auto'}}>
@@ -73,6 +83,22 @@ const OrderSummary = React.createClass({
               </TableRowColumn>
             </TableRow>;
           })}
+          <TableRow>
+            <TableRowColumn></TableRowColumn>
+            <TableRowColumn></TableRowColumn>
+            <TableRowColumn> {/* style={{ textAlign: 'right' }} */}
+              Subtotal:
+            </TableRowColumn>
+            <TableRowColumn>${this.subtotal().toFixed(2)}</TableRowColumn>
+          </TableRow>
+          <TableRow>
+            <TableRowColumn></TableRowColumn>
+            <TableRowColumn></TableRowColumn>
+            <TableRowColumn> {/* style={{ textAlign: 'right' }} */}
+              Tax:
+            </TableRowColumn>
+            <TableRowColumn>${this.tax().toFixed(2)}</TableRowColumn>
+          </TableRow>
           <TableRow>
             <TableRowColumn></TableRowColumn>
             <TableRowColumn></TableRowColumn>

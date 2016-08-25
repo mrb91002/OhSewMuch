@@ -10,11 +10,11 @@
   padding: 0px;
 }
 
-.login-form-button-row, .reg-form-button-row {
+.form-button-row {
   margin-top: 50px;
 }
 
-.reg-form-row {
+.form-row {
   margin-bottom: 0;
 }
 
@@ -51,11 +51,7 @@
      color: #000;
    }
 
-   input[type=text]:focus:not([readonly]) {
-     box-shadow: none;
-   }
-
-   input[type=password]:focus:not([readonly]) {
+   input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=email]:focus:not([readonly]){
      box-shadow: none;
    }
 

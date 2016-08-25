@@ -6,9 +6,9 @@ const SquareForm = React.createClass({
   },
 
   render() {
-    console.log('render');
-    return <div>
+    return <div  style={{ marginTop: '14px' }}>
       <label>Card Number</label>
+      {/* These div elements are the placeholder elements that are replaced by the SqPaymentForm's iframes. */}
       <div id="sq-card-number"></div>
       <label>CVV</label>
       <div id="sq-cvv"></div>

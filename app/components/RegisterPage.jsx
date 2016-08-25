@@ -23,9 +23,11 @@ const schema = Joi.object({
     .trim()
     .min(6),
   phone: Joi.string()
+    .allow('')
     .trim()
     .min(7)
-    .max(20),
+    .max(20)
+    .optional(),
   userName: Joi.string()
     .trim()
     .min(6)
@@ -33,13 +35,13 @@ const schema = Joi.object({
   password: Joi.string()
     .trim()
     .min(8)
-    .max(255)
-    .regex(pw, '1 Cap, 1 Lower, 1 Special'),
+    .max(255),
+    // .regex(pw, '1 Cap, 1 Lower, 1 Special'),
   confirmPassword: Joi.string()
     .trim()
     .min(8)
-    .max(255)
-    .regex(pw, '1 Cap, 1 Lower, 1 Special'),
+    .max(255),
+    // .regex(pw, '1 Cap, 1 Lower, 1 Special'),
   addressLine1: Joi.string()
     .trim()
     .max(255),
@@ -84,7 +86,7 @@ const RegisterPage = React.createClass({
         addressCity: '',
         addressState: '',
         addressZip: '',
-        addressCountry: ''
+        addressCountry: 'US'
       },
       regFailText: '',
       open: false,
@@ -231,12 +233,12 @@ const RegisterPage = React.createClass({
         >
           <h1>User Registration</h1>
 
-          <div className="row reg-form-row">
+          <div className="row form-row">
             <div className="col s6">
               <TextField
                 errorStyle={styleError}
                 errorText={errors.firstName}
-                floatingLabelText="First Name"
+                floatingLabelText="* First Name"
                 fullWidth={true}
                 hintText="First name..."
                 name="firstName"
@@ -251,7 +253,7 @@ const RegisterPage = React.createClass({
               <TextField
                 errorStyle={styleError}
                 errorText={errors.lastName}
-                floatingLabelText="Last Name"
+                floatingLabelText="* Last Name"
                 fullWidth={true}
                 hintText="Last name..."
                 name="lastName"
@@ -263,17 +265,18 @@ const RegisterPage = React.createClass({
             </div>
           </div>
 
-          <div className="row reg-form-row">
+          <div className="row form-row">
             <div className="col s12 l6">
               <TextField
                 errorStyle={styleError}
                 errorText={errors.email}
-                floatingLabelText="Email"
+                floatingLabelText="* Email"
                 fullWidth={true}
                 hintText="Email address..."
                 name="email"
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
+                type="email"
                 style={styleTextField}
                 value={reg.email}
               />
@@ -289,7 +292,7 @@ const RegisterPage = React.createClass({
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
                 style={styleTextField}
-                type='phone'
+                type="tel"
                 value={reg.phone}
               />
             </div>
@@ -297,7 +300,7 @@ const RegisterPage = React.createClass({
           <TextField
             errorStyle={styleError}
             errorText={errors.userName}
-            floatingLabelText="User Name"
+            floatingLabelText="* User Name"
             fullWidth={true}
             hintText="User name..."
             name="userName"
@@ -306,12 +309,12 @@ const RegisterPage = React.createClass({
             style={styleTextField}
             value={reg.userName}
           />
-          <div className="row reg-form-row">
+          <div className="row form-row">
             <div className="col s6">
               <TextField
                 errorStyle={styleError}
                 errorText={errors.password}
-                floatingLabelText="Password"
+                floatingLabelText="* Password"
                 fullWidth={true}
                 hintText="Enter password..."
                 name="password"
@@ -326,7 +329,7 @@ const RegisterPage = React.createClass({
               <TextField
                 errorStyle={styleError}
                 errorText={errors.confirmPassword}
-                floatingLabelText="Confirm Password"
+                floatingLabelText="* Confirm Password"
                 fullWidth={true}
                 hintText="Re-enter password..."
                 name="confirmPassword"
@@ -339,12 +342,12 @@ const RegisterPage = React.createClass({
             </div>
           </div>
 
-          <div className="row reg-form-row">
+          <div className="row form-row">
             <div className="col s12 l6">
               <TextField
                 errorStyle={styleError}
                 errorText={errors.addressLine1}
-                floatingLabelText="Street address"
+                floatingLabelText="* Street address"
                 fullWidth={true}
                 hintText="Address line 1..."
                 name="addressLine1"
@@ -370,12 +373,12 @@ const RegisterPage = React.createClass({
             </div>
           </div>
 
-          <div className="row reg-form-row">
+          <div className="row form-row">
             <div className="col s6 l5">
               <TextField
                 errorStyle={styleError}
                 errorText={errors.addressCity}
-                floatingLabelText="City"
+                floatingLabelText="* City"
                 fullWidth={true}
                 hintText="City name..."
                 name="addressCity"
@@ -389,9 +392,9 @@ const RegisterPage = React.createClass({
               <TextField
                 errorStyle={styleError}
                 errorText={errors.addressState}
-                floatingLabelText="State"
+                floatingLabelText="* State"
                 fullWidth={true}
-                hintText="State abrv."
+                hintText="State abrv..."
                 name="addressState"
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
@@ -403,7 +406,7 @@ const RegisterPage = React.createClass({
               <TextField
                 errorStyle={styleError}
                 errorText={errors.addressZip}
-                floatingLabelText="Zip code"
+                floatingLabelText="* Zip code"
                 fullWidth={true}
                 hintText="5-digit zip code..."
                 name="addressZip"
@@ -415,9 +418,10 @@ const RegisterPage = React.createClass({
             </div>
             <div className="col s6 l2">
               <TextField
+                disabled={true}
                 errorStyle={styleError}
                 errorText={errors.addressCountry}
-                floatingLabelText="Country"
+                floatingLabelText="* Country"
                 fullWidth={true}
                 hintText="Country abrv..."
                 name="addressCountry"
@@ -429,7 +433,7 @@ const RegisterPage = React.createClass({
             </div>
           </div>
 
-          <div className="row reg-form-button-row">
+          <div className="row form-button-row">
             <RaisedButton
               className="col s4 offset-s1 l3 offset-l2 form-button"
               icon={<Send />}
@@ -437,7 +441,6 @@ const RegisterPage = React.createClass({
               labelPosition="before"
               onTouchTap={this.handleTouchTapReg}
               primary={true}
-              // style={styleRaisedButton}
             />
 
             <RaisedButton
@@ -447,7 +450,6 @@ const RegisterPage = React.createClass({
               labelPosition="before"
               onTouchTap={this.handleTouchTapCancel}
               primary={true}
-              // style={styleRaisedButton}
             />
           </div>
         </Paper>

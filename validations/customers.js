@@ -47,7 +47,7 @@ module.exports.post = {
       .optional(),
     password: Joi.string()
       .label('Password')
-      .regex(pw, 'Strong Password')
+      // .regex(pw, 'Strong Password')
       .min(8)
       .max(255)
       .trim()
@@ -168,7 +168,7 @@ module.exports.patch = {
       .optional(),
     password: Joi.string()
       .label('Password')
-      .regex(pw, 'Strong Password')
+      // .regex(pw, 'Strong Password')
       .min(8)
       .max(255)
       .trim()
@@ -297,7 +297,7 @@ module.exports.patchAdmin = {
       .optional(),
     password: Joi.string()
       .label('Password')
-      .regex(pw, 'Strong Password')
+      // .regex(pw, 'Strong Password')
       .min(8)
       .max(255)
       .trim()
