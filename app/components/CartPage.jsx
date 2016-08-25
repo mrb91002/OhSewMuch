@@ -56,7 +56,7 @@ const CartPage = React.createClass({
     return <div>
       <div className="container">
         <div className="row">
-          {quantity} Items In Your Cart
+          <h5>{quantity} Items In Your Cart </h5>
         </div>
       </div>
       <div className="container">
@@ -95,12 +95,16 @@ const CartPage = React.createClass({
                       <td>${subTotal.toFixed(2)}</td>
                     </tr>
                     <tr>
+                      <td>tax</td>
+                      <td>WA Only</td>
+                    </tr>
+                    <tr>
                       <td>Shipping</td>
                       <td>FREE</td>
                     </tr>
-                    <tr>
+                    <tr className="border-top">
                       <td>Total</td>
-                      <td>$34.90</td>
+                      <td>${subTotal.toFixed(2)}</td>
                     </tr>
                   </tbody>
 
