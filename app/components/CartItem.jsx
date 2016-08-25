@@ -6,19 +6,31 @@ const CartItem = React.createClass({
     muiTheme: React.PropTypes.object.isRequired
   },
 
-  handleTouchTap(event) {
-    // this.props.router.push(`/product/${this.props.product.id}`)
-    // this.props.router.push(`/product/${event.target.id}`)
+  handleTouchTap() {
+    console.log(this.props.item);
+    this.props.router.push(`/product/${this.props.item.product.id}`)
     console.log('test');
+  },
+
+  handleDoubleClick() {
+    console.log('double clicked');
   },
 
   render() {
     const item = this.props.item;
 
-    // if (!this.props.length) {
-    //   console.log('fail');
-    //   return <div></div>
-    // };
+    const number = {
+      cursor: "pointer",
+      borderRadius: "3px",
+      width: "35px",
+      height: "35px",
+      margin: "0 auto",
+      textAlign: "center",
+      backgroundColor: "#EFEFF4",
+      marginTop: "10px",
+      paddingTop: "5px"
+
+    }
 
     console.log('something is going on here');
     return <div className="row">
@@ -26,9 +38,8 @@ const CartItem = React.createClass({
         <div className="col s6 l4">
           <img
             src={item.product.images[0].imageUrl}
-            // height="150px"
             width="70%"
-            // width="150px"
+            style={{cursor: "pointer" }}
             onTouchTap={this.handleTouchTap}
           />
         </div>
@@ -36,7 +47,11 @@ const CartItem = React.createClass({
           <p>{item.product.name}</p>
         </div>
         <div  className="col s6 l2 fill">
-          <p>{item.quantity}</p>
+          <input
+            onDoubleClick={this.handleDoubleClick}
+            style={number}
+            value={item.quantity}
+          />
         </div>
         <div className="col s16 l2 fill">
           <p>${`${(item.product.price * item.quantity).toFixed(2)}`}</p>

@@ -135,6 +135,15 @@ const App = React.createClass({
     this.setState({ cookies: nextCookies });
   },
 
+  updateCart(item, qty) {
+    const nextCart = this.state.cart.map((prod) => {
+        if (item.product.id === prod.product.id) {
+          prod.quantity = qty;
+        }
+    });
+    this.setState({ cart: nextCart });
+  },
+
   getChildrenProps() {
     const matchPath = this.props.routes.reduce((accum, route) => {
       // Sometimes route.path is undefined, so default to empty string
@@ -148,14 +157,16 @@ const App = React.createClass({
         clearCart: this.clearCart,
         cookies: this.state.cookies,
         products: this.state.products,
-        removeFromCart: this.removeFromCart
+        removeFromCart: this.removeFromCart,
+        updateCart: this.updateCart
       },
       '/register': {
         cookies: this.state.cookies,
         updateCookies: this.updateCookies
       },
       '/payment': {
-        cart: this.state.cart
+        cart: this.state.cart,
+        cookies: this.state.cookies
       }
     };
 
