@@ -23,6 +23,10 @@ import SquareForm from 'components/SquareForm';
 import TextField from 'material-ui/TextField';
 import weakKey from 'weak-key';
 
+let total = 0;
+let state;
+let props;
+
 const schema = Joi.object({
   firstName: Joi.string()
     .trim()
@@ -126,6 +130,11 @@ const PaymentPage = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
+    total = nextProps.cart.reduce((accum, item) => {
+        return accum + item.quantity * item.product.price;
+      }, 0);
+
+    props = nextProps;
     this.getCustomerInfo(nextProps);
   },
 
@@ -134,6 +143,7 @@ const PaymentPage = React.createClass({
       return;
     }
 
+    props = this.props;
     this.getCustomerInfo(this.props);
   },
 
@@ -184,10 +194,16 @@ const PaymentPage = React.createClass({
           else {
             axios.post('/api/payment', {
               nonce: nonce,
-              amount: 10.62
+              amount: total
             })
             .then((apiRes) => {
-              console.log(apiRes)
+              console.log(apiRes.data);
+              // console.log(getProps().cart);
+              console.log(state);
+              console.log(props);
+              if (props.cookies.loggedIn) {
+
+              }
             })
             .catch((err) => {
               console.log(err);
@@ -304,6 +320,8 @@ const PaymentPage = React.createClass({
   },
 
   handleTouchTapSubmit(event) {
+    state = this.state;
+    props = this.props;
     this.state.paymentForm.requestCardNonce();
   },
 
