@@ -21,6 +21,7 @@ const ProductPage = React.createClass({
       return product.id === id;
     })[0];
 
+    Materialize.toast('Item Added To Cart', 2000, 'rounded');
     this.props.addToCart(product);
   },
 
