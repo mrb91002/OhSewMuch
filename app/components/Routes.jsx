@@ -10,10 +10,12 @@ import CartPage from 'components/CartPage';
 import HomePage from 'components/HomePage';
 import LoginPage from 'components/LoginPage';
 import NotFound from 'components/NotFound';
+import OrderHistoryPage from 'components/OrderHistoryPage';
 import PaymentPage from 'components/PaymentPage';
 import ProductPage from 'components/ProductPage';
 import React from 'react';
 import RegisterPage from 'components/RegisterPage';
+import ThankYouPage from 'components/ThankYouPage';
 
 const Routes = React.createClass({
   handleChange(prevState, nextState, replace) {
@@ -35,10 +37,12 @@ const Routes = React.createClass({
           path="product/:id"
           // onEnter={this.handleEnter}
         />
-        <Route component={LoginPage} path="login" />
-        <Route component={RegisterPage} path="register" />
         <Route component={CartPage} path="cart" />
+        <Route component={LoginPage} path="login" />
+        <Route component={OrderHistoryPage} path="orderhistory" />
         <Route component={PaymentPage} path="payment" />
+        <Route component={RegisterPage} path="register" />
+        <Route component={ThankYouPage} path="thankyou" />
 
         <Route component={AdminHomePage} path="adminhome" />
 

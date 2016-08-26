@@ -18,6 +18,7 @@ router.get('/orders', checkAuth, ev(val.get), (req, res, next) => {
 
   knex('orders')
     .where('customer_id', customerId)
+    .orderBy('created_at', 'desc')
     .then((orders) => {
       res.send(camelizeKeys(orders));
     })

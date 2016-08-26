@@ -21,7 +21,7 @@ exports.seed = function(knex) {
         id:2,
         customer_id: 2,
         promo_id: 1,
-        created_at: new Date('2016-06-26 14:26:16 UTC'),
+        created_at: new Date('2016-07-27 14:26:16 UTC'),
         updated_at: new Date('2016-06-26 14:26:16 UTC'),
         ship_type: 'UPS: 2-day',
         ship_first_name: "christine",

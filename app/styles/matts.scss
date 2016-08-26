@@ -117,3 +117,32 @@ footer {
 .border-right {
   border-right: 1px solid rgb(149, 39, 39);
 }
+
+.thanks-clouds img {
+        -moz-transform: scaleY(-1);
+        -o-transform: scaleY(-1);
+        -webkit-transform: scaleY(-1);
+        transform: scaleY(-1);
+        filter: FlipV;
+        -ms-filter: "FlipV";
+        width: 100%;
+        margin-top: -400px;
+}
+
+.light-city {
+  width: 100%;
+  margin-top: -300px;
+}
+
+.light-city img {
+  width: 100%;
+}
+
+.hill2 {
+  width: 100%;
+  margin-top: -600px;
+}
+
+.hill2 img {
+  width: 100%;
+}
