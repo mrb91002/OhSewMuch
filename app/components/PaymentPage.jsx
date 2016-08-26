@@ -247,6 +247,7 @@ const PaymentPage = React.createClass({
               // Need to store newOrder to state of App.
               // Need to navigate to thank you page.
               console.log(newOrder.data);
+              props.clearCart();
               props.router.push('/thankyou');
             })
             .catch((err) => {

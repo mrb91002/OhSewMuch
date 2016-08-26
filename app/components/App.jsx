@@ -167,7 +167,8 @@ const App = React.createClass({
       },
       '/payment': {
         cart: this.state.cart,
-        cookies: this.state.cookies
+        cookies: this.state.cookies,
+        clearCart: this.clearCart
       }
     };
 
