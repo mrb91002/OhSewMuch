@@ -102,16 +102,9 @@ const App = React.createClass({
   },
 
   removeFromCart(product) {
-    console.log('got here');
-    console.log(product);
     const nextCart = this.state.cart.filter((item) => {
-      if (item.product.id === product.id) {
-        // if (item.quantity === 1) {
-        //   return false;
-        // }
 
-        // item.quantity -= 1;
-
+      if (item.product.id === product.product.id) {
         return false;
       }
       return true;

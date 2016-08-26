@@ -89,6 +89,7 @@ const CartPage = React.createClass({
                       key={weakKey(item)}
                       item={item}
                       updateCart={this.props.updateCart}
+                      removeFromCart={this.props.removeFromCart}
                     />
                 })}
 

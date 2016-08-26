@@ -63,8 +63,6 @@ const CartItem = React.createClass({
 
   render() {
     const item = this.props.item;
-    console.log('item');
-    console.log(item);
 
     const number = {
       cursor: "pointer",
