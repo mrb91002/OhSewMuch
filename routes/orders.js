@@ -15,12 +15,22 @@ const { checkAuth, processToken } = require('../modules/middleware');
 // Route tested and working
 router.get('/orders', checkAuth, ev(val.get), (req, res, next) => {
   const customerId = req.token.userId;
+  let orders;
 
   knex('orders')
     .where('customer_id', customerId)
     .orderBy('created_at', 'desc')
-    .then((orders) => {
-      res.send(camelizeKeys(orders));
+    .then((allOrders) => {
+      orders = camelizeKeys(allOrders);
+      return Promise.all(orders.map((order) => {
+        return knex('orders_products')
+          .select('order_id', 'price', 'product_id')
+          .where('order_id', order.id);
+      }));
+    })
+    .then((ordersProducts) => {
+
+      res.send(ordersProducts);
     })
     .catch((err) => {
       next(err);

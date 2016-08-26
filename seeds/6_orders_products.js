@@ -39,7 +39,7 @@ exports.seed = function(knex) {
         price: 14.95
       }, {
         id:8,
-        order_id: 2,
+        order_id: 3,
         product_id: 2,
         price: 14.95
       }, ]);
