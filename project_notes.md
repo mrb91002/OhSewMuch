@@ -340,3 +340,9 @@ Users will have trouble understanding what we do initially due to scroll height.
 Users will be able to see how to login quickly.
 
 Users will understand how to add to cart.
+
+Sample Credit data:
+4532759734545858
+111
+0820
+94103
