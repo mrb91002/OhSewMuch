@@ -5,6 +5,7 @@ import {
   Router
 } from 'react-router';
 import App from 'components/App';
+import AdminHomePage from 'components/AdminHomePage';
 import CartPage from 'components/CartPage';
 import HomePage from 'components/HomePage';
 import LoginPage from 'components/LoginPage';
@@ -38,7 +39,9 @@ const Routes = React.createClass({
         <Route component={RegisterPage} path="register" />
         <Route component={CartPage} path="cart" />
         <Route component={PaymentPage} path="payment" />
-        
+
+        <Route component={AdminHomePage} path="adminhome" />
+
         {/* The 404 error handler */}
         <Route component={NotFound} path="*" />
       </Route>

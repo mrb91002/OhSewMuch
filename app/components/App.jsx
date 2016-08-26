@@ -68,8 +68,7 @@ const App = React.createClass({
   },
 
   handleTouchTapAdmin() {
-    // this.props.router.push('/adminhome');
-    console.log('admin');
+    this.props.router.push('/adminhome');
   },
 
   handleTouchTapLogout() {
@@ -177,43 +176,65 @@ const App = React.createClass({
     };
 
     props['/login'] = props['/register'];
+
     props['/product/:id'] = props['/'];
     props['/cart'] = props['/'];
+    props['/adminhome'] = props['/'];
 
     return props[matchPath];
   },
 
   render() {
+    const { loggedIn, admin } = this.state.cookies;
+    const { pathname } = this.props.location;
+    const { cart } = this.state;
+
     const quantity = this.state.cart.reduce((accum, item) => {
       return accum + item.quantity;
     }, 0);
 
-    const hideWhenLoggedIn = () => {
-      if (!this.state.cookies.loggedIn) {
+    const showRegister = () => {
+      if (!loggedIn && pathname !== '/register') {
         return { display: 'block' };
       }
 
       return { display: 'none' };
     };
 
-    const showWhenLoggedIn = () => {
-      if (this.state.cookies.loggedIn) {
+    const showLogout = () => {
+      if (loggedIn) {
         return { display: 'block' };
       }
 
       return { display: 'none' };
     };
 
-    const showWhenAdmin = () => {
-      if (this.state.cookies.admin) {
+    const showLogin = () => {
+      if (!loggedIn && pathname !== '/login') {
         return { display: 'block' };
       }
 
       return { display: 'none' };
     };
 
-    const showWhenCart = () => {
-      if (this.state.cart.length) {
+    const showAdmin = () => {
+      if (admin) {
+        return { display: 'block' };
+      }
+
+      return { display: 'none' };
+    };
+
+    const showCart = () => {
+      if (cart.length) {
+        return { display: 'block' };
+      }
+
+      return { display: 'none' };
+    };
+
+    const showEmptyCart = () => {
+      if (cart.length && pathname === '/cart') {
         return { display: 'block' };
       }
 
@@ -244,32 +265,32 @@ const App = React.createClass({
           <FlatButton
             label="Login"
             onTouchTap={this.handleTouchTapLogin}
-            style={Object.assign({}, styleFlatButton, hideWhenLoggedIn())}
+            style={Object.assign({}, styleFlatButton, showLogin())}
           />
           <FlatButton
             label="Register"
             onTouchTap={this.handleTouchTapReg}
-            style={Object.assign({}, styleFlatButton, hideWhenLoggedIn())}
+            style={Object.assign({}, styleFlatButton, showRegister())}
           />
           <FlatButton
             label="Logout"
             onTouchTap={this.handleTouchTapLogout}
-            style={Object.assign({}, styleFlatButton, showWhenLoggedIn())}
+            style={Object.assign({}, styleFlatButton, showLogout())}
           />
           <FlatButton
             label="Admin"
             onTouchTap={this.handleTouchTapAdmin}
-            style={Object.assign({}, styleFlatButton, showWhenAdmin())}
+            style={Object.assign({}, styleFlatButton, showAdmin())}
           />
           <FlatButton
             label={"Cart - " + quantity}
             onTouchTap={this.handleTouchTapCart}
-            style={Object.assign({}, styleFlatButton, showWhenCart())}
+            style={Object.assign({}, styleFlatButton, showCart())}
           />
           <FlatButton
             label="Empty Cart"
             onTouchTap={this.handleTouchTapEmptyCart}
-            style={Object.assign({}, styleFlatButton, showWhenCart())}
+            style={Object.assign({}, styleFlatButton, showEmptyCart())}
           />
         </AppBar>
         <div style={{height: '64px'}}>

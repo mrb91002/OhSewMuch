@@ -124,8 +124,17 @@ const PaymentPage = React.createClass({
   },
 
   componentWillMount() {
-    console.log('willMount');
-    
+    const loggedIn = this.props.cookies.loggedIn;
+
+    if (loggedIn) {
+      axios.get('api/customer')
+        .then((customer) => {
+          console.log(customer);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
   },
 
   componentDidMount() {
