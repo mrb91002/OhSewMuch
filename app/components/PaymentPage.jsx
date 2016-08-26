@@ -24,7 +24,6 @@ import SquareForm from 'components/SquareForm';
 import TextField from 'material-ui/TextField';
 import weakKey from 'weak-key';
 
-let total = 0;
 let state;
 let props;
 
@@ -131,10 +130,6 @@ const PaymentPage = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    total = nextProps.cart.reduce((accum, item) => {
-        return accum + item.quantity * item.product.price;
-      }, 0);
-
     props = nextProps;
     this.getCustomerInfo(nextProps);
   },
@@ -198,6 +193,9 @@ const PaymentPage = React.createClass({
             const shipType = 'UPS: Standard';
             const order = {};
             let newCustomer;
+            const total = props.cart.reduce((accum, item) => {
+                return accum + item.quantity * item.product.price;
+              }, 0);
 
             axios.post('/api/payment', {
               nonce: nonce,
