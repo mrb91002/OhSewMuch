@@ -152,12 +152,12 @@ router.post('/orders', ev(val.post), processToken, (req, res, next) => {
     })
     .then((orders) => {
       newOrder = camelizeKeys(orders[0]);
-
+      console.log(orderProducts);
       // console.log(orderProducts);
       // Needs to map the products array and get prices and insert order id #'s
       return Promise.all(orderProducts.map((prod) => {
         return knex('products')
-          .where('id', prod.id)
+          .where('id', prod)
           .first();
       }));
     })
