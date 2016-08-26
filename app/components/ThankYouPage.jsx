@@ -29,7 +29,7 @@ const ThankYouPage = React.createClass({
         <h5>You're awesome and we want your friends to know!</h5>
 
         <div className="col s12 thanks-message">
-          <img src="/images/facebook.png" width="65" />
+          <img src="/images/Facebook.png" width="65" />
           <img src="/images/twitter.png" width="65" />
           <img src="/images/instagram.png" width="65" />
           <img src="/images/pinterest.png" width="65" />
