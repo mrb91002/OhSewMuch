@@ -253,7 +253,6 @@ const PaymentPage = React.createClass({
               nextAddress[key] = '';
             }
           }
-          console.log(nextAddress);
           this.setState({ address: nextAddress });
         })
         .catch((err) => {
