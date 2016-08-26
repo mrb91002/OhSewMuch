@@ -184,7 +184,7 @@ const PaymentPage = React.createClass({
           else {
             axios.post('/api/payment', {
               nonce: nonce,
-              amount: 10.21
+              amount: 10.62
             })
             .then((apiRes) => {
               console.log(apiRes)
@@ -253,7 +253,6 @@ const PaymentPage = React.createClass({
               nextAddress[key] = '';
             }
           }
-          console.log(nextAddress);
           this.setState({ address: nextAddress });
         })
         .catch((err) => {
