@@ -96,7 +96,7 @@ const ProductPage = React.createClass({
           </div>
           <div className="col s10 offset-1 social-media">
             <div className="col s12 product-info-inner">
-              <img src="/images/facebook.png" width="65" />
+              <img src="/images/Facebook.png" width="65" />
               <img src="/images/twitter.png" width="65" />
               <img src="/images/instagram.png" width="65" />
               <img src="/images/pinterest.png" width="65" />
