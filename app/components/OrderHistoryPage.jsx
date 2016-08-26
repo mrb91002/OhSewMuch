@@ -19,8 +19,7 @@ const OrderHistoryPage = React.createClass({
     axios.get('/api/orders')
       .then((res) => {
 
-        // console.log(res);
-        // this.setState({ orders: res.data });
+        this.setState({ orders: res.data });
       })
       .catch((err) => {
         console.error(err.response);
@@ -29,14 +28,14 @@ const OrderHistoryPage = React.createClass({
 
   render() {
     return <div>
-
       {this.state.orders.map((ord) => {
+        console.log('iterate');
           return <OrderSummary
             cart={ord}
             key={weakKey(ord)}
           />
       })}
-
+      <p>this</p>
     </div>;
 
   }

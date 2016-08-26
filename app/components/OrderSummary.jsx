@@ -31,6 +31,7 @@ const OrderSummary = React.createClass({
   },
 
   render() {
+    console.log('hit');
     const palette = this.context.muiTheme.palette;
 
     const styleHeader = {

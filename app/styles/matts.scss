@@ -128,16 +128,21 @@ footer {
 
 .light-city {
   width: 100%;
-  margin-top: -300px;
+  background: url("images/city2.png");
+  height: 900px;
+
+  // margin-top: -300px;
 }
 
-.light-city img {
-  width: 100%;
-}
+// .light-city img {
+//   width: 100%;
+//   // background: src(/images/city2.png);
+//   height: 900px;
+// }
 
 .hill2 {
   width: 100%;
-  margin-top: -600px;
+  // margin-top: -600px;
 }
 
 .hill2 img {
