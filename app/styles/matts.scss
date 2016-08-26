@@ -25,6 +25,24 @@
   padding: 10px;
 }
 
+.thanks-message {
+  // background-color: rgba(160, 210, 245, 1);
+  // background-color: rgba(160, 210, 245, .5);
+  background-color: rgba(149, 39, 39, 0.8);
+  // background-color: rgba(245, 245, 241, 0.9);
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.thanks-message img {
+  padding: 10px;
+}
+
+
+
+
+
 .question {
   padding: 5px;
   border: 1px solid grey;
@@ -128,21 +146,16 @@ footer {
 
 .light-city {
   width: 100%;
-  background: url("images/city2.png");
-  height: 900px;
-
-  // margin-top: -300px;
+  margin-top: -300px;
 }
 
-// .light-city img {
-//   width: 100%;
-//   // background: src(/images/city2.png);
-//   height: 900px;
-// }
+.light-city img {
+  width: 100%;
+}
 
 .hill2 {
   width: 100%;
-  // margin-top: -600px;
+  margin-top: -600px;
 }
 
 .hill2 img {
@@ -150,9 +163,19 @@ footer {
 }
 
 .congratulations {
-  height: 500px;
+  height: 400px;
   width: 500px;
-  background-color: blue;
-  margin-top: -400px;
+  background-color: rgba(255, 255, 255, .7);
+  // background-color: rgba(149, 39, 39, 0.8);
+  padding: 20px;
+  top: 200px;
+  left: 200px;
   z-index: 100;
+  position: fixed;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.congratulations h2 {
+  font-size: 40px;
 }
