@@ -6,6 +6,7 @@ import { Table,
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
+import { camelizeKeys, decamelizeKeys } from 'humps';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import BillAddress from 'components/BillAddress';
@@ -192,21 +193,67 @@ const PaymentPage = React.createClass({
           // No errors occurred. Extract the card nonce or cardData
           }
           else {
+            const products = [];
+            // Hard coded ship-type and Promo skipped
+            const shipType = 'UPS: Standard';
+            const order = {};
+            let newCustomer;
+
             axios.post('/api/payment', {
               nonce: nonce,
               amount: total
             })
             .then((apiRes) => {
-              console.log(apiRes.data);
-              // console.log(getProps().cart);
-              console.log(state);
-              console.log(props);
-              if (props.cookies.loggedIn) {
-
+              // Need to store apiRes for credit authorization at some point.
+              for (const item of props.cart) {
+                for (let i = 0; i < item.quantity; i++) {
+                  products.push(item.product.id);
+                }
               }
+              // Need promo and shiptype processed here
+
+              // Loop address and remove blank fields
+              const cust = Object.assign({}, state.address);
+
+              for (const key in cust) {
+                if (!cust[key]) {
+                  delete cust[key];
+                }
+              }
+
+              // Need to get a customer or patch existing
+              if (!props.cookies.loggedIn) {
+                return axios.post('api/customers', cust);
+              }
+
+              // Should only patch if necessary, but patching all is a shortcut
+              // to get this done quicker.
+              return axios.patch('api/customer', cust);
+            })
+            .then((customer) => {
+              newCustomer = camelizeKeys(customer.data);
+              console.log(newCustomer);
+              if (!props.cookies.loggedIn) {
+                order.customerId = newCustomer.id;
+              }
+
+              // Would also add promoId at this point
+              order.shipType = shipType;
+              order.products = products;
+
+              console.log(order);
+
+              return axios.post('api/orders', order);
+            })
+            .then((newOrder) => {
+              // Need to store newOrder to state of App.
+              // Need to navigate to thank you page.
+              console.log(newOrder.data);
+              props.router.push('/thankyou');
             })
             .catch((err) => {
-              console.log(err);
+              // need to handle address errors in toast or equiv.
+              console.log(err.response || err);
             });
           }
         },
@@ -310,8 +357,22 @@ const PaymentPage = React.createClass({
       value = value.toUpperCase();
     }
 
-    if (name === 'addressCity' && value.length === 1) {
+    if (name === 'shipAddressState' || name === 'shipAddressCountry') {
       value = value.toUpperCase();
+    }
+
+    if (value.length === 1) {
+      if (name === 'addressCity' || name === 'shipAddressCity') {
+        value = value.toUpperCase();
+      }
+
+      if (name === 'firstName' || name === 'lastName') {
+        value = value.toUpperCase();
+      }
+
+      if (name === 'shipFirstName' || name === 'shipLastName') {
+        value = value.toUpperCase();
+      }
     }
 
     const nextAddress = Object.assign({}, address, { [name]: value });

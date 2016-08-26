@@ -57,10 +57,10 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="Email address..."
             name="email"
+            noValidate
             onBlur={this.props.handleBlur}
             onChange={this.props.handleChange}
             style={styleTextField}
-            type="email"
             value={address.email}
           />
         </div>
