@@ -104,6 +104,8 @@ const PaymentPage = React.createClass({
       address: {
         firstName: '',
         lastName: '',
+        email: '',
+        phone: '',
         addressLine1: '',
         addressLine2: '',
         addressCity: '',
@@ -123,18 +125,16 @@ const PaymentPage = React.createClass({
     };
   },
 
-  componentWillMount() {
-    const loggedIn = this.props.cookies.loggedIn;
+  componentWillReceiveProps(nextProps) {
+    this.getCustomerInfo(nextProps);
+  },
 
-    if (loggedIn) {
-      axios.get('api/customer')
-        .then((customer) => {
-          console.log(customer);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
+  componentWillMount() {
+    if (!Object.keys(this.props.cookies).length) {
+      return;
     }
+
+    this.getCustomerInfo(this.props);
   },
 
   componentDidMount() {
@@ -233,6 +233,33 @@ const PaymentPage = React.createClass({
   componentWillUnmount() {
     // Necessary to prevent memory leaks and unwanted event handlers
     this.state.paymentForm.destroy();
+  },
+
+  getCustomerInfo(props) {
+    if (props.cookies.loggedIn) {
+      axios.get('api/customer')
+        .then((apiRes) => {
+          const customer = apiRes.data;
+          const nextAddress = {};
+
+          delete customer.id;
+          delete customer.userName;
+
+          for (const key in customer) {
+            if (customer[key]) {
+              nextAddress[key] = customer[key];
+            }
+            else {
+              nextAddress[key] = '';
+            }
+          }
+          console.log(nextAddress);
+          this.setState({ address: nextAddress });
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
   },
 
   handleRequestClose() {
