@@ -136,11 +136,17 @@ const App = React.createClass({
   },
 
   updateCart(item, qty) {
+    // console.log(item);
+    console.log(qty);
+
     const nextCart = this.state.cart.map((prod) => {
         if (item.product.id === prod.product.id) {
           prod.quantity = qty;
         }
+        return prod;
     });
+    console.log('updateCartState')
+    console.log(nextCart);
     this.setState({ cart: nextCart });
   },
 

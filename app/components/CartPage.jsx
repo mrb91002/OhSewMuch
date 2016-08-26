@@ -88,6 +88,7 @@ const CartPage = React.createClass({
                   return <CartItem
                       key={weakKey(item)}
                       item={item}
+                      updateCart={this.props.updateCart}
                     />
                 })}
 
