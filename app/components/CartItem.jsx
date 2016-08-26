@@ -57,8 +57,12 @@ const CartItem = React.createClass({
     this.props.updateCart(this.props.item, this.state.quantity);
   },
 
-  handleBlur() {
-    console.log('blur');
+  handleBlur(event) {
+    if (this.state.quantity === '') {
+      return;
+    };
+
+    this.props.updateCart(this.props.item, this.state.quantity);
   },
 
   render() {
