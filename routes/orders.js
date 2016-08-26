@@ -16,6 +16,8 @@ const { checkAuth, processToken } = require('../modules/middleware');
 router.get('/orders', checkAuth, ev(val.get), (req, res, next) => {
   const customerId = req.token.userId;
   let orders;
+  let lineItems;
+  let items = [];
 
   knex('orders')
     .where('customer_id', customerId)
@@ -29,8 +31,58 @@ router.get('/orders', checkAuth, ev(val.get), (req, res, next) => {
       }));
     })
     .then((ordersProducts) => {
+      lineItems = camelizeKeys(ordersProducts);
+      for (const order of lineItems) {
+        for (const product of order) {
+          items.push(product);
+        }
+      }
 
-      res.send(ordersProducts);
+      return Promise.all(items.map((item) => {
+        return knex('products')
+          .where('id', item.productId)
+          .first();
+      }));
+    })
+    .then((lineProducts) => {
+      for (const item of items) {
+        for (const product of camelizeKeys(lineProducts)) {
+          if (product.id === item.productId) {
+            item.product = product;
+            item.product.price = item.price;
+            delete item.price;
+            delete product.deleted;
+            delete product.createdAt;
+            delete product.updatedAt;
+            delete product.unitsInStock;
+            delete item.productId;
+            break;
+          }
+        }
+      }
+
+      const finalOrders = [];
+      let inFinalOrders = false;
+      for (const it of items) {
+        for (const ord of finalOrders) {
+          if (it.orderId === ord.id) {
+            ord.products.push(it.product)
+            inFinalOrders = true;
+            break;
+          }
+        }
+        if (inFinalOrders) {
+          inFinalOrders = false;
+          continue;
+        }
+        it.products = [];
+        it.products.push(it.product);
+        delete it.product;
+        it.id = it.orderId;
+        delete it.orderId;
+      }
+
+      res.send(items);
     })
     .catch((err) => {
       next(err);
