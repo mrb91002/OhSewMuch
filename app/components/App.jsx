@@ -102,16 +102,19 @@ const App = React.createClass({
   },
 
   removeFromCart(product) {
-    const nextCart = this.state.filter((item) => {
+    console.log('got here');
+    console.log(product);
+    const nextCart = this.state.cart.filter((item) => {
       if (item.product.id === product.id) {
-        if (item.quantity === 1) {
-          return false;
-        }
+        // if (item.quantity === 1) {
+        //   return false;
+        // }
 
-        item.quantity -= 1;
+        // item.quantity -= 1;
 
-        return true;
+        return false;
       }
+      return true;
     });
 
     localStorage.setItem('cart', JSON.stringify(nextCart));

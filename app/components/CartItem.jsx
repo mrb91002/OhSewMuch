@@ -13,14 +13,11 @@ const CartItem = React.createClass({
   },
 
   handleTouchTap() {
-    console.log(this.props.item);
     this.props.router.push(`/product/${this.props.item.product.id}`)
-    console.log('test');
   },
 
   handleDoubleClick() {
-    console.log('double clicked');
-    console.log(this.props.item);
+
     this.props.updateCart(this.props.item);
 
   },
@@ -42,6 +39,12 @@ const CartItem = React.createClass({
     this.setState({ quantity: nextQuantity });
   },
 
+  handleDelete() {
+    console.log('this is set for delete');
+    console.log(this.props);
+    this.props.removeFromCart(this.props.item);
+  },
+
   handleEnter(event) {
     if (this.state.quantity === '') {
       return;
@@ -60,6 +63,8 @@ const CartItem = React.createClass({
 
   render() {
     const item = this.props.item;
+    console.log('item');
+    console.log(item);
 
     const number = {
       cursor: "pointer",
@@ -74,21 +79,27 @@ const CartItem = React.createClass({
 
     }
 
-    console.log('something is going on here');
     return <div className="row">
       <div className="Cart-Product">
         <div className="col s6 l4">
           <img
             src={item.product.images[0].imageUrl}
             width="70%"
-            style={{cursor: "pointer" }}
+            style={{cursor: "pointer", paddingLeft: "40px" }}
             onTouchTap={this.handleTouchTap}
           />
         </div>
         <div   className="col s6 l4 fill">
           <p>{item.product.name}</p>
+          <p>measurements: {item.product.dimensions} </p>
+          <p
+            style={{color: "red", cursor:"pointer"}}
+            onTouchTap={this.handleDelete}
+          >
+            Delete
+          </p>
         </div>
-        <div  className="col s6 l2 fill">
+        <div  className="col s6 l2 ">
           <input
             // onDoubleClick={this.handleDoubleClick}
             onChange={this.handleChange}
@@ -98,7 +109,7 @@ const CartItem = React.createClass({
             value={this.state.quantity}
           />
         </div>
-        <div className="col s16 l2 fill">
+        <div className="col s16 l2 ">
           <p>${`${(item.product.price * item.quantity).toFixed(2)}`}</p>
         </div>
       </div>

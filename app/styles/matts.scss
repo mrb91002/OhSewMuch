@@ -36,9 +36,6 @@
   cursor: pointer;
 }
 
-.fill {
-  // height: 156px;
-}
 
 // .cart-product {
 //   margin-top: 60px;
@@ -145,4 +142,12 @@ footer {
 
 .hill2 img {
   width: 100%;
+}
+
+.congratulations {
+  height: 500px;
+  width: 500px;
+  background-color: blue;
+  margin-top: -400px;
+  z-index: 100;
 }

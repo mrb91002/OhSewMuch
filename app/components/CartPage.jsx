@@ -62,7 +62,7 @@ const CartPage = React.createClass({
       <div className="container">
         <div className="row">
           <Paper
-            className="col s12 center-align"
+            className="col s12"
             rounded={false}
             style={stylePaper}
             zDepth={3}

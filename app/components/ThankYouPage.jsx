@@ -23,8 +23,8 @@ const ThankYouPage = React.createClass({
         <img src="/images/hill2.png" />
       </div>
 
-      <div className="congratulatons">
-        <h1>CONGRATULATIONS</h1>
+      <div className="congratulations">
+        <h2>CONGRATULATIONS</h2>
         <h2>You're awesome and we want your friends to know!</h2>
       </div>
 
