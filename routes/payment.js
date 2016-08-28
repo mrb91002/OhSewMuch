@@ -16,20 +16,15 @@ router.post('/payment', ev(val.post), (req, res, next) => {
   const { nonce } = req.body;
   const amount = Number.parseInt(req.body.amount * 100);
 
-  // Test token
-  const token = 'sq0atb-YNNIgBEgcqBGnmR8oU9Rbg';
+  // Square Token
+  const token = process.env.SQUARE_TOKEN;
 
-  // Real token
-  // const token = 'sq0atp-d6Zo5UF4W4mjQGnh3Lz2Sw';
-
-  // Test location Id
-  const locationId = 'CBASEGRXhR1JcqVD96HhnKcbMr4';
-
-  // Real location Id
-  // const locationId = '9K81Q6PDVQM0Q';
+  // location Id
+  const locationId = process.env.SQUARE_LOCID;
 
   // Transaction url: POST /v2/locations/{location_id}/transactions
-  const url = `https://connect.squareup.com/v2/locations/${locationId}/transactions`;
+  const prefix = 'https://connect.squareup.com/v2/locations/';
+  const url = `${prefix}${locationId}/transactions`;
 
   // Generate one per transaction!
   const idempotency_key = uuid.v1();

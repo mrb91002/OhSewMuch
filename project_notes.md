@@ -15,7 +15,7 @@ https://lob.com/
 API library for Node.js
 https://github.com/lob/lob-node
 
-test apikey: test_4f2a9a1e1ceb3697e262fa8cf5500ca9913
+test apikey:
 live apikey:
 
 Verify an address
@@ -42,10 +42,9 @@ Must be a 2 letter country short-name code (ISO 3166)
 RETURNS
 
 Returns the validated address object. If there is only a partial match and more information is required (e.g. Apt#, etc), a message string with more information will also be returned.
-test_4e00b94a3f4e72376756182a0e2ffaca055
 
 curl https://api.lob.com/v1/verify \
-  -u test_4e00b94a3f4e72376756182a0e2ffaca055: \
+  -u XXXXXXXXLOBAPIKEY:  \
   -d "address_line1=185 Berry Street" \
   -d "address_city=San Francisco" \
   -d "address_state=CA" \
@@ -66,7 +65,7 @@ Sample invalid response:
 }
 
 curl https://api.lob.com/v1/verify \
-  -u test_4e00b94a3f4e72376756182a0e2ffaca055: \
+  -u XXXXXXLOBAPIKEY: \
   -d "address_line1=6821 S Gove St" \
   -d "address_city=Tacoma" \
   -d "address_state=WA" \
@@ -346,3 +345,32 @@ Sample Credit data:
 111
 0820
 94103
+
+What's the name of your project?
+
+
+What problem does it solve?
+
+
+Who has this problem?
+
+
+How does your project solve this problem?
+
+
+What web APIs did it use?
+Lob - For address verification
+Square - For credit card authorization
+
+What technologies did it use?
+JSON Web Tokens, ReactJS, PostgreSQL, Material-UI and Materialize, Babel with Brunch, Axios HTTP Library, Secure iFrames and 3rd party credit card processing.
+
+What was the most valuable piece of user feedback you received?
+Ease of form use to register.
+Keeping the product and site display in plain view.
+
+What was the biggest technical challenge you had to overcome?
+Integrating the payment processing system with React.
+
+What lessons did your team learn as a result of your collaboration?
+Having a clear outline of style and functionality and the steps to implement that functionality keeps the team on track.
