@@ -6,13 +6,21 @@ const ShipAddress = React.createClass({
     muiTheme: React.PropTypes.object.isRequired
   },
 
+  handleBlur(event) {
+    this.props.processBlur(event);
+  },
+
+  handleChange(event) {
+    this.props.processChange(event);
+  },
+
   render() {
     const { errors, address } = this.props;
     const styleTextField = {
       display: 'block'
     };
 
-    const  styleError = {
+    const styleError = {
       marginTop: '-20px'
     };
 
@@ -26,8 +34,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="First name..."
             name="shipFirstName"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipFirstName}
           />
@@ -40,8 +48,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="Last name..."
             name="shipLastName"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipLastName}
           />
@@ -57,8 +65,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="Address Line 1..."
             name="shipAddressLine1"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipAddressLine1}
           />
@@ -71,8 +79,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="Address Line 2..."
             name="shipAddressLine2"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipAddressLine2}
           />
@@ -88,8 +96,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="City name..."
             name="shipAddressCity"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipAddressCity}
           />
@@ -102,8 +110,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="State abrv..."
             name="shipAddressState"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipAddressState}
           />
@@ -119,8 +127,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="5-digit zip code..."
             name="shipAddressZip"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipAddressZip}
           />
@@ -134,8 +142,8 @@ const ShipAddress = React.createClass({
             fullWidth={true}
             hintText="Country abrv..."
             name="shipAddressCountry"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.shipAddressCountry}
           />

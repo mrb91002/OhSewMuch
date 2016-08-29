@@ -1,13 +1,9 @@
 'use strict';
 
+const { camelizeKeys } = require('humps');
 const express = require('express');
-
-const router = express.Router();
 const knex = require('../knex');
-const boom = require('boom');
-const { camelizeKeys, decamelizeKeys } = require('humps');
-const ev = require('express-validation');
-const val = require('../validations/products');
+const router = express.Router();// eslint-disable-line new-cap
 
 router.get('/products', (_req, res, next) => {
   let resultProducts;
@@ -17,6 +13,7 @@ router.get('/products', (_req, res, next) => {
     .orderBy('name')
     .then((products) => {
       resultProducts = camelizeKeys(products);
+
       return Promise.all(resultProducts.map((prod) => {
         delete prod.createdAt;
         delete prod.updatedAt;

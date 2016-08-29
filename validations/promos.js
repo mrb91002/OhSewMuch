@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 const Joi = require('joi');
 
 module.exports.post = {
-  options : {
-    allowUnknownBody: false,
+  options: {
+    allowUnknownBody: false
   },
 
   body: {
@@ -30,8 +30,8 @@ module.exports.post = {
 };
 
 module.exports.delete = {
-  options : {
-    allowUnknownParams: false,
+  options: {
+    allowUnknownParams: false
   },
 
   params: {
@@ -40,12 +40,12 @@ module.exports.delete = {
       .integer()
       .min(1)
       .required()
-  },
+  }
 };
 
 module.exports.get = {
-  options : {
-    allowUnknownParams: false,
+  options: {
+    allowUnknownParams: false
   },
 
   params: {
@@ -53,5 +53,5 @@ module.exports.get = {
       .label('Promo Code')
       .trim()
       .required()
-  },
+  }
 };

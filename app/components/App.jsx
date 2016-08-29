@@ -1,10 +1,9 @@
-import { withRouter } from 'react-router';
 import AppBar from 'material-ui/AppBar';
-import axios from 'axios';
-import cookie from 'react-cookie';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import FlatButton from 'material-ui/FlatButton';
 import React from 'react';
+import axios from 'axios';
+import cookie from 'react-cookie';
+import { withRouter } from 'react-router';
 
 const App = React.createClass({
   getInitialState() {
@@ -12,7 +11,7 @@ const App = React.createClass({
       products: [],
       cart: [],
       cookies: {}
-    }
+    };
   },
 
   componentWillMount() {
@@ -42,7 +41,7 @@ const App = React.createClass({
         });
       })
       .catch((err) => {
-        console.error(err.response || err);
+        console.error(err.response || err);// eslint-disable-line no-console
       });
   },
 
@@ -78,14 +77,14 @@ const App = React.createClass({
         this.props.router.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err);// eslint-disable-line no-console
       });
   },
 
   addToCart(product) {
     let exists = false;
     let nextCart = this.state.cart.map((item) => {
-      if (product.id === item.product.id ) {
+      if (product.id === item.product.id) {
         item.quantity += 1;
         exists = true;
       }
@@ -103,10 +102,10 @@ const App = React.createClass({
 
   removeFromCart(product) {
     const nextCart = this.state.cart.filter((item) => {
-
       if (item.product.id === product.product.id) {
         return false;
       }
+
       return true;
     });
 
@@ -116,6 +115,7 @@ const App = React.createClass({
 
   clearCart() {
     const nextCart = [];
+
     localStorage.setItem('cart', JSON.stringify(nextCart));
 
     this.setState({ cart: nextCart });
@@ -131,17 +131,14 @@ const App = React.createClass({
   },
 
   updateCart(item, qty) {
-    // console.log(item);
-    console.log(qty);
-
     const nextCart = this.state.cart.map((prod) => {
-        if (item.product.id === prod.product.id) {
-          prod.quantity = qty;
-        }
-        return prod;
+      if (item.product.id === prod.product.id) {
+        prod.quantity = qty;
+      }
+
+      return prod;
     });
-    console.log('updateCartState')
-    console.log(nextCart);
+
     this.setState({ cart: nextCart });
   },
 
@@ -240,7 +237,7 @@ const App = React.createClass({
 
     const styleFlatButton = {
       height: '64px',
-      lineHeight: '64px',
+      lineHeight: '64px'
     };
 
     const styleTitle = {
@@ -252,55 +249,57 @@ const App = React.createClass({
     };
 
     return <div>
-        <AppBar
-          onTitleTouchTap={this.handleTitleTouchTap}
-          title="Oh Sew Much"
-          titleStyle={styleTitle}
-          style={styleNav}
-          zDepth={2}
-        >
-          <FlatButton
-            label="Login"
-            onTouchTap={this.handleTouchTapLogin}
-            style={Object.assign({}, styleFlatButton, showLogin())}
-          />
-          <FlatButton
-            label="Register"
-            onTouchTap={this.handleTouchTapReg}
-            style={Object.assign({}, styleFlatButton, showRegister())}
-          />
-          <FlatButton
-            label="Logout"
-            onTouchTap={this.handleTouchTapLogout}
-            style={Object.assign({}, styleFlatButton, showLogout())}
-          />
-          <FlatButton
-            label="Admin"
-            onTouchTap={this.handleTouchTapAdmin}
-            style={Object.assign({}, styleFlatButton, showAdmin())}
-          />
-          <FlatButton
-            label={"Cart - " + quantity}
-            onTouchTap={this.handleTouchTapCart}
-            style={Object.assign({}, styleFlatButton, showCart())}
-          />
-          <FlatButton
-            label="Empty Cart"
-            onTouchTap={this.handleTouchTapEmptyCart}
-            style={Object.assign({}, styleFlatButton, showEmptyCart())}
-          />
-        </AppBar>
-        <div style={{height: '64px'}}>
-        </div>
-      {/* React.cloneElement is the glue that passes in props to children created with React Router. React router instantiates classes for us, and cloning the existing instance is the only way to set props. */}
+      <AppBar
+        onTitleTouchTap={this.handleTitleTouchTap}
+        style={styleNav}
+        title="Oh Sew Much"
+        titleStyle={styleTitle}
+        zDepth={2}
+      >
+        <FlatButton
+          label="Login"
+          onTouchTap={this.handleTouchTapLogin}
+          style={Object.assign({}, styleFlatButton, showLogin())}
+        />
+        <FlatButton
+          label="Register"
+          onTouchTap={this.handleTouchTapReg}
+          style={Object.assign({}, styleFlatButton, showRegister())}
+        />
+        <FlatButton
+          label="Logout"
+          onTouchTap={this.handleTouchTapLogout}
+          style={Object.assign({}, styleFlatButton, showLogout())}
+        />
+        <FlatButton
+          label="Admin"
+          onTouchTap={this.handleTouchTapAdmin}
+          style={Object.assign({}, styleFlatButton, showAdmin())}
+        />
+        <FlatButton
+          label={`Cart - ${quantity}`}
+          onTouchTap={this.handleTouchTapCart}
+          style={Object.assign({}, styleFlatButton, showCart())}
+        />
+        <FlatButton
+          label="Empty Cart"
+          onTouchTap={this.handleTouchTapEmptyCart}
+          style={Object.assign({}, styleFlatButton, showEmptyCart())}
+        />
+      </AppBar>
+
+      <div style={{ height: '64px' }} />
+
+      {/* React.cloneElement is the glue that passes in props to children*/}
+      {/* created with React Router. React router instantiates classes for us*/}
+      {/* , and cloning the existing instance is the only way to set props.*/}
       {React.cloneElement(this.props.children, this.getChildrenProps())}
       {/* {React.cloneElement(this.props.children, {
         products: this.state.products
       })} */}
+
     </div>;
   }
 });
-
-
 
 export default withRouter(App);

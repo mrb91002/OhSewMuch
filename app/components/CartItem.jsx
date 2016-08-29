@@ -13,21 +13,18 @@ const CartItem = React.createClass({
   },
 
   handleTouchTap() {
-    this.props.router.push(`/product/${this.props.item.product.id}`)
+    this.props.router.push(`/product/${this.props.item.product.id}`);
   },
 
   handleDoubleClick() {
-
     this.props.updateCart(this.props.item);
-
   },
 
-  handleChange(event){
-    // console.log(this.state.quantity);
+  handleChange(event) {
     let nextQuantity = event.target.value;
 
     if (nextQuantity === '') {
-      return this.setState({ quantity: '' })
+      return this.setState({ quantity: '' });
     }
 
     if (isNaN(nextQuantity) || nextQuantity <= 0 || nextQuantity >= 100) {
@@ -40,8 +37,6 @@ const CartItem = React.createClass({
   },
 
   handleDelete() {
-    console.log('this is set for delete');
-    console.log(this.props);
     this.props.removeFromCart(this.props.item);
   },
 
@@ -52,15 +47,15 @@ const CartItem = React.createClass({
 
     if (event.which !== 13) {
       return;
-    };
+    }
 
     this.props.updateCart(this.props.item, this.state.quantity);
   },
 
-  handleBlur(event) {
+  handleBlur() {
     if (this.state.quantity === '') {
       return;
-    };
+    }
 
     this.props.updateCart(this.props.item, this.state.quantity);
   },
@@ -69,44 +64,42 @@ const CartItem = React.createClass({
     const item = this.props.item;
 
     const number = {
-      cursor: "pointer",
-      borderRadius: "3px",
-      width: "35px",
-      height: "35px",
-      margin: "0 auto",
-      textAlign: "center",
-      backgroundColor: "#EFEFF4",
-      marginTop: "10px",
-      paddingTop: "5px"
-
-    }
+      cursor: 'pointer',
+      borderRadius: '3px',
+      width: '35px',
+      height: '35px',
+      margin: '0 auto',
+      textAlign: 'center',
+      backgroundColor: '#EFEFF4',
+      marginTop: '10px',
+      paddingTop: '5px'
+    };
 
     return <div className="row">
       <div className="Cart-Product">
         <div className="col s6 l4">
           <img
-            src={item.product.images[0].imageUrl}
-            width="70%"
-            style={{cursor: "pointer", paddingLeft: "40px" }}
             onTouchTap={this.handleTouchTap}
+            src={item.product.images[0].imageUrl}
+            style={{ cursor: 'pointer', paddingLeft: '40px' }}
+            width="70%"
           />
         </div>
-        <div   className="col s6 l4 fill">
+        <div className="col s6 l4 fill">
           <p>{item.product.name}</p>
           <p>measurements: {item.product.dimensions} </p>
           <p
-            style={{color: "red", cursor:"pointer"}}
             onTouchTap={this.handleDelete}
+            style={{ color: 'red', cursor: 'pointer' }}
           >
             Delete
           </p>
         </div>
-        <div  className="col s6 l2 ">
+        <div className="col s6 l2 ">
           <input
-            // onDoubleClick={this.handleDoubleClick}
+            onBlur={this.handleBlur}
             onChange={this.handleChange}
             onKeyUp={this.handleEnter}
-            onBlur={this.handleBlur}
             style={number}
             value={this.state.quantity}
           />
@@ -115,7 +108,7 @@ const CartItem = React.createClass({
           <p>${`${(item.product.price * item.quantity).toFixed(2)}`}</p>
         </div>
       </div>
-    </div>
+    </div>;
   }
 });
 

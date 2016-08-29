@@ -10,6 +10,7 @@ const sanitizeCustomer = (customer) => {
   return customer;
 };
 
+// eslint-disable-next-line max-statements
 const processShipAddress = (cust) => {
   if (!cust.shipFirstName) {
     cust.shipFirstName = cust.firstName;
@@ -116,6 +117,7 @@ const embedAddresses = (cust, primaryAddress, shipAddress) => {
   cust.shipAddressCountry = shipAddress.addressCountry;
 };
 
+// eslint-disable-next-line max-statements
 const mergeAddresses = (exist, primary, ship) => {
   if (!primary.addressLine1) {
     primary.addressLine1 = exist.addressLine1;

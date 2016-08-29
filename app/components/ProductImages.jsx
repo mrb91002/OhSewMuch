@@ -6,22 +6,22 @@ const ProductImages = React.createClass({
     muiTheme: React.PropTypes.object.isRequired
   },
 
-  handleTouchTap(event) {
-    let mainImage = document.getElementById('primaryImg');
-    let newMainImage = this.props.productImg.imageUrl;
+  handleTouchTap() {
+    const mainImage = document.getElementById('primaryImg');
+    const newMainImage = this.props.productImg.imageUrl;
 
     mainImage.src = newMainImage;
   },
 
   render() {
-
     return <div>
-    <img
-      className="col s3 thumbnail-img"
-      src={this.props.productImg.imageUrl}
-      alt={this.props.productImg.altText}
-      onTouchTap={this.handleTouchTap}/>
-    </div>
+      <img
+        alt={this.props.productImg.altText}
+        className="col s3 thumbnail-img"
+        onTouchTap={this.handleTouchTap}
+        src={this.props.productImg.imageUrl}
+      />
+    </div>;
   }
 });
 

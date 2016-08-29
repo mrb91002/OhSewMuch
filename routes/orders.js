@@ -1,15 +1,13 @@
 'use strict';
 
-const express = require('express');
-
-// eslint-disable-next-line new-cap
-const router = express.Router();
-const knex = require('../knex');
-const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
-const ev = require('express-validation');
-const val = require('../validations/orders');
 const { checkAuth, processToken } = require('../modules/middleware');
+const boom = require('boom');
+const ev = require('express-validation');
+const express = require('express');
+const knex = require('../knex');
+const router = express.Router(); // eslint-disable-line new-cap
+const val = require('../validations/orders');
 
 // For customers to get their order info
 // Route tested and working
@@ -17,13 +15,14 @@ router.get('/orders', checkAuth, ev(val.get), (req, res, next) => {
   const customerId = req.token.userId;
   let orders;
   let lineItems;
-  let items = [];
+  const items = [];
 
   knex('orders')
     .where('customer_id', customerId)
     .orderBy('created_at', 'desc')
     .then((allOrders) => {
       orders = camelizeKeys(allOrders);
+
       return Promise.all(orders.map((order) => {
         return knex('orders_products')
           .select('order_id', 'price', 'product_id')
@@ -44,6 +43,8 @@ router.get('/orders', checkAuth, ev(val.get), (req, res, next) => {
           .first();
       }));
     })
+
+    // eslint-disable-next-line max-statements
     .then((lineProducts) => {
       for (const item of items) {
         for (const product of camelizeKeys(lineProducts)) {
@@ -63,10 +64,11 @@ router.get('/orders', checkAuth, ev(val.get), (req, res, next) => {
 
       const finalOrders = [];
       let inFinalOrders = false;
+
       for (const it of items) {
         for (const ord of finalOrders) {
           if (it.orderId === ord.id) {
-            ord.products.push(it.product)
+            ord.products.push(it.product);
             inFinalOrders = true;
             break;
           }
@@ -97,7 +99,7 @@ router.post('/orders', ev(val.post), processToken, (req, res, next) => {
   if (req.token) {
     order.customerId = req.token.userId;
   }
-  else if (!order.customerId){
+  else if (!order.customerId) {
     return next(boom.unauthorized('Invalid customer ID'));
   }
 
@@ -127,11 +129,11 @@ router.post('/orders', ev(val.post), processToken, (req, res, next) => {
           .first()
           .then((promoExists) => {
             promoExists = camelizeKeys(promoExists);
-            if(!promoExists) {
+            if (!promoExists) {
               throw boom.notFound('Promo code is invalid');
             }
 
-            if(new Date(promoExists.expiresAt) <= new Date()) {
+            if (new Date(promoExists.expiresAt) <= new Date()) {
               throw boom.forbidden('Promo code is expired');
             }
           });
@@ -146,14 +148,13 @@ router.post('/orders', ev(val.post), processToken, (req, res, next) => {
       order.shipAddressState = customer.shipAddressState;
       order.shipAddressZip = customer.shipAddressZip;
       order.ShipAddressCountry = customer.shipAddressCountry;
-      console.log(order);
+
       return knex('orders')
         .insert(decamelizeKeys(order), '*');
     })
     .then((orders) => {
       newOrder = camelizeKeys(orders[0]);
-      console.log(orderProducts);
-      // console.log(orderProducts);
+
       // Needs to map the products array and get prices and insert order id #'s
       return Promise.all(orderProducts.map((prod) => {
         return knex('products')
@@ -176,9 +177,9 @@ router.post('/orders', ev(val.post), processToken, (req, res, next) => {
         delete product.unitsInStock;
         delete product.deleted;
       }
-      console.log(orderProducts);
+
       return knex('orders_products')
-        .insert(decamelizeKeys(orderProducts), '*')
+        .insert(decamelizeKeys(orderProducts), '*');
     })
     .then((newOrderProducts) => {
       for (const product of newOrderProducts) {

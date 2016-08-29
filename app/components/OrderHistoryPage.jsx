@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React from 'react';
 import OrderSummary from 'components/OrderSummary';
+import React from 'react';
+import axios from 'axios';
 import weakKey from 'weak-key';
 
 const OrderHistoryPage = React.createClass({
@@ -10,7 +10,7 @@ const OrderHistoryPage = React.createClass({
 
   getInitialState() {
     return {
-        orders: []
+      orders: []
     };
   },
 
@@ -18,26 +18,23 @@ const OrderHistoryPage = React.createClass({
     // Get the orders from API
     axios.get('/api/orders')
       .then((res) => {
-
         this.setState({ orders: res.data });
       })
       .catch((err) => {
-        console.error(err.response);
+        console.error(err.response);// eslint-disable-line no-console
       });
   },
 
   render() {
     return <div>
       {this.state.orders.map((ord) => {
-        console.log('iterate');
-          return <OrderSummary
-            cart={ord}
-            key={weakKey(ord)}
-          />
+        return <OrderSummary
+          cart={ord}
+          key={weakKey(ord)}
+        />;
       })}
       <p>this</p>
     </div>;
-
   }
 });
 

@@ -1,6 +1,7 @@
 'use strict';
 
 exports.up = function(knex) {
+  // eslint-disable-next-line max-statements
   return knex.schema.createTable('customers', (table) => {
     table.increments();
     table.timestamps(true, true);

@@ -1,48 +1,48 @@
-'use strict'
+'use strict';
 
 const Joi = require('joi');
 
 module.exports.post = {
   options: {
-    allowUnknownBody: false,
+    allowUnknownBody: false
   },
 
   body: {
     category: Joi.string()
-    .label('Category')
-    .max(255)
-    .trim()
-    .required(),
-  price: Joi.number()
-    .label('Price')
-    .min(0)
-    .required(),
-  name: Joi.string()
-    .label('Name')
-    .max(255)
-    .trim()
-    .required(),
-  description: Joi.string()
-    .label('Description')
-    .trim()
-    .required(),
-  dimensions: Joi.string()
-    .label('Dimensions')
-    .trim()
-    .optional(),
-  units_in_stock: Joi.number()
-    .label('Units in stock')
-    .integer()
-    .optional(),
-  images: Joi.array()
-    .label('Images')
-    .required()
+      .label('Category')
+      .max(255)
+      .trim()
+      .required(),
+    price: Joi.number()
+      .label('Price')
+      .min(0)
+      .required(),
+    name: Joi.string()
+      .label('Name')
+      .max(255)
+      .trim()
+      .required(),
+    description: Joi.string()
+      .label('Description')
+      .trim()
+      .required(),
+    dimensions: Joi.string()
+      .label('Dimensions')
+      .trim()
+      .optional(),
+    unitsInStock: Joi.number()
+      .label('Units in stock')
+      .integer()
+      .optional(),
+    images: Joi.array()
+      .label('Images')
+      .required()
   }
 };
 
 module.exports.patch = {
   options: {
-    allowUnknownBody: false,
+    allowUnknownBody: false
   },
 
   params: {
@@ -76,7 +76,7 @@ module.exports.patch = {
       .label('Dimensions')
       .trim()
       .optional(),
-    units_in_stock: Joi.number()
+    unitsInStock: Joi.number()
       .label('Units in stock')
       .integer()
       .optional(),

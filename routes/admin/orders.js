@@ -1,15 +1,13 @@
 'use strict';
 
-const express = require('express');
-
-// eslint-disable-next-line new-cap
-const router = express.Router();
-const knex = require('../../knex');
-const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
-const ev = require('express-validation');
-const val = require('../../validations/orders');
 const { checkAdmin } = require('../../modules/middleware');
+const boom = require('boom');
+const ev = require('express-validation');
+const express = require('express');
+const knex = require('../../knex');
+const router = express.Router();// eslint-disable-line new-cap
+const val = require('../../validations/orders');
 
 // For admins to cancel an order
 router.delete('/orders/:id', checkAdmin, ev(val.delete), (req, res, next) => {
@@ -45,7 +43,7 @@ router.delete('/orders/:id', checkAdmin, ev(val.delete), (req, res, next) => {
     })
     .catch((err) => {
       next(err);
-    })
+    });
 });
 
 module.exports = router;

@@ -1,9 +1,7 @@
-import React from 'react';
 import ProductImages from 'components/ProductImages';
-import weakKey from 'weak-key';
-import ReactDOM from 'react-dom';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import React from 'react';
+import weakKey from 'weak-key';
 
 const ProductPage = React.createClass({
   contextTypes: {
@@ -17,8 +15,8 @@ const ProductPage = React.createClass({
   handleTouchTapCart() {
     const id = Number.parseInt(this.props.params.id);
     const { products } = this.props;
-    const product = products.filter((product) => {
-      return product.id === id;
+    const product = products.filter((prod) => {
+      return prod.id === id;
     })[0];
 
     Materialize.toast('Item Added To Cart', 2000, 'rounded');
@@ -27,12 +25,12 @@ const ProductPage = React.createClass({
 
   render() {
     if (this.props.products.length === 0) {
-      return <div></div>;
+      return <div />;
     }
 
     const styleButton = {
-      margin: '50px',
-      };
+      margin: '50px'
+    };
 
     const id = Number.parseInt(this.props.routeParams.id);
     const product = this.props.products.filter((prod) => {
@@ -56,7 +54,7 @@ const ProductPage = React.createClass({
               return <ProductImages
                 key={weakKey(prodImg)}
                 productImg={prodImg}
-              />
+              />;
             })}
 
         </div>
@@ -68,31 +66,16 @@ const ProductPage = React.createClass({
               <h5>dimensions: {product.dimensions}</h5>
               <h5 className="col s6">${product.price}</h5>
               <p className="col s4 question">Ask a question</p>
-
-
-{/*
-              <input type="button" value="-"/>
-              <label className="show">{3}</label>
-              <input
-                type="text"
-                className="hide"
-                maxLength="4"
-                size="4"
-                placeholder="{4}"
-              />
-              <input type="button" value="+"/> */}
-
               <div className="center">
                 <RaisedButton
+                  backgroundColor="rgba(149, 39, 39, 0.9)"
                   className="buttonTest"
                   label="ADD TO CART"
-                  backgroundColor="rgba(149, 39, 39, 0.9)"
                   labelColor="#fff"
-                  style = {styleButton}
                   onTouchTap={this.handleTouchTapCart}
+                  style={styleButton}
                 />
               </div>
-
             </div>
           </div>
           <div className="col s10 offset-1 social-media">
@@ -113,16 +96,12 @@ const ProductPage = React.createClass({
       </div>
 
       <div className="bottom-clouds footer">
-       <img src="/images/bottom-clouds.png" />
+        <img src="/images/bottom-clouds.png" />
       </div>
 
-      <footer>
-        {/* <p> */}
-          Web Design by - Team Super Secret Squirrel
-        {/* </p> */}
-      </footer>
+      <footer>Web Design by - Team Super Secret Squirrel</footer>
 
-    </div>
+    </div>;
   }
 });
 

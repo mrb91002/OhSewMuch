@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 const Joi = require('joi');
 
 module.exports.post = {
-  options : {
-    allowUnknownBody: false,
+  options: {
+    allowUnknownBody: false
   },
 
   body: {

@@ -1,68 +1,29 @@
-import { withRouter } from 'react-router';
-import axios from 'axios';
+/* eslint-disable max-lines */
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import Joi from 'joi';
+import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
-import Paper from 'material-ui/Paper';
-import Snackbar from 'material-ui/Snackbar';
 import Send from 'material-ui/svg-icons/content/send';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
-
-const pw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+import axios from 'axios';
+import { withRouter } from 'react-router';
 
 const schema = Joi.object({
-  firstName: Joi.string()
-    .trim()
-    .max(255),
-  lastName: Joi.string()
-    .trim()
-    .max(255),
-  email: Joi.string()
-    .email()
-    .trim()
-    .min(6),
-  phone: Joi.string()
-    .allow('')
-    .trim()
-    .min(7)
-    .max(20)
-    .optional(),
-  userName: Joi.string()
-    .trim()
-    .min(6)
-    .max(255),
-  password: Joi.string()
-    .trim()
-    .min(8)
-    .max(255),
-    // .regex(pw, '1 Cap, 1 Lower, 1 Special'),
-  confirmPassword: Joi.string()
-    .trim()
-    .min(8)
-    .max(255),
-    // .regex(pw, '1 Cap, 1 Lower, 1 Special'),
-  addressLine1: Joi.string()
-    .trim()
-    .max(255),
-  addressLine2: Joi.string()
-    .allow('')
-    .trim()
-    .max(255)
-    .optional(),
-  addressCity: Joi.string()
-    .trim()
-    .max(255),
-  addressState: Joi.string()
-    .trim()
-    .length(2),
-  addressZip: Joi.string()
-    .trim()
-    .min(5)
-    .max(10),
-  addressCountry: Joi.string()
-    .trim()
-    .length(2)
+  firstName: Joi.string().trim().max(255),
+  lastName: Joi.string().trim().max(255),
+  email: Joi.string().email().trim().min(6),
+  phone: Joi.string().allow('').trim().min(7).max(20).optional(),
+  userName: Joi.string().trim().min(6).max(255),
+  password: Joi.string().trim().min(8).max(255),
+  confirmPassword: Joi.string().trim().min(8).max(255),
+  addressLine1: Joi.string().trim().max(255),
+  addressLine2: Joi.string().allow('').trim().max(255).optional(),
+  addressCity: Joi.string().trim().max(255),
+  addressState: Joi.string().trim().length(2),
+  addressZip: Joi.string().trim().min(5).max(10),
+  addressCountry: Joi.string().trim().length(2)
 });
 
 const RegisterPage = React.createClass({
@@ -89,7 +50,7 @@ const RegisterPage = React.createClass({
         addressCountry: 'US'
       },
       regFailText: '',
-      open: false,
+      open: false
     };
   },
 
@@ -111,7 +72,6 @@ const RegisterPage = React.createClass({
   },
 
   handleTouchTapCancel() {
-    // this.props.router.push('/');
     this.props.router.goBack();
   },
 
@@ -151,13 +111,13 @@ const RegisterPage = React.createClass({
     }
 
     axios.post('/api/customers', reg)
-      .then((res) => {
+      .then(() => {
         return axios.post('api/token', {
           userName: reg.userName,
           password: reg.password
         });
       })
-      .then((res) => {
+      .then(() => {
         this.props.updateCookies();
         this.props.router.push('/');
       })
@@ -208,15 +168,11 @@ const RegisterPage = React.createClass({
       display: 'block'
     };
 
-    const styleRaisedButton = {
-      borderRadius: '3px'
-    };
-
     const stylePaper = {
       borderRadius: '5px'
     };
 
-    const  styleError = {
+    const styleError = {
       marginTop: '-20px'
     };
 
@@ -276,7 +232,6 @@ const RegisterPage = React.createClass({
                 name="email"
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
-                type="email"
                 style={styleTextField}
                 value={reg.email}
               />
@@ -456,10 +411,10 @@ const RegisterPage = React.createClass({
 
       </div>
       <Snackbar
-        open={this.state.open}
-        message={failMessage}
         autoHideDuration={3000}
+        message={failMessage}
         onRequestClose={this.handleRequestClose}
+        open={this.state.open}
       />
     </div>;
   }

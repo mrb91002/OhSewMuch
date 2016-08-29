@@ -1,6 +1,5 @@
 module.exports = {
   extends: [
-    'ryansobol/browser',
     'ryansobol/es6',
     'ryansobol/node',
     'ryansobol/mocha'
@@ -17,6 +16,6 @@ module.exports = {
     // "no-cond-assign": ["error", "always"],
 
     // disable rules from base configurations
-    // "camelcase": "off"
+    "camelcase": "off"
   }
 };

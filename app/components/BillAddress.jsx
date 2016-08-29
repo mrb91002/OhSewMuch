@@ -6,13 +6,21 @@ const BillAddress = React.createClass({
     muiTheme: React.PropTypes.object.isRequired
   },
 
+  handleBlur(event) {
+    this.props.processBlur(event);
+  },
+
+  handleChange(event) {
+    this.props.processChange(event);
+  },
+
   render() {
     const { errors, address } = this.props;
     const styleTextField = {
       display: 'block'
     };
 
-    const  styleError = {
+    const styleError = {
       marginTop: '-20px'
     };
 
@@ -26,8 +34,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="First name..."
             name="firstName"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.firstName}
           />
@@ -40,8 +48,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="Last name..."
             name="lastName"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.lastName}
           />
@@ -57,9 +65,9 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="Email address..."
             name="email"
-            noValidate
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            noValidate={true}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.email}
           />
@@ -72,8 +80,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="Phone number..."
             name="phone"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             type="tel"
             value={address.phone}
@@ -90,8 +98,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="Address Line 1..."
             name="addressLine1"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.addressLine1}
           />
@@ -104,8 +112,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="Address Line 2..."
             name="addressLine2"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.addressLine2}
           />
@@ -121,8 +129,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="City name..."
             name="addressCity"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.addressCity}
           />
@@ -135,8 +143,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="State abrv..."
             name="addressState"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.addressState}
           />
@@ -152,8 +160,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="5-digit zip code..."
             name="addressZip"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.addressZip}
           />
@@ -167,8 +175,8 @@ const BillAddress = React.createClass({
             fullWidth={true}
             hintText="Country abrv..."
             name="addressCountry"
-            onBlur={this.props.handleBlur}
-            onChange={this.props.handleChange}
+            onBlur={this.handleBlur}
+            onChange={this.handleChange}
             style={styleTextField}
             value={address.addressCountry}
           />

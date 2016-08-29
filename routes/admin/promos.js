@@ -1,15 +1,13 @@
 'use strict';
 
-const express = require('express');
-
-// eslint-disable-next-line new-cap
-const router = express.Router();
-const knex = require('../../knex');
-const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
-const ev = require('express-validation');
-const val = require('../../validations/promos');
 const { checkAdmin } = require('../../modules/middleware');
+const boom = require('boom');
+const ev = require('express-validation');
+const express = require('express');
+const knex = require('../../knex');
+const router = express.Router(); // eslint-disable-line new-cap
+const val = require('../../validations/promos');
 
 // Route to create a promo
 // Route needs testing from JS (didn't figure out how to send a date with http)
@@ -23,6 +21,7 @@ router.post('/promos', checkAdmin, ev(val.post), (req, res, next) => {
       if (exists) {
         throw boom.conflict('Promo code already exists');
       }
+
       return knex('promos')
         .insert(decamelizeKeys(promo), '*');
     })
@@ -30,7 +29,7 @@ router.post('/promos', checkAdmin, ev(val.post), (req, res, next) => {
       res.send(camelizeKeys(promos[0]));
     })
     .catch((err) => {
-      next (err);
+      next(err);
     });
 });
 
@@ -56,7 +55,7 @@ router.delete('/promo/:id', checkAdmin, ev(val.delete), (req, res, next) => {
       res.send(camelizeKeys(promos[0]));
     })
     .catch((err) => {
-      next (err);
+      next(err);
     });
 });
 

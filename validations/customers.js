@@ -1,20 +1,11 @@
 'use strict';
 
+// 8chr, 1-lower, 1-upper, 1-number, 1-special (! @ # $ % ^ & *)
+// const pw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 const Joi = require('joi');
 
-// The string must contain at least 1 lowercase alphabetical character
-// The string must contain at least 1 uppercase alphabetical character
-// The string must contain at least 1 numeric character
-// The string must contain at least one special character: ! @ # $ % ^ & *
-// The string must be eight characters or longer
-const pw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-
-// req.body: firstName, lastName, phone, email, [userName], [password], addressLine1, [addressLine2], addressCity, addressState, addressZip, addressCountry, shipFirstName, shipLastName, shipAddressLine1, [shipAddressLine2], shipAddressCity, shipAddressState, shipAddressZip, shipAddressCountry
 module.exports.post = {
-  options : {
-    allowUnknownBody: false,
-  },
-
+  options: { allowUnknownBody: false },
   body: {
     firstName: Joi.string()
       .label('First Name')
@@ -47,7 +38,6 @@ module.exports.post = {
       .optional(),
     password: Joi.string()
       .label('Password')
-      // .regex(pw, 'Strong Password')
       .min(8)
       .max(255)
       .trim()
@@ -132,10 +122,7 @@ module.exports.post = {
 };
 
 module.exports.patch = {
-  options : {
-    allowUnknownBody: false,
-  },
-
+  options: { allowUnknownBody: false },
   body: {
     firstName: Joi.string()
       .label('First Name')
@@ -168,7 +155,6 @@ module.exports.patch = {
       .optional(),
     password: Joi.string()
       .label('Password')
-      // .regex(pw, 'Strong Password')
       .min(8)
       .max(255)
       .trim()
@@ -252,11 +238,8 @@ module.exports.patch = {
   }
 };
 
-module.exports.patchAdmin = {
-  options : {
-    allowUnknownBody: false,
-  },
-
+module.exports.patchA = {
+  options: { allowUnknownBody: false },
   params: {
     id: Joi.number()
       .label('id')
@@ -264,7 +247,6 @@ module.exports.patchAdmin = {
       .min(1)
       .required()
   },
-
   body: {
     firstName: Joi.string()
       .label('First Name')
@@ -297,7 +279,6 @@ module.exports.patchAdmin = {
       .optional(),
     password: Joi.string()
       .label('Password')
-      // .regex(pw, 'Strong Password')
       .min(8)
       .max(255)
       .trim()

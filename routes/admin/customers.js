@@ -1,15 +1,6 @@
 'use strict';
 
-const express = require('express');
-
-// eslint-disable-next-line new-cap
-const router = express.Router();
-const knex = require('../../knex');
-const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
-const bcrypt = require('bcrypt-as-promised');
-const ev = require('express-validation');
-const val = require('../../validations/customers');
 const { checkAdmin } = require('../../modules/middleware');
 const {
   sanitizeCustomer,
@@ -18,9 +9,16 @@ const {
   getPrimaryAddress,
   getShipAddress,
   embedAddresses,
-  mergeAddresses,
+  mergeAddresses
 } = require('../../modules/utils');
+const bcrypt = require('bcrypt-as-promised');
+const boom = require('boom');
+const ev = require('express-validation');
+const express = require('express');
+const knex = require('../../knex');
 const Lob = require('lob')(process.env.LOB_APIKEY);
+const router = express.Router(); // eslint-disable-line new-cap
+const val = require('../../validations/customers');
 
 // For admins to get all customers
 // Route tested and working
@@ -28,6 +26,7 @@ router.get('/customers', checkAdmin, (req, res, next) => {
   knex('customers')
     .then((customers) => {
       let custs = camelizeKeys(customers);
+
       custs = custs.map((cust) => {
         delete cust.hashedPassword;
         delete cust.createdAt;
@@ -44,8 +43,7 @@ router.get('/customers', checkAdmin, (req, res, next) => {
 
 // For admins to update customers
 // Route tested and working
-router.patch('/customer/:id', checkAdmin, ev(val.patchAdmin),
-  (req, res, next) => {
+router.patch('/customer/:id', checkAdmin, ev(val.patchA), (req, res, next) => {
   const id = req.params.id;
   const cust = processShipAddress(req.body);
   let isSameAddress;
@@ -76,6 +74,7 @@ router.patch('/customer/:id', checkAdmin, ev(val.patchAdmin),
           // Guard clause for partial match
           if (lobPriRes.message) {
             const err = boom.notFound(JSON.stringify(camelizeKeys(lobPriRes)));
+
             err.json = true;
             throw err;
           }
@@ -95,6 +94,7 @@ router.patch('/customer/:id', checkAdmin, ev(val.patchAdmin),
               if (lobShipRes.message) {
                 const jsonLobRes = JSON.stringify(camelizeKeys(lobShipRes));
                 const err = boom.notFound(jsonLobRes);
+
                 err.json = true;
                 throw err;
               }
@@ -117,7 +117,7 @@ router.patch('/customer/:id', checkAdmin, ev(val.patchAdmin),
           }
 
           throw err;
-        })
+        });
     })
     .then(() => {
       // Addresses verified
@@ -166,6 +166,7 @@ router.patch('/customer/:id', checkAdmin, ev(val.patchAdmin),
       // Handle lob API errors for address not found
       const primaryAddressErr = err.message === 'Primary address not found';
       const shipAddressErr = err.message === 'Shipping address not found';
+
       if (primaryAddressErr || shipAddressErr) {
         throw boom.notFound(err.message);
       }

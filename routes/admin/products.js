@@ -1,14 +1,13 @@
 'use strict';
 
-const express = require('express');
-
-const router = express.Router();
-const knex = require('../../knex');
-const boom = require('boom');
 const { camelizeKeys, decamelizeKeys } = require('humps');
-const ev = require('express-validation');
-const val = require('../../validations/products');
 const { checkAdmin } = require('../../modules/middleware');
+const boom = require('boom');
+const ev = require('express-validation');
+const express = require('express');
+const knex = require('../../knex');
+const router = express.Router(); // eslint-disable-line new-cap
+const val = require('../../validations/products');
 
 router.get('/products', checkAdmin, (_req, res, next) => {
   let resultProducts;
@@ -16,6 +15,7 @@ router.get('/products', checkAdmin, (_req, res, next) => {
   knex('products')
     .then((products) => {
       resultProducts = camelizeKeys(products);
+
       return Promise.all(resultProducts.map((prod) => {
         return knex('product_images')
           .where('product_id', prod.id)
@@ -63,12 +63,12 @@ router.post('/products', checkAdmin, ev(val.post), (req, res, next) => {
       res.send(product);
     })
     .catch((err) => {
-      next(err)
+      next(err);
     });
 });
 
-router.patch('/products/:id', checkAdmin, ev(val.patch), (req, res,next) => {
-  let updatedProduct = req.body;
+router.patch('/products/:id', checkAdmin, ev(val.patch), (req, res, next) => {
+  const updatedProduct = req.body;
   let images = updatedProduct.images;
   let newProduct;
 
@@ -105,7 +105,7 @@ router.patch('/products/:id', checkAdmin, ev(val.patch), (req, res,next) => {
     })
     .then(() => {
       return knex('product_images')
-        .insert(decamelizeKeys(images), '*')
+        .insert(decamelizeKeys(images), '*');
     })
     .then((newImages) => {
       newProduct.images = newImages;

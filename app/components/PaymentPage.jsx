@@ -1,28 +1,19 @@
-import { Table,
-  TableBody,
-  TableFooter,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table';
-import { camelizeKeys, decamelizeKeys } from 'humps';
-import { withRouter } from 'react-router';
-import axios from 'axios';
+/* eslint-disable max-lines */
 import BillAddress from 'components/BillAddress';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import Checkbox from 'material-ui/Checkbox';
 import Joi from 'joi';
 import OrderSummary from 'components/OrderSummary';
+import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
-import Paper from 'material-ui/Paper';
 import Send from 'material-ui/svg-icons/content/send';
 import ShipAddress from 'components/ShipAddress';
 import Snackbar from 'material-ui/Snackbar';
 import SquareForm from 'components/SquareForm';
-import TextField from 'material-ui/TextField';
-import weakKey from 'weak-key';
+import axios from 'axios';
+import { camelizeKeys } from 'humps';
+import { withRouter } from 'react-router';
 
 let state;
 let props;
@@ -129,11 +120,6 @@ const PaymentPage = React.createClass({
     };
   },
 
-  componentWillReceiveProps(nextProps) {
-    props = nextProps;
-    this.getCustomerInfo(nextProps);
-  },
-
   componentWillMount() {
     if (!Object.keys(this.props.cookies).length) {
       return;
@@ -148,8 +134,9 @@ const PaymentPage = React.createClass({
     const applicationId = 'sandbox-sq0idp-JQWJQ16-z103Dcor0PDo4Q';
 
     // The payment form
+    // eslint-disable-next-line no-undef
     const paymentForm = new SqPaymentForm({
-      applicationId: applicationId,
+      applicationId,
       inputClass: 'sq-input',
       inputStyles: [
         {
@@ -175,39 +162,44 @@ const PaymentPage = React.createClass({
 
         // Called when the SqPaymentForm completes a request to generate a card
         // nonce, even if the request failed because of an error.
-        cardNonceResponseReceived: function(errors, nonce, cardData) {
+        // Params available below: (errors, nonce, cardData)
+        cardNonceResponseReceived(errors, nonce) {
           if (errors) {
-            console.log("Encountered errors:");
+            // eslint-disable-next-line no-console
+            console.log('Encountered errors:');
 
             // This logs all errors encountered during nonce generation to the
             // Javascript console.
-            errors.forEach(function(error) {
-              console.log('  ' + error.message);
+            errors.forEach((error) => {
+              // eslint-disable-next-line no-console
+              console.log(`  ${error.message}`);
             });
 
           // No errors occurred. Extract the card nonce or cardData
           }
           else {
             const products = [];
+
             // Hard coded ship-type and Promo skipped
             const shipType = 'UPS: Standard';
             const order = {};
             let newCustomer;
             const total = props.cart.reduce((accum, item) => {
-                return accum + item.quantity * item.product.price;
-              }, 0);
+              return accum + item.quantity * item.product.price;
+            }, 0);
 
             axios.post('/api/payment', {
-              nonce: nonce,
+              nonce,
               amount: total
             })
-            .then((apiRes) => {
+            .then(() => {
               // Need to store apiRes for credit authorization at some point.
               for (const item of props.cart) {
                 for (let i = 0; i < item.quantity; i++) {
                   products.push(item.product.id);
                 }
               }
+
               // Need promo and shiptype processed here
 
               // Loop address and remove blank fields
@@ -230,7 +222,6 @@ const PaymentPage = React.createClass({
             })
             .then((customer) => {
               newCustomer = camelizeKeys(customer.data);
-              console.log(newCustomer);
               if (!props.cookies.loggedIn) {
                 order.customerId = newCustomer.id;
               }
@@ -239,31 +230,30 @@ const PaymentPage = React.createClass({
               order.shipType = shipType;
               order.products = products;
 
-              console.log(order);
-
               return axios.post('api/orders', order);
             })
-            .then((newOrder) => {
+            .then(() => {
               // Need to store newOrder to state of App.
               // Need to navigate to thank you page.
-              console.log(newOrder.data);
               props.clearCart();
               props.router.push('/thankyou');
             })
             .catch((err) => {
               // need to handle address errors in toast or equiv.
+              // eslint-disable-next-line no-console
               console.log(err.response || err);
             });
           }
         },
 
-        unsupportedBrowserDetected: function() {
-          // Fill in this callback to alert buyers when their browser is not supported.
+        unsupportedBrowserDetected() {
+          // Fill in this callback to alert buyers
+          // when their browser is not supported.
         },
 
-        // Fill in these cases to respond to various events that can occur while a
-        // buyer is using the payment form.
-        inputEventReceived: function(inputEvent) {
+        // Fill in these cases to respond to various events that
+        // can occur while a buyer is using the payment form.
+        inputEventReceived(inputEvent) {
           switch (inputEvent.eventType) {
             case 'focusClassAdded':
               // Handle as desired
@@ -283,13 +273,23 @@ const PaymentPage = React.createClass({
             case 'postalCodeChanged':
               // Handle as desired
               break;
+            default:
+              break;
           }
         }
       }
     });
+
     // Necessary to initialize payment form on dynamic insertion
     paymentForm.build();
-    this.setState({ paymentForm: paymentForm });
+
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ paymentForm });
+  },
+
+  componentWillReceiveProps(nextProps) {
+    props = nextProps;
+    this.getCustomerInfo(nextProps);
   },
 
   componentWillUnmount() {
@@ -297,8 +297,8 @@ const PaymentPage = React.createClass({
     this.state.paymentForm.destroy();
   },
 
-  getCustomerInfo(props) {
-    if (props.cookies.loggedIn) {
+  getCustomerInfo(properties) {
+    if (properties.cookies.loggedIn) {
       axios.get('api/customer')
         .then((apiRes) => {
           const customer = apiRes.data;
@@ -318,7 +318,7 @@ const PaymentPage = React.createClass({
           this.setState({ address: nextAddress });
         })
         .catch((err) => {
-          console.log(err.response);
+          console.log(err.response); // eslint-disable-line no-console
         });
     }
   },
@@ -331,6 +331,36 @@ const PaymentPage = React.createClass({
   },
 
   handleBlur(event) {
+    this.processBlur(event);
+  },
+
+  handleChange(event) {
+    this.processChange(event);
+  },
+
+  handleTouchTapSubmit() {
+    state = this.state;
+    props = this.props;
+    this.state.paymentForm.requestCardNonce();
+  },
+
+  handleTouchTapCancel() {
+    this.props.router.push('/');
+  },
+
+  handleCheck(event, isChecked) {
+    this.setState({ shipping: isChecked });
+  },
+
+  displayShipping() {
+    if (this.state.shipping) {
+      return { display: 'block' };
+    }
+
+    return { display: 'none' };
+  },
+
+  processBlur(event) {
     const { name, value } = event.target;
     const nextErrors = Object.assign({}, this.state.errors);
     const result = Joi.validate({ [name]: value }, schema);
@@ -347,16 +377,13 @@ const PaymentPage = React.createClass({
     this.setState({ errors: nextErrors });
   },
 
-  handleChange(event) {
+  processChange(event) {
     const { address } = this.state;
     const { name } = event.target;
     let { value } = event.target;
 
-    if (name === 'addressState' || name === 'addressCountry') {
-      value = value.toUpperCase();
-    }
-
-    if (name === 'shipAddressState' || name === 'shipAddressCountry') {
+    if (name === 'addressState' || name === 'addressCountry' ||
+      name === 'shipAddressState' || name === 'shipAddressCountry') {
       value = value.toUpperCase();
     }
 
@@ -379,32 +406,7 @@ const PaymentPage = React.createClass({
     this.setState({ address: nextAddress });
   },
 
-  handleTouchTapSubmit(event) {
-    state = this.state;
-    props = this.props;
-    this.state.paymentForm.requestCardNonce();
-  },
-
-  handleTouchTapCancel(event) {
-    console.log('cancel');
-  },
-
-  handleCheck(event, isChecked) {
-    this.setState({ shipping: isChecked });
-  },
-
-  displayShipping() {
-    if (this.state.shipping) {
-      return { display: 'block' };
-    }
-
-    return { display: 'none' };
-  },
-
   render() {
-    const palette = this.context.muiTheme.palette;
-    const { errors, address } = this.state;
-
     // Necessary to make change event work after blur event.
     // Can't be done through CSS.
     const stylePaper = {
@@ -419,8 +421,8 @@ const PaymentPage = React.createClass({
           style={stylePaper}
           zDepth={3}
         >
-          <OrderSummary cart={this.props.cart}/>
-          <div className="divider section"></div>
+          <OrderSummary cart={this.props.cart} />
+          <div className="divider section" />
           <div className="row form-row">
 
             <div className="col s12 m7 l6">
@@ -428,8 +430,8 @@ const PaymentPage = React.createClass({
               <BillAddress
                 address={this.state.address}
                 errors={this.state.errors}
-                handleBlur={this.handleBlur}
-                handleChange={this.handleChange}
+                processBlur={this.processBlur}
+                processChange={this.processChange}
               />
             </div>
 
@@ -450,8 +452,8 @@ const PaymentPage = React.createClass({
                   <ShipAddress
                     address={this.state.address}
                     errors={this.state.errors}
-                    handleBlur={this.handleBlur}
-                    handleChange={this.handleChange}
+                    processBlur={this.processBlur}
+                    processChange={this.processChange}
                   />
                 </div>
               </div>
@@ -466,7 +468,6 @@ const PaymentPage = React.createClass({
               labelPosition="before"
               onTouchTap={this.handleTouchTapSubmit}
               primary={true}
-              // style={{ width: "125px" }}
             />
             <RaisedButton
               className="col s4 offset-s2 l3 offset-l2 form-button"
@@ -475,16 +476,15 @@ const PaymentPage = React.createClass({
               labelPosition="before"
               onTouchTap={this.handleTouchTapCancel}
               primary={true}
-              // style={{ width: "125px" }}
             />
           </div>
         </Paper>
       </div>
       <Snackbar
-        open={this.state.open}
-        message={this.state.payFailText}
         autoHideDuration={3000}
+        message={this.state.payFailText}
         onRequestClose={this.handleRequestClose}
+        open={this.state.open}
       />
     </div>;
   }

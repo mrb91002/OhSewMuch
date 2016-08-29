@@ -1,15 +1,14 @@
 'use strict';
 
+const { camelizeKeys } = require('humps');
 const bcrypt = require('bcrypt-as-promised');
 const boom = require('boom');
-const express = require('express');
-const knex = require('../knex');
-const { camelizeKeys } = require('humps');
 const ev = require('express-validation');
-const validate = require('../validations/token');
+const express = require('express');
 const jwt = require('jsonwebtoken');
-
+const knex = require('../knex');
 const router = express.Router(); // eslint-disable-line new-cap
+const validate = require('../validations/token');
 
 // To log a user in
 // Route tested and working

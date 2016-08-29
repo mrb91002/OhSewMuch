@@ -1,15 +1,12 @@
 'use strict';
 
-const express = require('express');
-
-// eslint-disable-next-line new-cap
-const router = express.Router();
-const knex = require('../knex');
+const { camelizeKeys } = require('humps');
 const boom = require('boom');
 const ev = require('express-validation');
+const express = require('express');
+const knex = require('../knex');
+const router = express.Router();// eslint-disable-line new-cap
 const val = require('../validations/promos');
-const { camelizeKeys, decamelizeKeys } = require('humps');
-const { checkAuth } = require('../modules/middleware');
 
 // Route for customers to get the details of a promo code.
 router.get('/promo/:code', ev(val.get), (req, res, next) => {
@@ -22,8 +19,8 @@ router.get('/promo/:code', ev(val.get), (req, res, next) => {
       }
 
       const promo = camelizeKeys(promoExists);
-      delete promo.updatedAt;
 
+      delete promo.updatedAt;
       res.send(promo);
     })
     .catch((err) => {

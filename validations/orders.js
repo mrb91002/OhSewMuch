@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const Joi = require('joi');
 
@@ -15,8 +15,8 @@ module.exports.get = {
 };
 
 module.exports.post = {
-  options : {
-    allowUnknownBody: false,
+  options: {
+    allowUnknownBody: false
   },
 
   body: {
@@ -42,7 +42,7 @@ module.exports.post = {
 };
 
 module.exports.delete = {
-  options : {
+  options: {
     allowUnknownParams: false,
     allowUnknownBody: false
   },
@@ -53,5 +53,5 @@ module.exports.delete = {
       .integer()
       .min(1)
       .required()
-  },
+  }
 };

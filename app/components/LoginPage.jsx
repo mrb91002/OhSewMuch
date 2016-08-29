@@ -1,13 +1,13 @@
-import { withRouter } from 'react-router';
-import axios from 'axios';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import Joi from 'joi';
+import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
-import Paper from 'material-ui/Paper';
-import Snackbar from 'material-ui/Snackbar';
 import Send from 'material-ui/svg-icons/content/send';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
+import axios from 'axios';
+import { withRouter } from 'react-router';
 
 const schema = Joi.object({
   userName: Joi.string()
@@ -31,7 +31,7 @@ const LoginPage = React.createClass({
         password: ''
       },
       loginFailText: '',
-      open: false,
+      open: false
     };
   },
 
@@ -42,26 +42,7 @@ const LoginPage = React.createClass({
     this.setState({ login: nextLogin });
   },
 
-  // handleChange(event) {
-  //   const { name, value } = event.target;
-  //   const nextLogin = Object.assign({}, this.state.login, { [name]: value });
-  //   const nextErrors = Object.assign({}, this.state.errors);
-  //   const result = Joi.validate({ [name]: value }, schema);
-  //
-  //   if (result.error) {
-  //     for (const detail of result.error.details) {
-  //       nextErrors[detail.path] = detail.message;
-  //     }
-  //   }
-  //   else {
-  //     delete nextErrors[name];
-  //   }
-  //
-  //   this.setState({ errors: nextErrors, login: nextLogin });
-  // },
-
   handleTouchTapCancel() {
-    // this.props.router.push('/');
     this.props.router.goBack();
   },
 
@@ -82,7 +63,7 @@ const LoginPage = React.createClass({
     }
 
     axios.post('/api/token', this.state.login)
-      .then((res) => {
+      .then(() => {
         this.props.updateCookies();
         this.props.router.push('/');
       })
@@ -144,7 +125,6 @@ const LoginPage = React.createClass({
           <h1>Login</h1>
 
           <TextField
-            // className="login-form-button"
             errorText={errors.userName}
             floatingLabelText="User Name"
             fullWidth={true}
@@ -157,7 +137,6 @@ const LoginPage = React.createClass({
           />
 
           <TextField
-            // className="login-form-button"
             errorText={errors.password}
             floatingLabelText="Password"
             fullWidth={true}
@@ -193,10 +172,10 @@ const LoginPage = React.createClass({
 
       </div>
       <Snackbar
-        open={this.state.open}
-        message={this.state.loginFailText}
         autoHideDuration={3000}
+        message={this.state.loginFailText}
         onRequestClose={this.handleRequestClose}
+        open={this.state.open}
       />
     </div>;
   }

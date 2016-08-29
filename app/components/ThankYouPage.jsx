@@ -38,15 +38,13 @@ const ThankYouPage = React.createClass({
 
       </div>
 
-
       <footer>
         {/* <p> */}
           Web Design by - Team Super Secret Squirrel
         {/* </p> */}
       </footer>
 
-    </div>
-
+    </div>;
   }
 });
 

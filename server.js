@@ -8,9 +8,7 @@ const express = require('express');
 const path = require('path');
 const port = process.env.PORT || 8000;
 
-
 // Middleware
-const ev = require('express-validation');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
