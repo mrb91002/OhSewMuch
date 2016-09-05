@@ -13,7 +13,7 @@ It solves the problem of getting a small business owner's products to market wit
 
 This problem is experienced by many small business owners who cannot continually pay to have their site modified by web developers when product changes occur.
 
-Our project solves this problem by storing the catalog in a databse and providing an admin interface for the business owners to manage their product catalog. It also addresses the ability to sell directly by incorporating credit card processing using Square's API and no local storage of credit card information.
+Our project solves this problem by storing the catalog in a database and providing an admin interface for the business owners to manage their product catalog. It also addresses the ability to sell directly by incorporating credit card processing using Square's API and no local storage of credit card information.
 
 This site uses the Square API for credit card processing and Lob for address verification.
 
