@@ -37,7 +37,7 @@ jspm_packages
 .node_repl_history
 
 # Ignore OS custom attributes file
-
+.DS_Store
 
 # Used by dotenv for creating local environment variables.
 .env
