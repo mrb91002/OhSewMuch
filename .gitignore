@@ -44,3 +44,6 @@ jspm_packages
 
 # Ignore the local Postgres database directory.
 pg
+
+# Ignore the transpiled public directory.
+public
