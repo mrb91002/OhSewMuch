@@ -95,12 +95,15 @@ const ProductPage = React.createClass({
         </div>
       </div>
 
-      <div className="bottom-clouds footer">
-        <img src="/images/bottom-clouds.png" />
+      <div className="footer">
+        <div className="bottom-clouds footer">
+          <img src="/images/bottom-clouds.png" />
+        </div>
+
+        <footer>
+          Web Design by - Team Super Secret Squirrel
+        </footer>
       </div>
-
-      <footer>Web Design by - Team Super Secret Squirrel</footer>
-
     </div>;
   }
 });

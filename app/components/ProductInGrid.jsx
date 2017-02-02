@@ -15,7 +15,7 @@ const ProductInGrid = React.createClass({
     const { product } = this.props;
 
     return <div
-      className="ProductInGrid"
+      className="ProductInGrid pointer"
       onTouchTap={this.handleTouchTap}
     >
       <img
