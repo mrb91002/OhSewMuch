@@ -135,8 +135,12 @@ button {
   top: 64px;
   height: 100vh;
   width: 150px;
-  background-color: #952727;
+  background-color: rgba(175, 43, 33, 1);
   transition: 1s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .nav-side-show {
@@ -144,6 +148,13 @@ button {
   right: 0;
 }
 
+.nav-side button {
+  width: 100%;
+}
+
+.nav-side button:hover {
+  background-color: #952727;
+}
 
 @media (max-width: 1000px) {
   .styleIcons {
@@ -165,4 +176,56 @@ button {
   .nav-side {
     visibility: hidden;
   }
+}
+
+.quantity {
+  background-color: #57A6D9;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: relative;
+  right: 24px;
+  top: -11px;
+}
+
+.quantity-side {
+  background-color: #57A6D9;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: relative;
+  right: 24px;
+  top: -12px;
+}
+
+.quantity p {
+  margin: 0;
+  padding: 0;
+  color: #952727;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.cart-side-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0 20px 0 ;
+}
+
+.cart-side-wrapper:hover {
+  background-color: #952727;
 }

@@ -69,7 +69,7 @@ const App = React.createClass({
   },
 
   handleTouchTapMenu() {
-    var sideNav = document.getElementById('nav-side');
+    const sideNav = document.getElementById('nav-side');
 
     sideNav.classList.toggle('nav-side-show');
   },
@@ -288,6 +288,12 @@ const App = React.createClass({
             shopping_cart
           </i>
 
+          <div className="quantity pointer"
+            onTouchTap={this.handleTouchTapCart}
+          >
+            <p>{quantity}</p>
+          </div>
+
           <button
             onTouchTap={this.handleTouchTapProfile}
             style={showLogout()}
@@ -342,6 +348,22 @@ const App = React.createClass({
         >
           Logout
         </button>
+
+        <div className="cart-side-wrapper pointer"
+          onTouchTap={this.handleTouchTapCart}
+        >
+          <i className="material-icons"
+            id="shopping cart"
+          >
+            shopping_cart
+          </i>
+
+          <div className="quantity-side"
+            onTouchTap={this.handleTouchTapCart}
+          >
+            <p>{quantity}</p>
+          </div>
+        </div>
 
       </div>
 
