@@ -1,5 +1,3 @@
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 import React from 'react';
 import axios from 'axios';
 import cookie from 'react-cookie';
@@ -68,6 +66,12 @@ const App = React.createClass({
 
   handleTouchTapAdmin() {
     this.props.router.push('/adminhome');
+  },
+
+  handleTouchTapMenu() {
+    var sideNav = document.getElementById('nav-side');
+
+    sideNav.classList.toggle('nav-side-show');
   },
 
   handleTouchTapLogout() {
@@ -188,7 +192,7 @@ const App = React.createClass({
     }, 0);
 
     const showRegister = () => {
-      if (!loggedIn && pathname !== '/register') {
+      if (!loggedIn && pathname !== '/login' || !loggedIn && pathname !== '/register' ) {
         return { display: 'block' };
       }
 
@@ -204,7 +208,7 @@ const App = React.createClass({
     };
 
     const showLogin = () => {
-      if (!loggedIn && pathname !== '/login') {
+      if (!loggedIn && pathname !== '/login' || !loggedIn && pathname !== '/register' ) {
         return { display: 'block' };
       }
 
@@ -235,70 +239,176 @@ const App = React.createClass({
       return { display: 'none' };
     };
 
-    const styleFlatButton = {
-      height: '64px',
-      lineHeight: '64px'
-    };
-
-    const styleTitle = {
-      cursor: 'pointer'
-    };
-
-    const styleNav = {
-      position: 'fixed'
-    };
-
     return <div>
-      <AppBar
-        onTitleTouchTap={this.handleTitleTouchTap}
-        style={styleNav}
-        title="Oh Sew Much"
-        titleStyle={styleTitle}
-        zDepth={2}
-      >
-        <FlatButton
-          label="Login"
+      <div className="nav">
+        <h1 className="title" onTouchTap={this.handleTitleTouchTap}>Oh Sew Much</h1>
+        {/* <h1 className="title-short" onTouchTap={this.handleTitleTouchTap}>FPW</h1> */}
+        <div>
+          <i className="material-icons"
+            onTouchTap={this.handleTitleTouchTap}
+            style={{fontSize: '30px'}}
+            >
+              star
+          </i>
+          <i className="material-icons"
+            onTouchTap={this.handleTitleTouchTap}
+            style={{fontSize: '40px'}}
+            >
+              star
+          </i>
+          <i className="material-icons"
+            onTouchTap={this.handleTitleTouchTap}
+            style={{fontSize: '30px'}}
+            >
+              star
+          </i>
+        </div>
+
+
+        <div className="nav-right">
+
+          <button
+            onTouchTap={this.handleTouchTapLogin}
+            style={showLogin()}
+          >
+            Login
+          </button>
+
+          <button
+            onTouchTap={this.handleTouchTapReg}
+            style={showRegister()}
+          >
+            Register
+          </button>
+
+          <i className="material-icons"
+            id="shopping cart"
+            onTouchTap={this.handleTouchTapCart}
+          >
+            shopping_cart
+          </i>
+
+          <button
+            onTouchTap={this.handleTouchTapProfile}
+            style={showLogout()}
+          >
+            Profile
+          </button>
+
+          <button
+            onTouchTap={this.handleTouchTapLogout}
+            style={showLogout()}
+          >
+            Logout
+          </button>
+        {/* </div> */}
+
+      </div>
+
+      <i className="material-icons menu"
+        id="menu"
+        onTouchTap={this.handleTouchTapMenu}
+        >
+          menu
+      </i>
+
+
+      <div className="nav-side" id="nav-side">
+
+        <button
           onTouchTap={this.handleTouchTapLogin}
-          style={Object.assign({}, styleFlatButton, showLogin())}
-        />
-        <FlatButton
-          label="Register"
+          // style={showLogin()}
+        >
+          Login
+        </button>
+
+        <button
           onTouchTap={this.handleTouchTapReg}
-          style={Object.assign({}, styleFlatButton, showRegister())}
-        />
-        <FlatButton
-          label="Logout"
+          style={showRegister()}
+        >
+          Register
+        </button>
+
+        <button
+          onTouchTap={this.handleTouchTapProfile}
+          style={showLogout()}
+        >
+          Profile
+        </button>
+
+        <button
           onTouchTap={this.handleTouchTapLogout}
-          style={Object.assign({}, styleFlatButton, showLogout())}
-        />
-        <FlatButton
-          label="Admin"
-          onTouchTap={this.handleTouchTapAdmin}
-          style={Object.assign({}, styleFlatButton, showAdmin())}
-        />
-        <FlatButton
-          label={`Cart - ${quantity}`}
-          onTouchTap={this.handleTouchTapCart}
-          style={Object.assign({}, styleFlatButton, showCart())}
-        />
-        <FlatButton
-          label="Empty Cart"
-          onTouchTap={this.handleTouchTapEmptyCart}
-          style={Object.assign({}, styleFlatButton, showEmptyCart())}
-        />
-      </AppBar>
+          style={showLogout()}
+        >
+          Logout
+        </button>
 
-      <div style={{ height: '64px' }} />
+      </div>
 
-      {/* React.cloneElement is the glue that passes in props to children*/}
-      {/* created with React Router. React router instantiates classes for us*/}
-      {/* , and cloning the existing instance is the only way to set props.*/}
-      {React.cloneElement(this.props.children, this.getChildrenProps())}
-      {/* {React.cloneElement(this.props.children, {
-        products: this.state.products
-      })} */}
+    </div>
 
-    </div>;
+    <div className="spacer">
+      -spacer div-
+    </div>
+
+        {/* React.cloneElement is the glue that passes in props to children
+          created with React Router. React router instantiates classes for
+          us, and cloning the existing instance is the only way to set props.
+          */}
+        {React.cloneElement(this.props.children, this.getChildrenProps())}
+      </div>;
+
+    // return <div>
+    //   <AppBar
+    //     onTitleTouchTap={this.handleTitleTouchTap}
+    //     style={styleNav}
+    //     title="Oh Sew Much"
+    //     titleStyle={styleTitle}
+    //     zDepth={2}
+    //   >
+    //     <FlatButton
+    //       label="Login"
+    //       onTouchTap={this.handleTouchTapLogin}
+    //       style={Object.assign({}, styleFlatButton, showLogin())}
+    //     />
+    //     <FlatButton
+    //       label="Register"
+    //       onTouchTap={this.handleTouchTapReg}
+    //       style={Object.assign({}, styleFlatButton, showRegister())}
+    //     />
+    //     <FlatButton
+    //       label="Logout"
+    //       onTouchTap={this.handleTouchTapLogout}
+    //       style={Object.assign({}, styleFlatButton, showLogout())}
+    //     />
+    //     <FlatButton
+    //       label="Admin"
+    //       onTouchTap={this.handleTouchTapAdmin}
+    //       style={Object.assign({}, styleFlatButton, showAdmin())}
+    //     />
+    //     <FlatButton
+    //       label={`Cart - ${quantity}`}
+    //       onTouchTap={this.handleTouchTapCart}
+    //       style={Object.assign({}, styleFlatButton, showCart())}
+    //     />
+    //     <FlatButton
+    //       label="Empty Cart"
+    //       onTouchTap={this.handleTouchTapEmptyCart}
+    //       style={Object.assign({}, styleFlatButton, showEmptyCart())}
+    //     />
+    //   </AppBar>
+    //
+    //   <div style={{ height: '64px' }} />
+    //
+    //   {/* React.cloneElement is the glue that passes in props to children*/}
+    //   {/* created with React Router. React router instantiates classes for us*/}
+    //   {/* , and cloning the existing instance is the only way to set props.*/}
+    //   {React.cloneElement(this.props.children, this.getChildrenProps())}
+    //   {/* {React.cloneElement(this.props.children, {
+    //     products: this.state.products
+    //   })} */}
+    //
+    // </div>;
   }
 });
 
