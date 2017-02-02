@@ -84,8 +84,14 @@ td {
 // }
 
 .main-content {
- margin-top: -305px;
+ margin-top: -310px;
  z-index: 2;
+ display: flex;
+ // width: 70%;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ background-color: white;
 }
 
 .blur-me {
@@ -97,6 +103,9 @@ td {
   border-radius: 8px;
   margin-bottom: 50px;
   padding-top: 20px;
+  z-index: 5;
+  position: relative;
+  top: -24px;
 }
 
 .blur-me h1 {
@@ -115,6 +124,8 @@ td {
 
 .bottom-clouds {
     width: 100%;
+    margin-bottom: 0px;
+    background-color: #fff;
 }
 
 .bottom-clouds img {
@@ -122,11 +133,23 @@ td {
 }
 
 footer {
-  background-color: rgba(149, 39, 39, 0.8);
+  // background-color: rgba(149, 39, 39, 0.8);
+  background-color: rgba(255,255,255,.4);
+  position: absolute;
+  bottom: 0px;
+  height: 30px;
+  width: 100%;
+  color: grey;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.footer {
   position: relative;
-  margin-top: -10px;
-  height: 50px;
-  color: #fff;
+  // margin-bottom: 5px;
 }
 
 .border-right {

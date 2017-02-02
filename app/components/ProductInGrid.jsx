@@ -15,12 +15,11 @@ const ProductInGrid = React.createClass({
     const { product } = this.props;
 
     return <div
-      className="col s12 m4 l3 product"
+      className="ProductInGrid"
       onTouchTap={this.handleTouchTap}
     >
       <img
         alt={images[0].altText}
-        className="col s12"
         src={images[0].imageUrl}
       />
       <div className="center-align">{product.name}</div>
