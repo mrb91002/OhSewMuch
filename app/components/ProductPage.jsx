@@ -28,10 +28,6 @@ const ProductPage = React.createClass({
       return <div />;
     }
 
-    const styleButton = {
-      margin: '50px'
-    };
-
     const id = Number.parseInt(this.props.routeParams.id);
     const product = this.props.products.filter((prod) => {
       return prod.id === id;
@@ -42,57 +38,79 @@ const ProductPage = React.createClass({
     });
 
     return <div>
-      <div className="row product-space container">
-        <div className="col s5">
-          <img
-            className="col s12"
-            id="primaryImg"
-            src={productPics[0].imageUrl}
-          />
+      <div className="product-space">
+        <div className="product-main">
+          <div className="product-page-container">
 
-            {productPics.map((prodImg) => {
-              return <ProductImages
-                key={weakKey(prodImg)}
-                productImg={prodImg}
-              />;
-            })}
+            <div className="flex-row-center">
 
-        </div>
+{/* LEFT */}
 
-        <div className="col s7">
-          <div className="col s10 offset-1 product-info-space">
-            <div className="col s12 product-info-inner">
-              <h1>{product.name}</h1>
-              <h5>dimensions: {product.dimensions}</h5>
-              <h5 className="col s6">${product.price}</h5>
-              <p className="col s4 question">Ask a question</p>
-              <div className="center">
-                <RaisedButton
-                  backgroundColor="rgba(149, 39, 39, 0.9)"
-                  className="buttonTest"
-                  label="ADD TO CART"
-                  labelColor="#fff"
-                  onTouchTap={this.handleTouchTapCart}
-                  style={styleButton}
+              <div className="all-prod-images">
+                <img
+                  id="primaryImg"
+                  src={productPics[0].imageUrl}
+                  className="product-main-image"
                 />
+                <div className="flex-row">
+                  {productPics.map((prodImg) => {
+                    return <ProductImages
+                      key={weakKey(prodImg)}
+                      productImg={prodImg}
+                    />;
+                  })}
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="col s10 offset-1 social-media">
-            <div className="col s12 product-info-inner">
-              <img src="/images/Facebook.png" width="65" />
-              <img src="/images/twitter.png" width="65" />
-              <img src="/images/instagram.png" width="65" />
-              <img src="/images/pinterest.png" width="65" />
-              <img src="/images/tumblr.png" width="65" />
+
+{/* RIGTH */}
+
+              <div className="redd">
+                <h1>{product.name}</h1>
+                <h5 >${product.price}</h5>
+                <select>
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="opel">Opel</option>
+                  <option value="audi">Audi</option>
+                </select>
+                <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </select>
+
+                <button
+                  className="buttonTest"
+                  onTouchTap={this.handleTouchTapCart}
+                >
+                  ADD TO CART
+                </button>
+
+                <div className="">
+                  <h5>Product Info</h5>
+                  <p>{product.description}</p>
+                </div>
+                <h5>dimensions: {product.dimensions}</h5>
+                <div>
+                  <img src="/images/Facebook.png" width="35" />
+                  <img src="/images/twitter.png" width="35" />
+                  <img src="/images/instagram.png" width="35" />
+                  <img src="/images/pinterest.png" width="35" />
+                  <img src="/images/tumblr.png" width="35"/>
+                </div>
+
+              </div>
+
             </div>
           </div>
         </div>
 
-        <div className="col s12 description">
-          <h1>Item Details</h1>
-          {product.description}
-        </div>
       </div>
 
       <div className="footer">
@@ -101,7 +119,8 @@ const ProductPage = React.createClass({
         </div>
 
         <footer>
-          Web Design by - Team Super Secret Squirrel
+          <p>Email - Ohsewmuch@gmail.com</p>
+
         </footer>
       </div>
     </div>;

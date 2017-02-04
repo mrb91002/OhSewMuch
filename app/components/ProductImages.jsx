@@ -17,7 +17,7 @@ const ProductImages = React.createClass({
     return <div>
       <img
         alt={this.props.productImg.altText}
-        className="col s3 thumbnail-img"
+        className="thumbnail-img"
         onTouchTap={this.handleTouchTap}
         src={this.props.productImg.imageUrl}
       />

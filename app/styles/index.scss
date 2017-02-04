@@ -113,6 +113,11 @@ button {
   padding: 0 15px 0 15px;
 }
 
+.red button {
+  padding: 0;
+  background-color: blue;
+}
+
 .menu {
   color: #fff;
   font-size: 40px;
@@ -251,4 +256,74 @@ button {
 .product-placeholder {
   width: 232px;
   height: 210px;
+}
+
+.product-space {
+  margin-top: 30px;
+}
+
+.product-main {
+  display: flex;
+  justify-content: center;
+  // background-color: red;
+}
+
+.product-main-image {
+  width: 100%;
+}
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-row-center {
+  display: flex;
+  justify-content: center;
+}
+
+.product-page-container {
+  width: 70%;
+  display: flex;
+  // flex-wrap: wrap;
+  // background-color: purple;
+  justify-content: center;
+}
+
+.all-prod-images {
+  display: flex;
+  flex-direction: column;
+  // background-color: green;
+  max-width: 300px;
+  min-width: 300px;
+  margin-right: 10px;
+  color: #888785;
+
+  // flex-wrap: wrap;
+}
+
+.redd {
+  // background-color: orange;
+  // display: inline-block;
+  // width: 40%;
+
+  min-width: 450px;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  // padding-left: 8%;
+  border-left: 1px solid #cacaca;
+  color: #888785;
+}
+
+.buttonTest {
+  width: 100%;
+  background-color: rgb(78, 169, 228);
+}
+
+// #888785
+
+h1 {
+  margin: 0;
 }
