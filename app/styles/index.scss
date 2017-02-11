@@ -320,6 +320,7 @@ button {
 .buttonTest {
   width: 100%;
   background-color: rgb(78, 169, 228);
+  z-index: -1;
 }
 
 // #888785
@@ -385,6 +386,7 @@ Dropdown {
 }
 
 .Dropdown-menu {
+  background:rgba(0,0,0,0);
   background-color: white;
   border: 1px solid #ccc;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
@@ -397,7 +399,6 @@ Dropdown {
   width: 100%;
   z-index: 1000;
   -webkit-overflow-scrolling: touch;
-  position: absolute;
 }
 
 .Dropdown-menu .Dropdown-group > .Dropdown-title{

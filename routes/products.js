@@ -18,6 +18,7 @@ router.get('/products', (_req, res, next) => {
         delete prod.createdAt;
         delete prod.updatedAt;
         delete prod.deleted;
+        // console.log(prod);
 
         return knex('product_images')
           .select('alt_text', 'display_order', 'image_url')
@@ -25,6 +26,17 @@ router.get('/products', (_req, res, next) => {
           .orderBy('display_order')
           .then((imgs) => {
             prod.images = camelizeKeys(imgs);
+            prod.test = true;
+
+            if (prod.colorOptions === true) {
+
+              return knex('color_options')
+                .where('product_id', prod.id)
+                .orderBy('display_order')
+                .then((colors) => {
+                  prod.colors = camelizeKeys(colors);
+                });
+            }
           });
       }));
     })

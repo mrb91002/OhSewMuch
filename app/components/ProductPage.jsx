@@ -25,6 +25,12 @@ const ProductPage = React.createClass({
     this.props.addToCart(product);
   },
 
+  // handleDropDown() {
+  //   console.log('clicked');
+  //   // e.stopPropagation();
+  //   // e.nativeEvent.stopImmediatePropagation();
+  // },
+
   render() {
     if (this.props.products.length === 0) {
       return <div />;
@@ -43,13 +49,15 @@ const ProductPage = React.createClass({
       display: "none"
     };
 
-    console.log(product);
-    if (product.colorOptions === true) {
-      console.log("OPTIONS HERE");
-      displayColor = { display: "inline-block" };
-    }
+    let options;
 
-    const options = [1,2,3,4,5,6,7,8,9];
+    if (product.colorOptions === true) {
+      displayColor = { display: "inline-block" };
+
+      options = product.colors.map((prod) => {
+        return prod.color;
+      });
+    }
 
     return <div>
       <div className="product-space">
@@ -88,13 +96,19 @@ const ProductPage = React.createClass({
 
                 <div className="displayColor" style={displayColor}>
                   <p>Colors</p>
-                  <Dropdown options={options} placeholder="Select Color" />
+                  <Dropdown options={options}
+                    // onTouchTap={this.handleDropDown}
+                    placeholder="Select Color" />
                </div>
 
                 <div className="dropdown-quantity">
                   <p>Quantity</p>
-                  <Dropdown options={options} placeholder="1" style={{border: "1px solid black"}} />
+                  <Dropdown
+                    // onTouchTap={this.handleDropDown}
+                    options={[1,2,3,4,5,6,7,8,9]}
+                    placeholder="1" style={{ border: "1px solid black"}} />
                 </div>
+
 
 
 
