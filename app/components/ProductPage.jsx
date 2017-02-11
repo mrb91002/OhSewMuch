@@ -2,6 +2,8 @@ import ProductImages from 'components/ProductImages';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
 import weakKey from 'weak-key';
+import Dropdown from 'react-dropdown';
+
 
 const ProductPage = React.createClass({
   contextTypes: {
@@ -37,6 +39,18 @@ const ProductPage = React.createClass({
       return prod1 < prod2;
     });
 
+    let displayColor = {
+      display: "none"
+    };
+
+    console.log(product);
+    if (product.colorOptions === true) {
+      console.log("OPTIONS HERE");
+      displayColor = { display: "inline-block" };
+    }
+
+    const options = [1,2,3,4,5,6,7,8,9];
+
     return <div>
       <div className="product-space">
         <div className="product-main">
@@ -65,25 +79,25 @@ const ProductPage = React.createClass({
 {/* RIGTH */}
 
               <div className="redd">
-                <h1>{product.name}</h1>
-                <h5 >${product.price}</h5>
-                <select>
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="opel">Opel</option>
-                  <option value="audi">Audi</option>
-                </select>
-                <select>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                </select>
+                <div style={{ marginBottom: "20px"}}>
+                  <h1>{product.name}</h1>
+                  <h5 >${product.price}</h5>
+                </div>
+
+                {/* <div className="Dropdown-container"> */}
+
+                <div className="displayColor" style={displayColor}>
+                  <p>Colors</p>
+                  <Dropdown options={options} placeholder="Select Color" />
+               </div>
+
+                <div className="dropdown-quantity">
+                  <p>Quantity</p>
+                  <Dropdown options={options} placeholder="1" style={{border: "1px solid black"}} />
+                </div>
+
+
+
 
                 <button
                   className="buttonTest"

@@ -9,6 +9,7 @@ exports.up = function(knex) {
     table.string('name').notNullable();
     table.text('description').notNullable();
     table.string('dimensions').notNullable().defaultTo('');
+    table.boolean('color_options').defaultTo(false);
     table.integer('units_in_stock').notNullable().defaultTo(0);
     table.dateTime('deleted').nullable();
   });
